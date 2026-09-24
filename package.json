@@ -1,0 +1,16 @@
+{
+  "name": "muhammed-zameel-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["portfolio", "personal"],
+  "author": "Muhammed Zameel",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
