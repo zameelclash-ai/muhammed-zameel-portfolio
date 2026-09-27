@@ -523,7 +523,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   });
 
   // ---------- scanning with Claude ----------
-  let sample = null, currentPhoto = null, ctl = null;
+  let sample = null, sampleReady = null, currentPhoto = null, ctl = null;
 
   const PROMPT = `You are reading a photo of a handwritten job card from Optimex Opticals, an optical shop in Kerala, India.
 The printed card has two parts. Top slip: Ph number (printed shop phone, ignore it), Order No, Date, Due Date, Total, Name, Advance, Address, Balance.
@@ -617,6 +617,11 @@ Reply with only this JSON object:
     newCard();
     currentPhoto = await thumbnail(file);
     const preview = currentPhoto || URL.createObjectURL(file);
+    // The Claude connection can take a few seconds after the page opens: wait for it rather than giving up.
+    if (!sample && sampleReady) {
+      showScanbar(preview, '<span class="spinner"></span><strong style="display:inline">Connecting to Claude…</strong>');
+      await sampleReady;
+    }
     if (!sample) {
       showScanbar(preview, window.claude
         ? '<strong>Automatic reading isn\u2019t available in this view.</strong>This Claude app can\u2019t send photos for reading. Open the link in a web browser signed in to claude.ai, or type the details in below.'
@@ -661,11 +666,11 @@ Reply with only this JSON object:
   $('sync').textContent = 'Connecting…';
 
   if (window.claude && claude.use) {
-    claude.use('sample').then(async (s) => {
+    sampleReady = claude.use('sample').then(async (s) => {
       if (!s) return;
       const lim = await s.limits().catch(() => null);
       if (lim && lim.images) sample = s;
-    });
+    }).catch(() => {});
     claude.use('db').then((d) => {
       if (!d) { $('sync').textContent = 'Saving in this browser only.'; return; }
       db = d;
