@@ -10,15 +10,13 @@
 <title>Scan Job Card</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%230b6e5b'/%3E%3Ccircle cx='12' cy='21' r='6' fill='none' stroke='white' stroke-width='2.6'/%3E%3Ccircle cx='28' cy='21' r='6' fill='none' stroke='white' stroke-width='2.6'/%3E%3C/svg%3E">
 <style>
+@font-face { font-family: "Questrial"; src: url("/fonts/questrial/questrial-latin-400-normal.woff2") format("woff2"); font-display: swap; }
 :root {
-  --paper: #f2f5f3; --surface: #ffffff; --sunk: #eef2f0; --ink: #15201c; --muted: #5a6762; --line: #d4dcd7;
-  --accent: #0b6e5b; --accent-ink: #ffffff; --accent-soft: #dff0e9; --warn: #9a5500; --warn-soft: #fbe9cf; --danger: #b3261e; --danger-soft: #fbe3e1;
-  --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  /* Same black-print-on-white look as the paper job card. */
+  --paper: #e7e7e3; --surface: #ffffff; --sunk: #f3f3f0; --ink: #111111; --muted: #5d5d58; --line: #1a1a1a;
+  --accent: #111111; --accent-ink: #ffffff; --accent-soft: #eef6ee; --warn: #b45309; --warn-soft: #ffe8c7; --danger: #b91c1c; --danger-soft: #fff1f1;
+  --sans: Arial, "Helvetica Neue", Helvetica, Roboto, sans-serif;
   color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root { --paper: #0e1412; --surface: #151e1b; --sunk: #1b2622; --ink: #e4ebe8; --muted: #93a39d; --line: #2a3632;
-    --accent: #3cc7a4; --accent-ink: #05201a; --accent-soft: #173a31; --warn: #f0b458; --warn-soft: #3a2c14; --danger: #f28b82; --danger-soft: #3b1d1b; color-scheme: dark; }
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -28,8 +26,8 @@ header { display: flex; align-items: center; gap: 10px; }
 header svg { width: 34px; height: 34px; color: var(--accent); flex: none; }
 h1 { font-size: 1.25rem; margin: 0; line-height: 1.15; }
 header p { margin: 0; color: var(--muted); font-size: 0.82rem; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-.big { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 64px; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); -webkit-tap-highlight-color: transparent; }
+.card { background: var(--surface); border: 2px solid var(--line); border-radius: 4px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.big { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 64px; border-radius: 6px; font-size: 1.1rem; font-weight: 700; cursor: pointer; border: 2px solid var(--line); background: var(--surface); color: var(--ink); -webkit-tap-highlight-color: transparent; }
 .big.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); min-height: 76px; font-size: 1.2rem; }
 .big svg { width: 26px; height: 26px; }
 .big:active { transform: scale(.98); }
@@ -61,7 +59,7 @@ li .st.err { color: var(--danger); }
 <main>
   <header>
     <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="11" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="29" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M18 21c1.2-1.4 2.8-1.4 4 0M4 20l-2-6M36 20l2-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-    <div><h1>Scan Job Card</h1><p>Optimex Opticals, Alathur</p></div>
+    <div><h1><span style="font-family:'Century Gothic','Questrial',sans-serif;font-weight:400;font-size:1.35em;letter-spacing:-.02em">Optimex</span> Scan Job Card</h1><p>Computerised Eye Clinic · Court Road, Alathur</p></div>
   </header>
 
   <section class="card warn" id="notConnected" hidden>

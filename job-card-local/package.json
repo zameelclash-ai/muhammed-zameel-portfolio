@@ -1,7 +1,7 @@
 {
   "name": "optimex-job-cards",
   "version": "1.0.0",
-  "description": "Shop-computer job card entry for Optimex Opticals. Phones on the shop Wi-Fi scan handwritten job cards; the computer reads them and fills the form.",
+  "description": "Shop-computer job card entry for Optimex Opticals. Phones on the shop Wi-Fi photograph handwritten job cards; the computer reads them offline and fills the form.",
   "private": true,
   "type": "module",
   "main": "server.js",
@@ -10,10 +10,20 @@
     "test": "node --test test/*.test.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.128.0",
-    "qrcode": "^1.5.4"
+    "@fontsource/archivo-narrow": "^5.3.0",
+    "@fontsource/arimo": "^5.3.0",
+    "@fontsource/kalam": "^5.3.0",
+    "@fontsource/michroma": "^5.3.0",
+    "@fontsource/questrial": "^5.3.0",
+    "@fontsource/tinos": "^5.3.0",
+    "@gutenye/ocr-common": "^1.4.9",
+    "@gutenye/ocr-models": "^1.4.2",
+    "@techstark/opencv-js": "^5.0.0-release.1",
+    "onnxruntime-web": "^1.30.0",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.35.5"
   }
 }

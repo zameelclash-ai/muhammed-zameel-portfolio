@@ -4,149 +4,195 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Optimex Job Cards</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
+@font-face { font-family: "Kalam"; src: url("/fonts/kalam/kalam-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Michroma"; src: url("/fonts/michroma/michroma-latin-400-normal.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+@font-face { font-family: "Questrial"; src: url("/fonts/questrial/questrial-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Tinos"; src: url("/fonts/tinos/tinos-latin-700-italic.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Arimo"; src: url("/fonts/arimo/arimo-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Arimo"; src: url("/fonts/arimo/arimo-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Archivo Narrow"; src: url("/fonts/archivo-narrow/archivo-narrow-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Archivo Narrow"; src: url("/fonts/archivo-narrow/archivo-narrow-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+/* The card's own look: black print on white paper. Windows fonts first (the card was set in them), web fonts as backup. */
 :root {
-  --paper: #f2f5f3; --surface: #ffffff; --sunk: #eef2f0; --ink: #15201c; --muted: #5a6762; --line: #d4dcd7;
-  --accent: #0b6e5b; --accent-ink: #ffffff; --accent-soft: #dff0e9; --mark: #f3d34a; --fill: #fdf6d6;
-  --warn: #9a5500; --warn-soft: #fbe9cf; --ready: #2f5aa8; --ready-soft: #e3ebf8; --danger: #b3261e; --danger-soft: #fbe3e1;
-  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --desk: #e7e7e3; --paper: #ffffff; --print: #111111; --rule: #1a1a1a; --muted: #5d5d58; --soft: #f3f3f0; --line: #c9c9c3;
+  --ink: #16307a;            /* pen-blue for what is written on the card */
+  --mark: #fff3b0;           /* highlighter on fields filled from the photo */
+  --check: #b45309; --check-soft: #ffe8c7;
+  --ready: #1d4ed8; --done: #166534; --late: #b91c1c;
+  --arial: Arial, "Arimo", "Helvetica Neue", Helvetica, sans-serif;
+  --narrow: "Arial Narrow", "Archivo Narrow", "Roboto Condensed", Arial, sans-serif;
+  --times: "Times New Roman", "Tinos", Times, serif;
+  --gothic: "Century Gothic", "Questrial", "Avenir", sans-serif;
+  --wide: "Michroma", "Eurostile Extended", "Arial Black", sans-serif;
+  --pen: "Kalam", "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
   color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #0e1412; --surface: #151e1b; --sunk: #1b2622; --ink: #e4ebe8; --muted: #93a39d; --line: #2a3632;
-    --accent: #3cc7a4; --accent-ink: #05201a; --accent-soft: #173a31; --mark: #c9a92b; --fill: #2e2a14;
-    --warn: #f0b458; --warn-soft: #3a2c14; --ready: #8fb2ee; --ready-soft: #1c2a42; --danger: #f28b82; --danger-soft: #3b1d1b;
-    color-scheme: dark;
-  }
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-body { margin: 0; padding: 0 16px 40px; background: var(--paper); color: var(--ink); font: 15px/1.5 var(--sans); }
-h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+html, body { background: var(--desk); }
+body { margin: 0; padding: 0 16px 40px; color: var(--print); font: 15px/1.45 var(--arial); }
 button, input, select, textarea { font: inherit; color: inherit; }
-a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--print); outline-offset: 2px; }
 
-.top { max-width: 1240px; margin: 0 auto; padding-block: 18px 14px; display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between; }
-.brand { display: flex; align-items: center; gap: 12px; }
-.brand svg { width: 38px; height: 38px; color: var(--accent); flex: none; }
-.brand h1 { font-size: 1.45rem; line-height: 1.1; }
-.brand p { margin: 0; color: var(--muted); font-size: 0.85rem; }
+/* ---------- app bar ---------- */
+.top { max-width: 1320px; margin: 0 auto; padding-block: 14px 12px; display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: baseline; gap: 12px; }
+.brand .optimex { font: 400 2rem/1 var(--gothic); letter-spacing: -0.02em; }
+.brand .opticals { font: 400 0.8rem/1 var(--wide); letter-spacing: 0.02em; -webkit-text-stroke: .04em currentColor; }
+.brand .sub { color: var(--muted); font-size: 0.85rem; }
 .top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 9px 14px; font-weight: 500; cursor: pointer; min-height: 42px; text-decoration: none; color: var(--ink); }
-.btn:hover { border-color: var(--accent); }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.btn.ghost { background: transparent; border-color: transparent; color: var(--muted); }
-.btn.danger { color: var(--danger); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px solid var(--print); background: var(--paper); border-radius: 4px; padding: 7px 14px; font-weight: 700; cursor: pointer; min-height: 40px; color: var(--print); text-decoration: none; }
+.btn:hover { background: var(--soft); }
+.btn.primary { background: var(--print); color: var(--paper); }
+.btn.primary:hover { background: #333; }
+.btn.ghost { border-color: transparent; background: transparent; font-weight: 400; }
+.btn.danger { color: var(--late); border-color: transparent; background: transparent; }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
-.btn svg { width: 20px; height: 20px; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn svg { width: 18px; height: 18px; }
 
-.banner { max-width: 1240px; margin: 0 auto 12px; padding: 10px 14px; border-radius: 10px; background: var(--warn-soft); color: var(--ink); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
-.banner b { color: var(--warn); }
-
-.panel { max-width: 1240px; margin: 0 auto 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 18px; }
-.connect { grid-template-columns: 220px minmax(0, 1fr); align-items: center; }
-@media (max-width: 640px) { .connect { grid-template-columns: minmax(0, 1fr); } }
-.qr { width: 220px; max-width: 100%; aspect-ratio: 1; background: #fff; border-radius: 10px; padding: 8px; border: 1px solid var(--line); }
+.panel { max-width: 1320px; margin: 0 auto 14px; background: var(--paper); border: 2px solid var(--rule); padding: 18px; display: grid; gap: 18px; grid-template-columns: 220px minmax(0, 1fr); align-items: center; }
+@media (max-width: 640px) { .panel { grid-template-columns: minmax(0, 1fr); } }
+.qr { width: 220px; max-width: 100%; aspect-ratio: 1; background: #fff; padding: 6px; border: 1.5px solid var(--rule); }
 .qr svg { width: 100%; height: 100%; display: block; }
-.panel h2 { font-size: 1.15rem; margin-bottom: 6px; }
+.panel h2 { font: 700 1.15rem var(--arial); margin: 0 0 6px; }
 .panel ol { margin: 6px 0 10px; padding-left: 20px; }
-.panel li { margin-bottom: 4px; }
-.link { font: 0.85rem var(--mono); word-break: break-all; background: var(--sunk); padding: 8px 10px; border-radius: 7px; user-select: all; }
+.link { font: 0.85rem ui-monospace, Consolas, monospace; word-break: break-all; background: var(--soft); padding: 8px 10px; user-select: all; border: 1px dashed var(--line); }
 .hint { color: var(--muted); font-size: 0.85rem; margin: 6px 0 0; }
-.settings-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.settings-row input { flex: 1 1 320px; border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; background: var(--surface); font-family: var(--mono); min-height: 42px; }
 
-.layout { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 16px; align-items: start; }
-@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .list-pane { order: 2; } }
-.pane { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
+.layout { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: minmax(250px, 320px) minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 980px) { .layout { grid-template-columns: minmax(0, 1fr); } .list-pane { order: 2; } }
 
-.list-pane { display: flex; flex-direction: column; gap: 10px; }
+/* ---------- job list ---------- */
+.list-pane { background: var(--paper); border: 2px solid var(--rule); padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .list-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.list-head h2 { font-size: 1.05rem; }
-.count { font: 0.8rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
-#search { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: var(--surface); }
+.list-head h2 { font: 700 1.05rem var(--arial); margin: 0; }
+.count { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+#search { width: 100%; border: 1.5px solid var(--rule); border-radius: 3px; padding: 7px 9px; background: var(--paper); }
 .filters { display: flex; gap: 6px; flex-wrap: wrap; }
-.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 11px; font-size: 0.82rem; cursor: pointer; }
-.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-.jobs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; max-height: 70vh; overflow-y: auto; }
-.job { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 8px; border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px; }
-.job:hover { background: var(--sunk); }
-.job.active { background: var(--accent-soft); }
-.job .nm { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.job .meta { grid-column: 1 / -1; color: var(--muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
-.status { font: 500 0.7rem/1 var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 4px 7px; border-radius: 4px; align-self: center; white-space: nowrap; }
-.status.pending { background: var(--warn-soft); color: var(--warn); }
-.status.ready { background: var(--ready-soft); color: var(--ready); }
-.status.delivered { background: var(--accent-soft); color: var(--accent); }
-.status.overdue { background: var(--danger); color: #fff; }
-.status.check { background: var(--mark); color: #2a2200; }
-.status.reading { background: var(--sunk); color: var(--muted); }
-.status.failed { background: var(--danger-soft); color: var(--danger); }
-.empty { color: var(--muted); font-size: 0.9rem; padding: 6px 2px; }
+.chip { border: 1.5px solid var(--rule); background: var(--paper); border-radius: 999px; padding: 3px 10px; font-size: 0.82rem; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--print); color: var(--paper); }
+.jobs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; max-height: 72vh; overflow-y: auto; }
+.job { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 9px 6px; border-bottom: 1px dotted var(--rule); cursor: pointer; }
+.job:hover { background: var(--soft); }
+.job.active { background: var(--soft); box-shadow: inset 3px 0 0 var(--print); }
+.job .nm { font: 400 1.1rem/1.2 var(--pen); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.job .meta { grid-column: 1 / -1; color: var(--muted); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+.status { font: 700 0.66rem/1 var(--arial); text-transform: uppercase; letter-spacing: .06em; padding: 4px 6px; border: 1.5px solid currentColor; align-self: center; white-space: nowrap; }
+.status.pending { color: var(--muted); }
+.status.ready { color: var(--ready); }
+.status.delivered { color: var(--done); }
+.status.overdue { color: #fff; background: var(--late); border-color: var(--late); }
+.status.check { color: var(--check); background: var(--check-soft); }
+.status.reading { color: var(--muted); border-style: dashed; }
+.status.failed { color: var(--late); }
+.empty { color: var(--muted); font-size: 0.9rem; }
 .empty ol { padding-left: 20px; margin: 6px 0 0; }
 .sync { font-size: 0.78rem; color: var(--muted); margin: 0; }
 
-.entry { display: flex; flex-direction: column; gap: 16px; }
-.entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
-.entry-head h2 { font-size: 1.2rem; }
-.scanbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: var(--sunk); }
-.scanbar.error { background: var(--danger-soft); }
-.thumb { width: 72px; height: 96px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); cursor: zoom-in; }
-.scanmsg { flex: 1 1 220px; font-size: 0.92rem; }
+/* ---------- toolbar + photo strip ---------- */
+.entry { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.toolbar h2 { font: 700 1.15rem var(--arial); margin: 0; margin-right: auto; }
+.toolbar select { border: 1.5px solid var(--rule); border-radius: 3px; padding: 7px 8px; background: var(--paper); min-height: 40px; }
+.saved-at { font-size: 0.82rem; color: var(--muted); }
+.scanbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 10px 12px; background: var(--paper); border: 1.5px dashed var(--rule); }
+.scanbar.error { border-color: var(--late); background: #fff5f5; }
+.thumb { width: 68px; height: 92px; object-fit: cover; border: 1px solid var(--rule); background: var(--soft); cursor: zoom-in; }
+.scanmsg { flex: 1 1 240px; font-size: 0.92rem; }
 .scanmsg strong { display: block; }
-.spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; display: inline-block; vertical-align: -3px; margin-right: 6px; }
+.spinner { width: 16px; height: 16px; border: 2px solid var(--line); border-top-color: var(--print); border-radius: 50%; animation: spin .8s linear infinite; display: inline-block; vertical-align: -3px; margin-right: 6px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
 
-.section-label { font: 500 0.72rem var(--sans); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin: 0 0 8px; }
-.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 12px; }
-.span2 { grid-column: span 2; }
-.span4 { grid-column: 1 / -1; }
-@media (max-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .span2 { grid-column: 1 / -1; } }
-.f { display: flex; flex-direction: column; gap: 3px; min-width: 0; position: relative; }
-.f label { font-size: 0.8rem; color: var(--muted); }
-.f input, .f textarea, .f select, .rx input { width: 100%; border: 1px solid var(--line); border-radius: 7px; padding: 8px 9px; background: var(--surface); min-height: 40px; }
-.f textarea { resize: vertical; }
-.f input:focus, .f textarea:focus, .rx input:focus, .f select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
-.filled { background: var(--fill) !important; }
-.unsure { border-color: var(--warn) !important; box-shadow: inset 0 0 0 1px var(--warn); }
-.flag { position: absolute; right: 6px; top: 0; font: 500 0.66rem var(--mono); color: var(--warn); text-transform: uppercase; letter-spacing: .05em; }
-.money input { font-variant-numeric: tabular-nums; text-align: right; font-family: var(--mono); }
+/* ---------- the paper job card ---------- */
+.sheet-wrap { overflow-x: auto; padding-bottom: 4px; }
+.sheet { width: 100%; min-width: 600px; max-width: 820px; margin: 0 auto; background: var(--paper); padding: 2.2em 2em; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.08); font-size: clamp(12px, 1.3vw, 15px); display: flex; flex-direction: column; gap: 2.2em; }
+.box { border: 2px solid var(--rule); }
 
-.rx-wrap { overflow-x: auto; }
-.rx { border-collapse: collapse; width: 100%; min-width: 520px; font-variant-numeric: tabular-nums; }
-.rx th { font: 500 0.78rem var(--sans); color: var(--muted); padding: 4px 6px; text-align: center; }
-.rx th.eye { font: 600 0.9rem var(--display); color: var(--ink); border-bottom: 1px solid var(--line); }
-.rx th.row { text-align: left; font: 600 0.85rem var(--mono); color: var(--ink); width: 44px; }
-.rx td { padding: 3px; }
-.rx td.gap, .rx th.gap { width: 10px; padding: 0; }
-.rx input { text-align: center; font-family: var(--mono); padding: 8px 4px; }
-@media (max-width: 560px) { .rx { min-width: 0; } .rx td { padding: 2px 1px; } .rx input { font-size: 0.82rem; padding: 8px 1px; } .rx th.eye { font-size: 0.78rem; } .rx td.gap, .rx th.gap { width: 4px; } .rx th.row { width: 30px; } }
+/* written values */
+.pen { border: 0; border-bottom: 1.6px dotted var(--rule); background: transparent; font: 400 1.3em/1.1 var(--pen); color: var(--ink); padding: 0 .2em; min-width: 0; width: 100%; height: 1.55em; border-radius: 0; }
+.pen:focus { outline: none; border-bottom: 1.6px solid var(--ink); background: #f5f8ff; }
+.pen.filled { background: var(--mark); }
+.pen.unsure { background: var(--check-soft); box-shadow: 0 2px 0 var(--check); }
+textarea.pen { resize: none; height: auto; }
+input[type="date"].pen { font-size: 1.12em; padding-right: 0; }
+input[type="date"].pen::-webkit-calendar-picker-indicator { margin: 0; padding: 0; width: .8em; opacity: .45; }
+.money .pen { text-align: left; }
+.ln { display: flex; align-items: baseline; gap: .1em; position: relative; min-width: 0; }
+.ln > label { white-space: nowrap; }
+.flag { position: absolute; right: 0; top: -1.1em; font: 700 .66em var(--arial); color: var(--check); text-transform: uppercase; letter-spacing: .06em; pointer-events: none; }
 
-.totals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; }
-@media (max-width: 480px) { .totals { grid-template-columns: minmax(0, 1fr); } }
-.balance-note { font-size: 0.78rem; color: var(--muted); }
-.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
+/* top customer slip */
+.slip { padding: .7em 1.1em .45em; font-family: var(--arial); }
+.slip-head { display: grid; grid-template-columns: 1.15fr 1fr; gap: 0 1.5em; }
+.logo { line-height: 1; }
+.logo .o1 { font: 400 3.9em/0.85 var(--gothic); letter-spacing: -0.03em; display: block; }
+.logo .o2 { font: 400 1.15em/1 var(--wide); letter-spacing: 0.01em; -webkit-text-stroke: .045em currentColor; display: block; margin: .05em 0 0 3.35em; }
+.clinic-name { font: italic 700 1.6em/1.2 var(--times); margin-top: .1em; }
+.shop-addr { font-size: 1.25em; line-height: 1.3; }
+.slip-right { display: flex; flex-direction: column; justify-content: space-between; align-items: stretch; }
+.ph { text-align: right; font-size: 1.3em; }
+.slip-right .ln { font-size: 1.15em; margin-bottom: 2.6em; }
+.slip-rows { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.15em 1em; margin-top: 1.1em; font-size: 1.12em; }
+.slip-rows .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 .2em; }
+.fine { display: flex; justify-content: space-between; gap: 1em; font: .7em/1.3 var(--narrow); margin-top: .7em; }
+
+/* bottom shop copy */
+.copy { font-family: var(--narrow); font-size: 1.12em; }
+.refs { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 2px solid var(--rule); }
+.refs > div { border-left: 1.5px solid var(--rule); display: grid; grid-template-rows: auto auto; }
+.refs > div:first-child { border-left: 0; }
+.refs .h { text-align: center; font-size: 1.15em; padding: .25em 0; border-bottom: 1.5px solid var(--rule); min-height: 1.9em; }
+.refs .pen { border-bottom: 0; text-align: center; height: 2em; }
+.info { display: grid; grid-template-columns: 2fr 1fr; gap: 0 1.5em; padding: 1.1em 1.1em .4em; }
+.info .col { display: flex; flex-direction: column; gap: 1.25em; }
+.info .col.right { padding-top: 1.9em; }
+.info .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 .2em; }
+.relabels { display: grid; grid-template-columns: 9.7% 45.3% 45%; text-align: center; font-size: 1.15em; padding-bottom: .3em; }
+.rx { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.rx th, .rx td { border: 1.5px solid var(--rule); font-weight: 400; }
+.rx tr:first-child th { border-top-width: 2px; }
+.rx th:first-child, .rx td:first-child { border-left: 0; }
+.rx th:last-child, .rx td:last-child { border-right: 0; }
+.rx th { font-size: 1.1em; padding: .25em 0; }
+.rx th.row { text-align: left; padding-left: .6em; width: 9.7%; }
+.rx td { height: 3.6em; }
+.rx .pen { border-bottom: 0; text-align: center; height: 100%; font-size: 1.45em; }
+.rx td.sep, .rx th.sep { border-left-width: 2px; }
+.lf { position: relative; display: flex; align-items: baseline; gap: .5em; border-bottom: 1.5px solid var(--rule); padding: .55em .6em .35em; font-size: 1.1em; }
+.lf::after { content: ""; position: absolute; left: 64%; top: 0; bottom: -1.5px; border-left: 1.5px solid var(--rule); pointer-events: none; }
+.lf .pen { border-bottom: 0; font-size: 1.25em; }
+.lower { display: grid; grid-template-columns: 64% 36%; min-height: 20em; }
+.lower .left { position: relative; padding: .6em .6em 1em; display: flex; flex-direction: column; gap: .3em; }
+.lower .left label { color: var(--muted); font-size: .9em; }
+.lower .left textarea.pen { border-bottom: 1.6px dotted #bbb; flex: 1; min-height: 5em; font-size: 1.15em; }
+.lower .right { border-left: 1.5px solid var(--rule); display: flex; flex-direction: column; }
+.lower .right .gap { height: 3.6em; border-bottom: 1.5px solid var(--rule); }
+.money { display: flex; flex-direction: column; gap: 1.9em; padding: 2.4em .6em 1.4em; font-size: 1.28em; }
+.balnote { font: .72em var(--arial); color: var(--late); position: absolute; right: 0; bottom: -1.5em; }
+.gc { position: absolute; right: .6em; display: grid; gap: .25em; }
+.gc.adv { bottom: 7.2em; }
+.gc.bal { bottom: 2.4em; }
+.gc .r { display: flex; gap: .2em; }
+.gc .let { width: 1.35em; height: 1.35em; border: 1.5px solid var(--rule); display: grid; place-items: center; font: 700 .85em var(--arial); box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 3px var(--rule); }
+.tick { width: 1.35em; height: 1.35em; border: 1.5px solid var(--rule); background: #fff; padding: 0; font: 1.05em/1 var(--pen); color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+.tick[aria-pressed="true"]::after { content: "X"; }
+.tick.filled { background: var(--mark); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .actions .spacer { flex: 1; }
-.saved-at { font-size: 0.82rem; color: var(--muted); }
 
 .viewer { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: grid; place-items: center; padding: 16px; z-index: 10; cursor: zoom-out; }
-.viewer img { max-height: 100%; max-width: 100%; border-radius: 6px; background: #fff; }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 18px; background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 8px; max-width: calc(100% - 32px); z-index: 11; }
+.viewer img { max-height: 100%; max-width: 100%; background: #fff; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 18px; background: var(--print); color: #fff; padding: 10px 16px; border-radius: 4px; max-width: calc(100% - 32px); z-index: 11; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 </style>
 </head>
 <body>
 <header class="top">
-  <div class="brand">
-    <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="11" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="29" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M18 21c1.2-1.4 2.8-1.4 4 0M4 20l-2-6M36 20l2-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-    <div><h1>Optimex Job Cards</h1><p>Optimex Opticals · Computerised Eye Clinic · Alathur</p></div>
+  <div class="brand" aria-label="Optimex Opticals">
+    <span class="optimex">Optimex</span><span class="opticals">OPTICALS</span><span class="sub">Job cards</span>
   </div>
   <div class="top-actions">
     <button class="btn primary" id="connectBtn" type="button" aria-expanded="false" aria-controls="connectPanel">
@@ -156,16 +202,10 @@ a { color: var(--accent); }
     <label class="btn" id="uploadLabel" for="upload">Upload photo</label>
     <input id="upload" class="sr" type="file" accept="image/*">
     <button class="btn" id="newBtn" type="button">New blank card</button>
-    <button class="btn ghost" id="settingsBtn" type="button" aria-expanded="false" aria-controls="settingsPanel">Settings</button>
   </div>
 </header>
 
-<div class="banner" id="keyBanner" hidden>
-  <span><b>Handwriting reading is off.</b> Phone photos still arrive here, but the details won't fill in until you add an Anthropic API key.</span>
-  <button class="btn" type="button" id="bannerSettings">Add API key</button>
-</div>
-
-<section class="panel connect" id="connectPanel" hidden aria-labelledby="connectH">
+<section class="panel" id="connectPanel" hidden aria-labelledby="connectH">
   <div class="qr" id="qr" role="img" aria-label="QR code for the phone scanning page"></div>
   <div>
     <h2 id="connectH">Connect a phone</h2>
@@ -177,25 +217,12 @@ a { color: var(--accent); }
     <p class="hint">Or type this link into the phone's browser. It includes the shop's private key, so only share it with staff.</p>
     <p class="link" id="phoneLink"></p>
     <p class="hint" id="otherLinks"></p>
-  </div>
-</section>
-
-<section class="panel" id="settingsPanel" hidden aria-labelledby="settingsH">
-  <div>
-    <h2 id="settingsH">Handwriting reading</h2>
-    <p class="hint" style="margin-bottom:10px">Photos are read by Claude through the Anthropic API. Create a key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> and add some credit. Each scan costs a few rupees. The key stays on this computer; phones never see it.</p>
-    <form class="settings-row" id="settingsForm">
-      <label class="sr" for="apiKey">Anthropic API key</label>
-      <input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-...">
-      <button class="btn primary" type="submit">Save key</button>
-      <button class="btn ghost" type="button" id="removeKey">Remove key</button>
-    </form>
-    <p class="hint" id="keyState"></p>
+    <p class="hint">Photos are read on this computer. Nothing is sent to the internet.</p>
   </div>
 </section>
 
 <main class="layout">
-  <aside class="pane list-pane" aria-labelledby="listH">
+  <aside class="list-pane" aria-labelledby="listH">
     <div class="list-head"><h2 id="listH">Job cards</h2><span class="count" id="count"></span></div>
     <input id="search" type="search" placeholder="Search name, phone or order no." aria-label="Search job cards">
     <div class="filters" role="group" aria-label="Filter by status">
@@ -211,23 +238,22 @@ a { color: var(--accent); }
       <ol>
         <li>Press <b>Connect a phone</b> and scan the QR code with a phone on the shop Wi-Fi.</li>
         <li>On the phone, tap <b>Take photo</b> and photograph a filled job card.</li>
-        <li>The card opens here with the details filled in. Check them and press <b>Save</b>.</li>
+        <li>The card opens here, filled in. Check it and press <b>Save</b>.</li>
       </ol>
     </div>
     <p class="sync" id="sync">Connecting…</p>
   </aside>
 
-  <section class="pane entry" aria-labelledby="entryH">
-    <div class="entry-head">
+  <section class="entry" aria-labelledby="entryH">
+    <div class="toolbar">
       <h2 id="entryH">New job card</h2>
-      <div class="f" style="min-width:150px">
-        <label for="status">Status</label>
-        <select id="status" data-key="status">
-          <option value="pending">Pending</option>
-          <option value="ready">Ready for pickup</option>
-          <option value="delivered">Delivered</option>
-        </select>
-      </div>
+      <label class="sr" for="status">Status</label>
+      <select id="status" data-key="status">
+        <option value="pending">Pending</option>
+        <option value="ready">Ready for pickup</option>
+        <option value="delivered">Delivered</option>
+      </select>
+      <button class="btn primary" type="submit" form="form" id="saveBtn">Save job card</button>
     </div>
 
     <div class="scanbar" id="scanbar" hidden>
@@ -237,62 +263,100 @@ a { color: var(--accent); }
     </div>
 
     <form id="form" autocomplete="off" novalidate>
-      <div>
-        <p class="section-label">Customer</p>
-        <div class="grid">
-          <div class="f"><label for="orderNo">Order no.</label><input id="orderNo" data-key="orderNo" inputmode="numeric"></div>
-          <div class="f"><label for="date">Date</label><input id="date" data-key="date" type="date"></div>
-          <div class="f"><label for="dueDate">Due date</label><input id="dueDate" data-key="dueDate" type="date"></div>
-          <div class="f"><label for="phone">Tel</label><input id="phone" data-key="phone" type="tel"></div>
-          <div class="f span2"><label for="name">Name</label><input id="name" data-key="name"></div>
-          <div class="f span2"><label for="address">Address</label><input id="address" data-key="address"></div>
+      <div class="sheet-wrap">
+        <div class="sheet">
+          <!-- ===== customer slip ===== -->
+          <section class="box slip" aria-label="Customer slip">
+            <div class="slip-head">
+              <div>
+                <div class="logo" aria-hidden="true"><span class="o1">Optimex</span><span class="o2">OPTICALS</span></div>
+                <div class="clinic-name">Computerised Eye Clinic</div>
+                <div class="shop-addr">Swathy Jn.<br>Court Road, Alathur</div>
+              </div>
+              <div class="slip-right">
+                <div class="ph">Ph : 9446411327</div>
+                <div class="ln"><label for="t-orderNo">Order No</label><input class="pen" id="t-orderNo" data-key="orderNo" inputmode="numeric"></div>
+              </div>
+            </div>
+            <div class="slip-rows">
+              <div class="pair">
+                <div class="ln"><label for="t-date">Date</label><input class="pen" id="t-date" data-key="date" type="date"></div>
+                <div class="ln"><label for="t-dueDate">Due Date</label><input class="pen" id="t-dueDate" data-key="dueDate" type="date"></div>
+              </div>
+              <div class="ln"><label for="t-total">Total</label><input class="pen" id="t-total" data-key="total" inputmode="decimal"></div>
+              <div class="ln"><label for="t-name">Name</label><input class="pen" id="t-name" data-key="name"></div>
+              <div class="ln"><label for="t-advance">Advance</label><input class="pen" id="t-advance" data-key="advance" inputmode="decimal"></div>
+              <div class="ln"><label for="t-address">Address</label><input class="pen" id="t-address" data-key="address"></div>
+              <div class="ln"><label for="t-balance">Balance</label><input class="pen" id="t-balance" data-key="balance" inputmode="decimal"></div>
+            </div>
+            <div class="fine"><span>*We are not responsible for goods not collected within 3 months</span><span>*Goods once sold will not be taken back or exchanged</span></div>
+          </section>
+
+          <!-- ===== shop copy ===== -->
+          <section class="box copy" aria-label="Shop copy">
+            <div class="refs">
+              <div><label class="h" for="call">Call</label><input class="pen" id="call" data-key="call"></div>
+              <div><label class="h" for="call2"><span class="sr">Column after Call</span></label><input class="pen" id="call2" data-key="call2"></div>
+              <div><label class="h" for="doctor">Doctor</label><input class="pen" id="doctor" data-key="doctor"></div>
+              <div><label class="h" for="clinic">Clinic</label><input class="pen" id="clinic" data-key="clinic"></div>
+              <div><label class="h" for="lab">Lab</label><input class="pen" id="lab" data-key="lab"></div>
+            </div>
+            <div class="info">
+              <div class="col">
+                <div class="pair">
+                  <div class="ln"><label for="date">Date</label><input class="pen" id="date" data-key="date" type="date"></div>
+                  <div class="ln"><label for="dueDate">Due Date</label><input class="pen" id="dueDate" data-key="dueDate" type="date"></div>
+                </div>
+                <div class="ln"><label for="name">Name</label><input class="pen" id="name" data-key="name"></div>
+                <div class="ln"><label for="address">Address</label><input class="pen" id="address" data-key="address"></div>
+                <div class="ln"><label for="phone">Tel</label><input class="pen" id="phone" data-key="phone" type="tel"></div>
+              </div>
+              <div class="col right">
+                <div class="ln"><label for="orderNo">No.</label><input class="pen" id="orderNo" data-key="orderNo" inputmode="numeric"></div>
+              </div>
+            </div>
+            <div class="relabels" aria-hidden="true"><span></span><span>Re</span><span>Le</span></div>
+            <table class="rx">
+              <thead>
+                <tr><th class="row"></th><th scope="col">Sph.</th><th scope="col">Cyl</th><th scope="col">Axi</th><th scope="col" class="sep">Sph.</th><th scope="col">Cyl</th><th scope="col">Axi</th></tr>
+              </thead>
+              <tbody id="rxBody"></tbody>
+            </table>
+            <div class="lf"><label for="lens">Lens</label><input class="pen" id="lens" data-key="lens"></div>
+            <div class="lf"><label for="frame">Frame</label><input class="pen" id="frame" data-key="frame"></div>
+            <div class="lower">
+              <div class="left">
+                <label for="notes">Notes</label>
+                <textarea class="pen" id="notes" data-key="notes" rows="3"></textarea>
+                <div class="gc adv" role="group" aria-label="G or C for Advance">
+                  <div class="r"><span class="let">G</span><button type="button" class="tick" data-key="gc.adv.g" aria-pressed="false" aria-label="Advance G"></button></div>
+                  <div class="r"><span class="let">C</span><button type="button" class="tick" data-key="gc.adv.c" aria-pressed="false" aria-label="Advance C"></button></div>
+                </div>
+                <div class="gc bal" role="group" aria-label="G or C for Balance">
+                  <div class="r"><span class="let">G</span><button type="button" class="tick" data-key="gc.bal.g" aria-pressed="false" aria-label="Balance G"></button></div>
+                  <div class="r"><span class="let">C</span><button type="button" class="tick" data-key="gc.bal.c" aria-pressed="false" aria-label="Balance C"></button></div>
+                </div>
+              </div>
+              <div class="right">
+                <div class="gap"></div>
+                <div class="money">
+                  <div class="ln"><label for="total">Total</label><input class="pen" id="total" data-key="total" inputmode="decimal"></div>
+                  <div class="ln"><label for="advance">Advance</label><input class="pen" id="advance" data-key="advance" inputmode="decimal"></div>
+                  <div class="ln"><label for="balance">Balance</label><input class="pen" id="balance" data-key="balance" inputmode="decimal"><span class="balnote" id="balNote"></span></div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-      </div>
-      <div style="margin-top:16px">
-        <p class="section-label">Referral</p>
-        <div class="grid">
-          <div class="f"><label for="call">Call</label><input id="call" data-key="call"></div>
-          <div class="f"><label for="doctor">Doctor</label><input id="doctor" data-key="doctor"></div>
-          <div class="f"><label for="clinic">Clinic</label><input id="clinic" data-key="clinic"></div>
-          <div class="f"><label for="lab">Lab</label><input id="lab" data-key="lab"></div>
-        </div>
-      </div>
-      <div style="margin-top:16px">
-        <p class="section-label">Prescription</p>
-        <div class="rx-wrap">
-          <table class="rx">
-            <thead>
-              <tr><th></th><th class="eye" colspan="3">Re (right eye)</th><th class="gap"></th><th class="eye" colspan="3">Le (left eye)</th></tr>
-              <tr><th></th><th>Sph</th><th>Cyl</th><th>Axis</th><th class="gap"></th><th>Sph</th><th>Cyl</th><th>Axis</th></tr>
-            </thead>
-            <tbody id="rxBody"></tbody>
-          </table>
-        </div>
-      </div>
-      <div style="margin-top:16px">
-        <p class="section-label">Order</p>
-        <div class="grid">
-          <div class="f span2"><label for="lens">Lens</label><textarea id="lens" data-key="lens" rows="2"></textarea></div>
-          <div class="f span2"><label for="frame">Frame</label><textarea id="frame" data-key="frame" rows="2"></textarea></div>
-          <div class="f span4"><label for="notes">Notes</label><input id="notes" data-key="notes"></div>
-        </div>
-      </div>
-      <div style="margin-top:16px">
-        <p class="section-label">Payment (₹)</p>
-        <div class="totals">
-          <div class="f money"><label for="total">Total</label><input id="total" data-key="total" inputmode="decimal"></div>
-          <div class="f money"><label for="advance">Advance</label><input id="advance" data-key="advance" inputmode="decimal"></div>
-          <div class="f money"><label for="balance">Balance</label><input id="balance" data-key="balance" inputmode="decimal"><span class="balance-note" id="balNote"></span></div>
-        </div>
-      </div>
-      <div class="actions" style="margin-top:16px">
-        <button class="btn primary" type="submit" id="saveBtn">Save job card</button>
-        <button class="btn" type="button" id="copyBtn">Copy details</button>
-        <span class="saved-at" id="savedAt"></span>
-        <span class="spacer"></span>
-        <button class="btn ghost danger" type="button" id="delBtn" hidden>Delete</button>
       </div>
     </form>
+
+    <div class="actions">
+      <button class="btn" type="button" id="copyBtn">Copy details</button>
+      <span class="saved-at" id="savedAt"></span>
+      <span class="spacer"></span>
+      <button class="btn danger" type="button" id="delBtn" hidden>Delete</button>
+    </div>
   </section>
 </main>
 
@@ -320,22 +384,21 @@ a { color: var(--accent); }
     return data;
   }
 
-  // ---------- prescription grid ----------
-  const RX = [];
+  // ---------- prescription grid (Re: right eye, Le: left eye) ----------
   ['dv', 'nv'].forEach((row) => {
     const tr = document.createElement('tr');
     tr.innerHTML = `<th class="row" scope="row">${row.toUpperCase()}</th>`;
-    ['re', 'le'].forEach((eye, i) => {
-      if (i === 1) tr.insertAdjacentHTML('beforeend', '<td class="gap"></td>');
-      ['sph', 'cyl', 'axis'].forEach((c) => {
+    ['re', 'le'].forEach((eye) => {
+      ['sph', 'cyl', 'axis'].forEach((c, i) => {
         const key = `rx.${eye}.${row}.${c}`;
-        RX.push(key);
         const td = document.createElement('td');
+        if (eye === 'le' && i === 0) td.className = 'sep';
         const inp = document.createElement('input');
+        inp.className = 'pen';
         inp.id = key.replace(/\./g, '-');
         inp.dataset.key = key;
         inp.inputMode = c === 'axis' ? 'numeric' : 'decimal';
-        inp.setAttribute('aria-label', `${eye === 're' ? 'Right' : 'Left'} eye ${row.toUpperCase()} ${c}`);
+        inp.setAttribute('aria-label', `${eye === 're' ? 'Right eye (Re)' : 'Left eye (Le)'} ${row.toUpperCase()} ${c === 'axis' ? 'Axis' : c === 'sph' ? 'Sph' : 'Cyl'}`);
         td.appendChild(inp);
         tr.appendChild(td);
       });
@@ -343,7 +406,9 @@ a { color: var(--accent); }
     $('rxBody').appendChild(tr);
   });
 
-  const inputs = () => [...document.querySelectorAll('[data-key]')];
+  // Every field is marked with data-key; a detail printed on both copies has two boxes with the same key.
+  const fields = () => [...document.querySelectorAll('[data-key]')];
+  const byKey = (k) => [...document.querySelectorAll(`[data-key="${CSS.escape(k)}"]`)];
   const getPath = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
   function setPath(o, p, v) {
     const ks = p.split('.');
@@ -351,9 +416,18 @@ a { color: var(--accent); }
     ks.slice(0, -1).forEach((k) => { cur = cur[k] = cur[k] || {}; });
     cur[ks[ks.length - 1]] = v;
   }
+  const isTick = (el) => el.classList.contains('tick');
+  const getVal = (el) => (isTick(el) ? (el.getAttribute('aria-pressed') === 'true' ? 'X' : '') : el.value.trim());
+  function setVal(el, v) {
+    if (isTick(el)) el.setAttribute('aria-pressed', String(!!v));
+    else el.value = v;
+  }
+  const setKey = (k, v) => byKey(k).forEach((el) => setVal(el, v));
+
   function readForm() {
     const d = {};
-    inputs().forEach((el) => setPath(d, el.dataset.key, el.value.trim()));
+    const seen = new Set();
+    fields().forEach((el) => { if (!seen.has(el.dataset.key)) { seen.add(el.dataset.key); setPath(d, el.dataset.key, getVal(el)); } });
     return d;
   }
   function clearMarks() {
@@ -362,40 +436,55 @@ a { color: var(--accent); }
   }
   function fillForm(d, opts = {}) {
     clearMarks();
-    inputs().forEach((el) => {
+    fields().forEach((el) => {
       let v = getPath(d, el.dataset.key);
       if (el.dataset.key === 'status') { el.value = v || 'pending'; return; }
       v = v == null ? '' : String(v);
-      el.value = v;
-      if (opts.mark && v) el.classList.add('filled');
+      setVal(el, v);
+      if (opts.mark && v && el.dataset.key !== 'notes') el.classList.add('filled');
     });
-    (opts.unsure || []).forEach((k) => {
-      const el = document.querySelector(`[data-key="${CSS.escape(k)}"]`);
-      if (!el) return;
+    (opts.unsure || []).forEach((k) => byKey(k).forEach((el) => {
       el.classList.add('unsure');
-      const wrap = el.closest('.f');
+      const wrap = el.closest('.ln');
       if (wrap && !wrap.querySelector('.flag')) wrap.insertAdjacentHTML('beforeend', '<span class="flag">check</span>');
-    });
+    }));
     updateBalanceNote();
   }
 
   let dirty = false, balanceTouched = false;
-  form.addEventListener('input', (e) => {
-    e.target.classList.remove('unsure', 'filled');
-    e.target.closest('.f')?.querySelector('.flag')?.remove();
-    if (e.target.id === 'balance') balanceTouched = true;
-    if (['total', 'advance'].includes(e.target.id)) autoBalance();
-    updateBalanceNote();
+  function touched(el) {
+    el.classList.remove('unsure', 'filled');
+    el.closest('.ln')?.querySelector('.flag')?.remove();
     dirty = true;
+  }
+  form.addEventListener('input', (e) => {
+    const el = e.target, k = el.dataset.key;
+    if (!k) return;
+    byKey(k).forEach((o) => { if (o !== el) { o.value = el.value; touched(o); } }); // keep both copies the same
+    touched(el);
+    if (k === 'balance') balanceTouched = true;
+    if (k === 'total' || k === 'advance') autoBalance();
+    updateBalanceNote();
   });
+  form.addEventListener('click', (e) => {
+    const t = e.target.closest('.tick');
+    if (!t) return;
+    const on = t.getAttribute('aria-pressed') !== 'true';
+    const group = t.dataset.key.split('.').slice(0, 2).join('.');
+    if (on) ['g', 'c'].forEach((x) => setKey(`${group}.${x}`, '')); // G or C, not both
+    setKey(t.dataset.key, on ? 'X' : '');
+    byKey(`${group}.g`).concat(byKey(`${group}.c`)).forEach(touched);
+  });
+  $('status').addEventListener('change', () => { dirty = true; });
+
   const num = (s) => { const n = parseFloat(String(s).replace(/[^\d.\-]/g, '')); return isNaN(n) ? null : n; };
   function autoBalance() {
     const t = num($('total').value), a = num($('advance').value);
-    if (t != null && !balanceTouched) $('balance').value = String(t - (a || 0));
+    if (t != null && !balanceTouched) setKey('balance', String(t - (a || 0)));
   }
   function updateBalanceNote() {
     const t = num($('total').value), a = num($('advance').value), b = num($('balance').value);
-    $('balNote').textContent = t != null && b != null && Math.abs(t - (a || 0) - b) > 0.01 ? `Total − advance = ${t - (a || 0)}` : '';
+    $('balNote').textContent = t != null && b != null && Math.abs(t - (a || 0) - b) > 0.01 ? `Total − Advance = ${t - (a || 0)}` : '';
   }
 
   let tt;
@@ -430,7 +519,7 @@ a { color: var(--accent); }
       const [cls, label] = badge(j);
       const b = document.createElement('span'); b.className = 'status ' + cls; b.textContent = label;
       const meta = document.createElement('span'); meta.className = 'meta';
-      meta.textContent = [j.orderNo && '#' + j.orderNo, j.phone, j.dueDate && 'due ' + fmtDate(j.dueDate), num(j.balance) ? '₹' + num(j.balance) + ' due' : ''].filter(Boolean).join(' · ');
+      meta.textContent = [j.orderNo && 'No. ' + j.orderNo, j.phone, j.dueDate && 'due ' + fmtDate(j.dueDate), num(j.balance) ? '₹' + num(j.balance) + ' balance' : ''].filter(Boolean).join(' · ');
       li.append(nm, b, meta);
       li.onclick = () => confirmLeave('job:' + j.id, () => openJob(j.id));
       li.onkeydown = (e) => { if (e.key === 'Enter') li.onclick(); };
@@ -446,7 +535,7 @@ a { color: var(--accent); }
     renderList();
   }));
 
-  // Unsaved typing is never thrown away silently: switching cards asks twice.
+  // Unsaved typing is never thrown away silently: switching cards asks for a second click.
   let leaveArmed = null;
   function confirmLeave(target, go) {
     if (!dirty || leaveArmed === target) { leaveArmed = null; go(); return; }
@@ -462,15 +551,15 @@ a { color: var(--accent); }
     bar.hidden = false;
     bar.classList.toggle('error', j.scan?.state === 'error');
     $('thumb').src = withKey('/photos/' + j.photo);
-    $('readBtn').hidden = !(j.scan?.state === 'error' || j.scan?.state === 'none' || j.scan?.state === 'done');
-    $('readBtn').textContent = j.scan?.state === 'done' ? 'Read again' : 'Read';
     const s = j.scan?.state;
-    if (s === 'reading') msg.innerHTML = '<span class="spinner"></span><strong style="display:inline">Reading the handwriting…</strong><br>Usually 15 to 40 seconds. The form fills in by itself.';
+    $('readBtn').hidden = !(s === 'error' || s === 'none' || s === 'done');
+    $('readBtn').textContent = s === 'done' ? 'Read again' : 'Read';
+    if (s === 'reading') msg.innerHTML = '<span class="spinner"></span><strong style="display:inline">Reading the handwriting…</strong><br>About 5 to 15 seconds. The card fills in by itself.';
     else if (s === 'error' || s === 'none') msg.textContent = j.scan.message || 'Not read yet.';
     else if (s === 'done' && j.review) {
-      const n = inputs().filter((el) => el.classList.contains('filled')).length;
+      const n = fields().filter((el) => el.classList.contains('filled') && !el.id.startsWith('t-')).length;
       const u = (j.scan.unsure || []).length;
-      msg.innerHTML = `<strong>Filled ${n} fields from the photo.</strong>` + (u ? `${u} marked <b style="color:var(--warn)">check</b>. Compare them with the photo, ` : 'Compare with the photo, ') + 'then press Save.';
+      msg.innerHTML = `<strong>Filled ${n} fields from the photo.</strong>` + (u ? `${u} marked <b style="color:var(--check)">check</b>. Compare them with the photo, ` : 'Compare with the photo, ') + 'then press Save.';
     } else msg.textContent = 'Photo of the paper card. Click it to enlarge.';
   }
 
@@ -481,7 +570,7 @@ a { color: var(--accent); }
     balanceTouched = true;
     fillForm(j, j.review && j.scan?.state === 'done' ? { mark: true, unsure: j.scan.unsure } : {});
     showScan(j);
-    $('entryH').textContent = j.orderNo ? `Job card #${j.orderNo}` : 'Job card';
+    $('entryH').textContent = j.orderNo ? `Job card No. ${j.orderNo}` : 'Job card';
     $('savedAt').textContent = j.review ? 'Not checked yet' : 'Last saved ' + new Date(j.updatedAt).toLocaleString();
     $('delBtn').hidden = false; resetDel();
     dirty = false;
@@ -512,7 +601,7 @@ a { color: var(--accent); }
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = readForm();
-    if (!data.name && !data.phone && !data.orderNo) { toast('Add at least a name, phone or order number'); return; }
+    if (!data.name && !data.phone && !data.orderNo) { toast('Add at least a name, Tel or order number'); return; }
     $('saveBtn').disabled = true;
     try {
       const job = currentId ? await api('PUT', '/api/jobs/' + currentId, data) : await api('POST', '/api/jobs', data);
@@ -551,11 +640,13 @@ a { color: var(--accent); }
   $('copyBtn').addEventListener('click', async () => {
     const d = readForm();
     const rx = (eye) => ['dv', 'nv'].map((r) => `${r.toUpperCase()} ${['sph', 'cyl', 'axis'].map((c) => d.rx[eye][r][c] || '-').join(' / ')}`).join(', ');
+    const gc = (g) => (d.gc[g].g ? ' (G)' : d.gc[g].c ? ' (C)' : '');
     const text = [
-      `Order ${d.orderNo || '-'} · Date ${fmtDate(d.date)} · Due ${fmtDate(d.dueDate)}`,
+      `No. ${d.orderNo || '-'} · Date ${fmtDate(d.date)} · Due ${fmtDate(d.dueDate)}`,
       `Name: ${d.name}`, `Address: ${d.address}`, `Tel: ${d.phone}`,
+      `Doctor: ${d.doctor} · Clinic: ${d.clinic} · Lab: ${d.lab}`,
       `Re: ${rx('re')}`, `Le: ${rx('le')}`, `Lens: ${d.lens}`, `Frame: ${d.frame}`,
-      `Total ₹${d.total || 0} · Advance ₹${d.advance || 0} · Balance ₹${d.balance || 0}`,
+      `Total ₹${d.total || 0} · Advance ₹${d.advance || 0}${gc('adv')} · Balance ₹${d.balance || 0}${gc('bal')}`,
     ].join('\n');
     try { await navigator.clipboard.writeText(text); toast('Details copied'); }
     catch (e) { toast('Copy was blocked by the browser.'); }
@@ -571,12 +662,12 @@ a { color: var(--accent); }
       const url = URL.createObjectURL(file);
       const img = new Image();
       img.onload = () => {
-        const s = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight));
+        const s = Math.min(1, 2400 / Math.max(img.naturalWidth, img.naturalHeight));
         const c = document.createElement('canvas');
         c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
         c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
         URL.revokeObjectURL(url);
-        c.toBlob((b) => (b ? resolve(b) : reject(new Error('Could not prepare the photo.'))), 'image/jpeg', 0.85);
+        c.toBlob((b) => (b ? resolve(b) : reject(new Error('Could not prepare the photo.'))), 'image/jpeg', 0.9);
       };
       img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('That file could not be opened as a photo.')); };
       img.src = url;
@@ -590,27 +681,21 @@ a { color: var(--accent); }
       const blob = await shrink(file);
       const job = await api('POST', '/api/scan', blob, 'image/jpeg');
       upsert(job);
-      if (dirty) { renderList(); toast('Photo added. It\u2019s in the list under To check.'); }
+      if (dirty) { renderList(); toast('Photo added. It’s in the list under To check.'); }
       else openJob(job.id);
     } catch (err) { toast(err.message); }
   });
 
-  // ---------- panels ----------
-  function toggle(btn, panel, show) {
-    const open = show ?? panel.hidden;
-    panel.hidden = !open;
-    btn.setAttribute('aria-expanded', String(open));
-  }
-  $('connectBtn').addEventListener('click', () => { toggle($('connectBtn'), $('connectPanel')); loadInfo(); });
-  $('settingsBtn').addEventListener('click', () => toggle($('settingsBtn'), $('settingsPanel')));
-  $('bannerSettings').addEventListener('click', () => { toggle($('settingsBtn'), $('settingsPanel'), true); $('apiKey').focus(); });
-
+  // ---------- connect a phone ----------
+  $('connectBtn').addEventListener('click', () => {
+    const open = $('connectPanel').hidden;
+    $('connectPanel').hidden = !open;
+    $('connectBtn').setAttribute('aria-expanded', String(open));
+    if (open) loadInfo();
+  });
   async function loadInfo() {
     try {
       const info = await api('GET', '/api/info');
-      $('keyBanner').hidden = info.hasApiKey;
-      $('keyState').textContent = info.apiKeyFromEnv ? 'Using the key from the ANTHROPIC_API_KEY environment variable.' : info.hasApiKey ? `A key is saved. Reading uses ${info.model}.` : 'No key saved yet.';
-      if (!info.isLocal) { $('settingsBtn').hidden = true; $('settingsPanel').hidden = true; }
       if (info.phoneLink) {
         $('qr').innerHTML = info.qr;
         $('phoneLink').textContent = info.phoneLink;
@@ -621,15 +706,6 @@ a { color: var(--accent); }
       }
     } catch (err) { toast(err.message); }
   }
-
-  $('settingsForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    try { await api('POST', '/api/settings', { apiKey: $('apiKey').value }); $('apiKey').value = ''; toast('API key saved'); loadInfo(); }
-    catch (err) { toast(err.message); }
-  });
-  $('removeKey').addEventListener('click', async () => {
-    try { await api('POST', '/api/settings', { apiKey: '' }); toast('API key removed'); loadInfo(); } catch (err) { toast(err.message); }
-  });
 
   // ---------- live updates ----------
   function connect() {
@@ -650,7 +726,7 @@ a { color: var(--accent); }
       upsert(job);
       if (job.id === currentId) {
         if (!dirty) openJob(job.id);
-        else { renderList(); if (job.scan?.state === 'done') toast('The photo has been read. Save or discard your typing to see the filled form.'); }
+        else { renderList(); if (job.scan?.state === 'done') toast('The photo has been read. Save or discard your typing to see the filled card.'); }
       } else if (isNew && job.source === 'phone') {
         if (!dirty) { openJob(job.id); toast('New job card from phone'); }
         else { renderList(); toast('New job card from phone. It’s in the list under To check.'); }
@@ -659,7 +735,6 @@ a { color: var(--accent); }
   }
 
   newCard();
-  loadInfo();
   connect();
 })();
 </script>

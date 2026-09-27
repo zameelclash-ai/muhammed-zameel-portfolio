@@ -13,7 +13,7 @@ if errorlevel 1 (
   exit /b
 )
 if not exist node_modules (
-  echo Installing for the first time, please wait...
+  echo Installing for the first time, please wait (needs internet once)...
   call npm install --omit=dev --no-audit --no-fund
 )
 node server.js

@@ -1,0 +1,10 @@
+{
+  "orderNo": "1042", "date": "2026-09-28", "dueDate": "2026-10-03",
+  "name": "Rahul Krishna", "address": "Krishna Kripa, Court Road, Alathur", "phone": "9876543210",
+  "call": "", "call2": "", "doctor": "Dr. Suresh", "clinic": "Alathur", "lab": "Sent",
+  "rx": { "re": { "dv": { "sph": "-1.25", "cyl": "-0.50", "axis": "90" }, "nv": { "sph": "+1.50", "cyl": "", "axis": "" } },
+          "le": { "dv": { "sph": "-1.50", "cyl": "-0.50", "axis": "80" }, "nv": { "sph": "+1.50", "cyl": "", "axis": "" } } },
+  "lens": "Anti-Glare Blue Cut (Crizal /Progressive)", "frame": "Matte Black Rectangular (Titan/Ray-Ban style)",
+  "total": "3500", "advance": "1000", "balance": "2500",
+  "gc": { "adv": { "g": "X", "c": "" }, "bal": { "g": "X", "c": "" } }
+}

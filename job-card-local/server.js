@@ -9,7 +9,8 @@ import crypto from "node:crypto";
 import { exec } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import QRCode from "qrcode";
-import { readJobCard, ReadError, MODEL } from "./reader.js";
+import { readJobCardOffline, ReadError } from "./ocr/reader.js";
+import { recognize, readLines } from "./ocr/engine.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT) || 3000;
@@ -37,7 +38,6 @@ function writeJson(file, value) {
 
 const config = readJson(CONFIG_FILE, {});
 if (!config.shopKey) { config.shopKey = crypto.randomBytes(16).toString("hex"); writeJson(CONFIG_FILE, config); }
-const apiKey = () => process.env.ANTHROPIC_API_KEY || config.apiKey || "";
 
 let jobs = readJson(JOBS_FILE, []);
 const saveJobs = () => writeJson(JOBS_FILE, jobs);
@@ -58,18 +58,26 @@ function nextOrderNo() {
   const n = jobs.map((j) => parseInt(j.orderNo, 10)).filter((x) => !isNaN(x));
   return n.length ? String(Math.max(...n) + 1) : "";
 }
+function emptyGc() { return { adv: { g: "", c: "" }, bal: { g: "", c: "" } }; }
 function emptyRx() {
   const row = () => ({ sph: "", cyl: "", axis: "" });
   return { re: { dv: row(), nv: row() }, le: { dv: row(), nv: row() } };
 }
 
-const EDITABLE = ["orderNo", "date", "dueDate", "name", "address", "phone", "call", "doctor", "clinic", "lab", "lens", "frame", "total", "advance", "balance", "notes", "status"];
+const EDITABLE = ["orderNo", "date", "dueDate", "name", "address", "phone", "call", "call2", "doctor", "clinic", "lab", "lens", "frame", "total", "advance", "balance", "notes", "status"];
 function applyFields(job, body) {
   for (const k of EDITABLE) if (typeof body[k] === "string") job[k] = body[k].slice(0, 2000);
   if (body.rx && typeof body.rx === "object") {
     for (const e of ["re", "le"]) for (const r of ["dv", "nv"]) for (const c of ["sph", "cyl", "axis"]) {
       const v = body.rx?.[e]?.[r]?.[c];
       if (typeof v === "string") job.rx[e][r][c] = v.slice(0, 20);
+    }
+  }
+  if (body.gc && typeof body.gc === "object") {
+    job.gc ||= emptyGc();
+    for (const g of ["adv", "bal"]) for (const c of ["g", "c"]) {
+      const v = body.gc?.[g]?.[c];
+      if (typeof v === "string") job.gc[g][c] = v ? "X" : "";
     }
   }
   if (!["pending", "ready", "delivered"].includes(job.status)) job.status = "pending";
@@ -79,7 +87,7 @@ function newJob(source) {
   return {
     id: "jc" + Date.now().toString(36) + crypto.randomBytes(3).toString("hex"),
     orderNo: nextOrderNo(), date: localDate(), dueDate: "", name: "", address: "", phone: "",
-    call: "", doctor: "", clinic: "", lab: "", rx: emptyRx(), lens: "", frame: "",
+    call: "", call2: "", doctor: "", clinic: "", lab: "", rx: emptyRx(), gc: emptyGc(), lens: "", frame: "",
     total: "", advance: "", balance: "", notes: "", status: "pending",
     photo: null, scan: { state: "none", message: "", unsure: [] }, review: false,
     source, createdAt: now, updatedAt: now,
@@ -97,23 +105,22 @@ setInterval(() => { for (const res of listeners) res.write(": ping\n\n"); }, 250
 
 // ---------------- reading a scan ----------------
 
-async function readScan(job) {
-  if (!apiKey()) {
-    job.scan = { state: "none", message: "Handwriting reading is off. Add an API key in Settings, then press Read again.", unsure: [] };
-    job.updatedAt = new Date().toISOString();
-    saveJobs(); broadcast({ type: "job", job });
-    return;
-  }
+// Cards are read one at a time, on this computer.
+let queue = Promise.resolve();
+function readScan(job) {
   job.scan = { state: "reading", message: "", unsure: [] };
   saveJobs(); broadcast({ type: "job", job });
+  queue = queue.then(() => readOne(job));
+  return queue;
+}
+async function readOne(job) {
   try {
     const image = await fsp.readFile(path.join(PHOTOS, job.photo));
-    const mediaType = Object.keys(IMAGE_TYPES).find((t) => job.photo.endsWith("." + IMAGE_TYPES[t]));
-    const { fields, unsure } = await readJobCard({ apiKey: apiKey(), image, mediaType });
+    const { fields, unsure } = await readJobCardOffline(image);
     const current = jobs.find((j) => j.id === job.id);
     if (!current) return; // deleted while reading
     const keepOrder = current.orderNo;
-    applyFields(current, { ...fields, status: current.status });
+    applyFields(current, { ...fields, status: current.status, notes: [...new Set([...current.notes.split(". "), ...fields.notes.split(". ")].filter(Boolean))].join(". ") });
     if (!current.orderNo) current.orderNo = keepOrder || nextOrderNo();
     if (!current.date) current.date = localDate();
     const t = parseFloat(current.total), a = parseFloat(current.advance) || 0;
@@ -131,6 +138,17 @@ async function readScan(job) {
     current.updatedAt = new Date().toISOString();
     saveJobs(); broadcast({ type: "job", job: current });
   }
+}
+
+async function sharpWarmup() {
+  try {
+    const white = { data: new Uint8ClampedArray(200 * 48 * 4).fill(255), width: 200, height: 48 };
+    await recognize(white);
+    await readLines(white);
+    const { default: sharp } = await import("sharp");
+    await readJobCardOffline(await sharp({ create: { width: 400, height: 500, channels: 3, background: "#ffffff" } }).jpeg().toBuffer()).catch(() => {});
+    console.log("  Reader ready.\n");
+  } catch (e) { console.error("Could not load the reading models:", e.message); }
 }
 
 // ---------------- HTTP ----------------
@@ -183,26 +201,25 @@ async function handle(req, res) {
     return send(res, 200, await fsp.readFile(path.join(HERE, "public", file)), "text/html; charset=utf-8");
   }
 
+  // The card's typefaces, bundled so the screen looks the same without internet.
+  const font = p.match(/^\/fonts\/(kalam|michroma|questrial|tinos|arimo|archivo-narrow)\/([\w-]+\.woff2)$/);
+  if (req.method === "GET" && font) {
+    const file = path.join(HERE, "node_modules", "@fontsource", font[1], "files", font[2]);
+    if (!fs.existsSync(file)) return send(res, 404, { error: "Font not found." });
+    res.writeHead(200, { "Content-Type": "font/woff2", "Cache-Control": "public, max-age=604800" });
+    return fs.createReadStream(file).pipe(res);
+  }
+
   if (!authorized(req, url)) return send(res, 401, { error: "This device is not connected. Scan the QR code on the shop computer." });
 
   if (req.method === "GET" && p === "/api/info") {
     const urls = lanUrls();
     const phoneLink = urls[0] ? `${urls[0]}/phone?key=${config.shopKey}` : "";
     return send(res, 200, {
-      hasApiKey: !!apiKey(), apiKeyFromEnv: !!process.env.ANTHROPIC_API_KEY, model: MODEL,
       isLocal: isLocal(req), urls, phoneLink,
       phoneLinks: urls.map((u) => `${u}/phone?key=${config.shopKey}`),
       qr: phoneLink ? await QRCode.toString(phoneLink, { type: "svg", margin: 1 }) : "",
     });
-  }
-
-  if (req.method === "POST" && p === "/api/settings") {
-    if (!isLocal(req)) return send(res, 403, { error: "Settings can only be changed on the shop computer." });
-    const body = await readJsonBody(req);
-    const key = String(body.apiKey || "").trim();
-    if (key && !/^sk-ant-[\w-]{20,}$/.test(key)) return send(res, 400, { error: "That doesn't look like an Anthropic API key. It starts with sk-ant-." });
-    config.apiKey = key; writeJson(CONFIG_FILE, config);
-    return send(res, 200, { hasApiKey: !!apiKey() });
   }
 
   if (req.method === "GET" && p === "/api/events") {
@@ -292,8 +309,10 @@ server.listen(PORT, "0.0.0.0", () => {
   console.log(`  On this computer:  http://localhost:${PORT}`);
   if (urls.length) console.log(`  Phones: open the job card page and press "Connect a phone" to see the QR code.`);
   else console.log(`  This computer is not on a network, so phones cannot connect yet.`);
-  console.log(apiKey() ? `  Handwriting reading: on (${MODEL})` : `  Handwriting reading: off. Add an API key in Settings.`);
+  console.log(`  Handwriting reading: on this computer, no internet needed.`);
   console.log(`\n  Keep this window open while the shop is using it.\n`);
+  // Load the reading models now, so the first scan doesn't wait for them.
+  sharpWarmup();
   if (process.env.OPEN_BROWSER !== "0") {
     const open = process.platform === "win32" ? `start "" "http://localhost:${PORT}"` : process.platform === "darwin" ? `open http://localhost:${PORT}` : `xdg-open http://localhost:${PORT}`;
     exec(open, () => {});
