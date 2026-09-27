@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ScanFill</title>
+<meta name="description" content="Scan a business card, ID or passport and autofill its details.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 11V6a2 2 0 0 1 2-2h5M21 4h5a2 2 0 0 1 2 2v5M28 21v5a2 2 0 0 1-2 2h-5M11 28H6a2 2 0 0 1-2-2v-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M4 16h24" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <span class="name">ScanFill</span>
+  </div>
+  <p class="tag">Photo in, form out. Everything runs in your browser.</p>
+</header>
+
+<main class="grid">
+  <!-- ============ SOURCE ============ -->
+  <section class="pane" aria-labelledby="src-h">
+    <div class="pane-head">
+      <h2 id="src-h">1 · Scan</h2>
+      <span id="docType" class="pill">Business card</span>
+    </div>
+
+    <label id="drop" class="drop" for="file">
+      <input id="file" type="file" accept="image/*" capture="environment">
+      <div id="dropEmpty" class="drop-empty">
+        <strong>Drop a photo here</strong>
+        <span>or tap to take a photo / choose a file</span>
+        <span class="hint">Business cards, ID cards, passports, forms. You can also paste an image.</span>
+      </div>
+      <div id="preview" class="preview" hidden>
+        <img id="previewImg" alt="Scanned document">
+        <div id="scanline" class="scanline" hidden></div>
+      </div>
+    </label>
+
+    <div class="row">
+      <button id="cameraBtn" class="btn" type="button">Use camera</button>
+      <button id="sampleBtn" class="btn" type="button">Scan a sample card</button>
+      <select id="lang" aria-label="Document language">
+        <option value="eng">English</option>
+        <option value="eng+ara">English + Arabic</option>
+        <option value="eng+hin">English + Hindi</option>
+        <option value="eng+mal">English + Malayalam</option>
+        <option value="eng+fra">English + French</option>
+      </select>
+    </div>
+
+    <div id="camera" class="camera" hidden>
+      <video id="video" playsinline muted></video>
+      <div class="row">
+        <button id="snapBtn" class="btn primary" type="button">Capture</button>
+        <button id="closeCamBtn" class="btn" type="button">Close camera</button>
+      </div>
+    </div>
+
+    <div id="progress" class="progress" hidden>
+      <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+      <span id="progressText">Starting…</span>
+    </div>
+    <p id="status" class="status" role="status"></p>
+
+    <div class="raw">
+      <div class="raw-head">
+        <label for="rawText">Recognised text</label>
+        <button id="reparseBtn" class="link" type="button">Re-extract from text</button>
+      </div>
+      <textarea id="rawText" spellcheck="false" rows="9"></textarea>
+      <p class="hint">Fix any misread characters here, then re-extract. You can also paste text copied from anywhere.</p>
+    </div>
+  </section>
+
+  <!-- ============ DETAILS ============ -->
+  <section class="pane" aria-labelledby="det-h">
+    <div class="pane-head">
+      <h2 id="det-h">2 · Check details</h2>
+      <span id="filledCount" class="count"></span>
+    </div>
+
+    <form id="form" autocomplete="on" novalidate>
+      <fieldset>
+        <legend>Person</legend>
+        <div class="field wide"><label for="f-fullName">Full name</label><input id="f-fullName" name="fullName" autocomplete="name"><span class="src"></span></div>
+        <div class="field"><label for="f-dateOfBirth">Date of birth</label><input id="f-dateOfBirth" name="dateOfBirth" type="date" autocomplete="bday"><span class="src"></span></div>
+        <div class="field"><label for="f-gender">Gender</label><input id="f-gender" name="gender" autocomplete="sex"><span class="src"></span></div>
+        <div class="field"><label for="f-nationality">Nationality</label><input id="f-nationality" name="nationality" autocomplete="country"><span class="src"></span></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Work &amp; contact</legend>
+        <div class="field"><label for="f-jobTitle">Job title</label><input id="f-jobTitle" name="jobTitle" autocomplete="organization-title"><span class="src"></span></div>
+        <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" autocomplete="organization"><span class="src"></span></div>
+        <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"><span class="src"></span></div>
+        <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"><span class="src"></span></div>
+        <div class="field wide"><label for="f-website">Website</label><input id="f-website" name="website" autocomplete="url"><span class="src"></span></div>
+        <div class="field wide"><label for="f-address">Address</label><textarea id="f-address" name="address" rows="2" autocomplete="street-address"></textarea><span class="src"></span></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Document</legend>
+        <div class="field"><label for="f-documentNumber">Document number</label><input id="f-documentNumber" name="documentNumber" class="mono"><span class="src"></span></div>
+        <div class="field"><label for="f-issueDate">Issue date</label><input id="f-issueDate" name="issueDate" type="date"><span class="src"></span></div>
+        <div class="field"><label for="f-expiryDate">Expiry date</label><input id="f-expiryDate" name="expiryDate" type="date"><span class="src"></span></div>
+        <div id="mrzBox" class="mrz" hidden></div>
+      </fieldset>
+
+      <div class="legend-key" aria-label="Where each value came from">
+        <span class="src" data-src="mrz">MRZ</span> checksum-verified machine zone
+        <span class="src" data-src="label">Label</span> printed next to a label
+        <span class="src" data-src="pattern">Pattern</span> matched its format
+        <span class="src" data-src="guess">Guess</span> please double-check
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" type="submit">Save to list</button>
+        <button id="copyJsonBtn" class="btn" type="button">Copy JSON</button>
+        <button id="copyVcfBtn" class="btn" type="button">Copy vCard</button>
+        <button id="dlVcfBtn" class="btn" type="button">Download .vcf</button>
+        <button id="clearBtn" class="btn ghost" type="reset">Clear</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<section class="pane saved" aria-labelledby="saved-h">
+  <div class="pane-head">
+    <h2 id="saved-h">3 · Saved scans</h2>
+    <div class="row">
+      <button id="copyCsvBtn" class="btn" type="button">Copy CSV</button>
+      <button id="dlCsvBtn" class="btn" type="button">Download CSV</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Type</th><th>Phone</th><th>Email</th><th>Company / Doc no.</th><th></th></tr></thead>
+      <tbody id="savedBody"></tbody>
+    </table>
+  </div>
+  <p id="savedEmpty" class="hint">Nothing saved yet. Scans you save stay in this browser only.</p>
+</section>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+<script src="parser.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

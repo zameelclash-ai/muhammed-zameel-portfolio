@@ -1,0 +1,11 @@
+{
+  "name": "scanfill",
+  "version": "1.0.0",
+  "description": "Scan a business card, ID card or passport and autofill its details, entirely in the browser.",
+  "private": true,
+  "scripts": {
+    "start": "npx http-server -p 8080 -c-1 .",
+    "test": "node --test test/*.test.js"
+  },
+  "license": "MIT"
+}
