@@ -1,0 +1,653 @@
+<title>Optimex Job Cards</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --paper: #f2f5f3;
+  --surface: #ffffff;
+  --sunk: #eef2f0;
+  --ink: #15201c;
+  --muted: #5a6762;
+  --line: #d4dcd7;
+  --accent: #0b6e5b;
+  --accent-ink: #ffffff;
+  --accent-soft: #dff0e9;
+  --mark: #f3d34a;
+  --fill: #fdf6d6;
+  --warn: #9a5500;
+  --warn-soft: #fbe9cf;
+  --ready: #2f5aa8;
+  --ready-soft: #e3ebf8;
+  --danger: #b3261e;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e1412; --surface: #151e1b; --sunk: #1b2622; --ink: #e4ebe8; --muted: #93a39d; --line: #2a3632;
+    --accent: #3cc7a4; --accent-ink: #05201a; --accent-soft: #173a31; --mark: #c9a92b; --fill: #2e2a14;
+    --warn: #f0b458; --warn-soft: #3a2c14; --ready: #8fb2ee; --ready-soft: #1c2a42; --danger: #f28b82;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e1412; --surface: #151e1b; --sunk: #1b2622; --ink: #e4ebe8; --muted: #93a39d; --line: #2a3632;
+  --accent: #3cc7a4; --accent-ink: #05201a; --accent-soft: #173a31; --mark: #c9a92b; --fill: #2e2a14;
+  --warn: #f0b458; --warn-soft: #3a2c14; --ready: #8fb2ee; --ready-soft: #1c2a42; --danger: #f28b82;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; padding: 0 16px 40px; background: var(--paper); color: var(--ink); font: 15px/1.5 var(--sans); }
+h1, h2 { font-family: var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+.top {
+  max-width: 1240px; margin: 0 auto; padding-block: 18px 14px;
+  display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand svg { width: 38px; height: 38px; color: var(--accent); flex: none; }
+.brand h1 { font-size: 1.45rem; line-height: 1.1; }
+.brand p { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid var(--line); background: var(--surface); border-radius: 9px;
+  padding: 9px 14px; font-weight: 500; cursor: pointer; min-height: 42px;
+}
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.big { font-size: 1.02rem; padding: 12px 18px; min-height: 50px; }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn.danger { color: var(--danger); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn svg { width: 20px; height: 20px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.layout {
+  max-width: 1240px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 16px; align-items: start;
+}
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .list-pane { order: 2; } }
+
+.pane { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
+
+/* ---- job list ---- */
+.list-pane { display: flex; flex-direction: column; gap: 10px; }
+.list-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.list-head h2 { font-size: 1.05rem; }
+.count { font: 0.8rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+#search { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: var(--surface); }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 11px; font-size: 0.82rem; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.jobs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; max-height: 70vh; overflow-y: auto; }
+.job {
+  display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 8px;
+  border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px;
+}
+.job:hover { background: var(--sunk); }
+.job.active { background: var(--accent-soft); }
+.job .nm { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.job .meta { grid-column: 1 / -1; color: var(--muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.job .no { font: 0.8rem var(--mono); color: var(--muted); }
+.status { font: 500 0.7rem/1 var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 4px 7px; border-radius: 4px; align-self: center; }
+.status.pending { background: var(--warn-soft); color: var(--warn); }
+.status.ready { background: var(--ready-soft); color: var(--ready); }
+.status.delivered { background: var(--accent-soft); color: var(--accent); }
+.status.overdue { background: var(--danger); color: #fff; }
+.empty { color: var(--muted); font-size: 0.9rem; padding: 6px 2px; }
+.empty ol { padding-left: 20px; margin: 6px 0 0; }
+.sync { font-size: 0.78rem; color: var(--muted); }
+
+/* ---- entry form ---- */
+.entry { display: flex; flex-direction: column; gap: 16px; }
+.entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+.entry-head h2 { font-size: 1.2rem; }
+.scanbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: var(--sunk); }
+.scanbar .thumb { width: 64px; height: 88px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); cursor: zoom-in; }
+.scanmsg { flex: 1 1 220px; font-size: 0.92rem; }
+.scanmsg.error { color: var(--danger); }
+.scanmsg strong { display: block; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; display: inline-block; vertical-align: -3px; margin-right: 6px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+
+.section-label { font: 500 0.72rem var(--sans); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin: 0 0 8px; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 12px; }
+.span2 { grid-column: span 2; }
+.span4 { grid-column: 1 / -1; }
+@media (max-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .span2 { grid-column: 1 / -1; } }
+.f { display: flex; flex-direction: column; gap: 3px; min-width: 0; position: relative; }
+.f label { font-size: 0.8rem; color: var(--muted); }
+.f input, .f textarea, .f select, .rx input {
+  width: 100%; border: 1px solid var(--line); border-radius: 7px; padding: 8px 9px; background: var(--surface); min-height: 40px;
+}
+.f textarea { resize: vertical; }
+.f input:focus, .f textarea:focus, .rx input:focus, .f select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.filled { background: var(--fill) !important; }
+.unsure { border-color: var(--warn) !important; box-shadow: inset 0 0 0 1px var(--warn); }
+.flag { position: absolute; right: 6px; top: 0; font: 500 0.66rem var(--mono); color: var(--warn); text-transform: uppercase; letter-spacing: .05em; }
+.money input { font-variant-numeric: tabular-nums; text-align: right; font-family: var(--mono); }
+
+.rx-wrap { overflow-x: auto; }
+.rx { border-collapse: collapse; width: 100%; min-width: 520px; font-variant-numeric: tabular-nums; }
+.rx th { font: 500 0.78rem var(--sans); color: var(--muted); padding: 4px 6px; text-align: center; }
+.rx th.eye { font: 600 0.9rem var(--display); color: var(--ink); border-bottom: 1px solid var(--line); }
+.rx th.row { text-align: left; font: 600 0.85rem var(--mono); color: var(--ink); width: 44px; }
+.rx td { padding: 3px; }
+.rx td.gap, .rx th.gap { width: 10px; padding: 0; }
+.rx input { text-align: center; font-family: var(--mono); padding: 8px 4px; }
+@media (max-width: 560px) { .rx { min-width: 0; } .rx td { padding: 2px 1px; } .rx input { font-size: 0.82rem; padding: 8px 1px; } .rx th.eye { font-size: 0.78rem; } .rx td.gap, .rx th.gap { width: 4px; } .rx th.row { width: 30px; } }
+
+.totals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; }
+@media (max-width: 480px) { .totals { grid-template-columns: minmax(0, 1fr); } }
+.balance-note { font-size: 0.78rem; color: var(--muted); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
+.actions .spacer { flex: 1; }
+.saved-at { font-size: 0.82rem; color: var(--muted); }
+
+.viewer { position: fixed; inset: 0; background: rgba(0,0,0,.8); display: grid; place-items: center; padding: 16px; z-index: 10; cursor: zoom-out; }
+.viewer img { max-height: 100%; max-width: 100%; border-radius: 6px; background: #fff; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 8px; max-width: calc(100% - 32px); z-index: 11; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="11" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="29" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M18 21c1.2-1.4 2.8-1.4 4 0M4 20l-2-6M36 20l2-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <div><h1>Optimex Job Cards</h1><p>Optimex Opticals · Computerised Eye Clinic · Alathur</p></div>
+  </div>
+  <div class="top-actions">
+    <label class="btn primary big" id="scanLabel" for="photo">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Scan job card
+    </label>
+    <input id="photo" class="sr" type="file" accept="image/jpeg,image/png,image/webp" capture="environment">
+    <button class="btn big" id="newBtn" type="button">New blank card</button>
+  </div>
+</header>
+
+<main class="layout">
+  <aside class="pane list-pane" aria-labelledby="listH">
+    <div class="list-head"><h2 id="listH">Job cards</h2><span class="count" id="count"></span></div>
+    <input id="search" type="search" placeholder="Search name, phone or order no." aria-label="Search job cards">
+    <div class="filters" role="group" aria-label="Filter by status">
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-filter="pending" aria-pressed="false">Pending</button>
+      <button class="chip" type="button" data-filter="ready" aria-pressed="false">Ready</button>
+      <button class="chip" type="button" data-filter="delivered" aria-pressed="false">Delivered</button>
+    </div>
+    <ul class="jobs" id="jobs"></ul>
+    <div class="empty" id="empty">
+      No job cards yet. How it works:
+      <ol>
+        <li>Open this page on your phone and tap <b>Scan job card</b>.</li>
+        <li>Photograph the filled card. The details fill in automatically.</li>
+        <li>Check the highlighted fields and tap <b>Save</b>. The card appears here on every device.</li>
+      </ol>
+    </div>
+    <p class="sync" id="sync"></p>
+  </aside>
+
+  <section class="pane entry" aria-labelledby="entryH">
+    <div class="entry-head">
+      <h2 id="entryH">New job card</h2>
+      <div class="f" style="min-width:150px">
+        <label for="status">Status</label>
+        <select id="status" data-key="status">
+          <option value="pending">Pending</option>
+          <option value="ready">Ready for pickup</option>
+          <option value="delivered">Delivered</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="scanbar" id="scanbar" hidden>
+      <img class="thumb" id="thumb" alt="Scanned job card, tap to enlarge">
+      <div class="scanmsg" id="scanmsg" role="status"></div>
+      <button class="btn" id="stopBtn" type="button" hidden>Stop</button>
+    </div>
+
+    <form id="form" autocomplete="off" novalidate>
+      <div>
+        <p class="section-label">Customer</p>
+        <div class="grid">
+          <div class="f"><label for="orderNo">Order no.</label><input id="orderNo" data-key="orderNo" inputmode="numeric"></div>
+          <div class="f"><label for="date">Date</label><input id="date" data-key="date" type="date"></div>
+          <div class="f"><label for="dueDate">Due date</label><input id="dueDate" data-key="dueDate" type="date"></div>
+          <div class="f"><label for="phone">Tel</label><input id="phone" data-key="phone" type="tel" inputmode="tel"></div>
+          <div class="f span2"><label for="name">Name</label><input id="name" data-key="name"></div>
+          <div class="f span2"><label for="address">Address</label><input id="address" data-key="address"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <p class="section-label">Referral</p>
+        <div class="grid">
+          <div class="f"><label for="call">Call</label><input id="call" data-key="call"></div>
+          <div class="f"><label for="doctor">Doctor</label><input id="doctor" data-key="doctor"></div>
+          <div class="f"><label for="clinic">Clinic</label><input id="clinic" data-key="clinic"></div>
+          <div class="f"><label for="lab">Lab</label><input id="lab" data-key="lab"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <p class="section-label">Prescription</p>
+        <div class="rx-wrap">
+          <table class="rx">
+            <thead>
+              <tr><th></th><th class="eye" colspan="3">Re (right eye)</th><th class="gap"></th><th class="eye" colspan="3">Le (left eye)</th></tr>
+              <tr><th></th><th>Sph</th><th>Cyl</th><th>Axis</th><th class="gap"></th><th>Sph</th><th>Cyl</th><th>Axis</th></tr>
+            </thead>
+            <tbody id="rxBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <p class="section-label">Order</p>
+        <div class="grid">
+          <div class="f span2"><label for="lens">Lens</label><textarea id="lens" data-key="lens" rows="2"></textarea></div>
+          <div class="f span2"><label for="frame">Frame</label><textarea id="frame" data-key="frame" rows="2"></textarea></div>
+          <div class="f span4"><label for="notes">Notes</label><input id="notes" data-key="notes"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <p class="section-label">Payment (₹)</p>
+        <div class="totals">
+          <div class="f money"><label for="total">Total</label><input id="total" data-key="total" inputmode="decimal"></div>
+          <div class="f money"><label for="advance">Advance</label><input id="advance" data-key="advance" inputmode="decimal"></div>
+          <div class="f money"><label for="balance">Balance</label><input id="balance" data-key="balance" inputmode="decimal"><span class="balance-note" id="balNote"></span></div>
+        </div>
+      </div>
+
+      <div class="actions" style="margin-top:16px">
+        <button class="btn primary big" type="submit" id="saveBtn">Save job card</button>
+        <button class="btn" type="button" id="copyBtn">Copy details</button>
+        <span class="saved-at" id="savedAt"></span>
+        <span class="spacer"></span>
+        <button class="btn ghost danger" type="button" id="delBtn" hidden>Delete</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<div class="viewer" id="viewer" hidden><img id="viewerImg" alt="Scanned job card"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const form = $('form');
+
+  // ---------- prescription grid ----------
+  const RX = [];
+  ['dv', 'nv'].forEach((row) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<th class="row" scope="row">${row.toUpperCase()}</th>`;
+    ['re', 'le'].forEach((eye, i) => {
+      if (i === 1) tr.insertAdjacentHTML('beforeend', '<td class="gap"></td>');
+      ['sph', 'cyl', 'axis'].forEach((c) => {
+        const key = `rx.${eye}.${row}.${c}`;
+        RX.push(key);
+        const td = document.createElement('td');
+        const inp = document.createElement('input');
+        inp.id = key.replace(/\./g, '-');
+        inp.dataset.key = key;
+        inp.inputMode = c === 'axis' ? 'numeric' : 'decimal';
+        inp.setAttribute('aria-label', `${eye === 're' ? 'Right' : 'Left'} eye ${row.toUpperCase()} ${c}`);
+        td.appendChild(inp);
+        tr.appendChild(td);
+      });
+    });
+    $('rxBody').appendChild(tr);
+  });
+
+  const inputs = () => [...document.querySelectorAll('[data-key]')];
+  const getPath = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
+  function setPath(o, p, v) {
+    const ks = p.split('.');
+    let cur = o;
+    ks.slice(0, -1).forEach((k) => { cur = cur[k] = cur[k] || {}; });
+    cur[ks[ks.length - 1]] = v;
+  }
+
+  function readForm() {
+    const d = {};
+    inputs().forEach((el) => setPath(d, el.dataset.key, el.value.trim()));
+    return d;
+  }
+
+  function clearMarks() {
+    document.querySelectorAll('.filled, .unsure').forEach((el) => el.classList.remove('filled', 'unsure'));
+    document.querySelectorAll('.flag').forEach((el) => el.remove());
+  }
+
+  function fillForm(d, opts = {}) {
+    clearMarks();
+    inputs().forEach((el) => {
+      let v = getPath(d, el.dataset.key);
+      if (el.dataset.key === 'status') { el.value = v || 'pending'; return; }
+      v = v == null ? '' : String(v);
+      el.value = v;
+      if (opts.mark && v) el.classList.add('filled');
+    });
+    (opts.unsure || []).forEach((k) => {
+      const el = document.querySelector(`[data-key="${CSS.escape(k)}"]`);
+      if (!el) return;
+      el.classList.add('unsure');
+      const wrap = el.closest('.f');
+      if (wrap && !wrap.querySelector('.flag')) wrap.insertAdjacentHTML('beforeend', '<span class="flag">check</span>');
+    });
+    updateBalanceNote();
+  }
+
+  form.addEventListener('input', (e) => {
+    e.target.classList.remove('unsure', 'filled');
+    e.target.closest('.f')?.querySelector('.flag')?.remove();
+    if (['total', 'advance'].includes(e.target.id)) autoBalance();
+    updateBalanceNote();
+    dirty = true;
+  });
+
+  const num = (s) => { const n = parseFloat(String(s).replace(/[^\d.\-]/g, '')); return isNaN(n) ? null : n; };
+  let balanceTouched = false;
+  $('balance').addEventListener('input', () => { balanceTouched = true; });
+  function autoBalance() {
+    const t = num($('total').value), a = num($('advance').value);
+    if (t != null && !balanceTouched) $('balance').value = String(t - (a || 0));
+  }
+  function updateBalanceNote() {
+    const t = num($('total').value), a = num($('advance').value), b = num($('balance').value);
+    $('balNote').textContent = t != null && b != null && Math.abs(t - (a || 0) - b) > 0.01 ? `Total − advance = ${t - (a || 0)}` : '';
+  }
+
+  // ---------- toast ----------
+  let tt;
+  function toast(m) { const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => { t.hidden = true; }, 2600); }
+
+  // ---------- storage: shared db, falling back to this browser ----------
+  let db = null, jobs = [], currentId = null, dirty = false;
+  const LOCAL = 'optimex.jobcards.v1';
+  const localLoad = () => { try { return JSON.parse(localStorage.getItem(LOCAL)) || []; } catch (e) { return []; } };
+  const localSave = () => { try { localStorage.setItem(LOCAL, JSON.stringify(jobs)); } catch (e) {} };
+
+  function newId() { return 'jc' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+  async function saveJob(data) {
+    const id = currentId || newId();
+    const now = new Date().toISOString();
+    const existing = jobs.find((j) => j.id === id);
+    const body = { ...data, createdAt: existing?.createdAt || now, updatedAt: now };
+    if (existing?.photo && !body.photo) body.photo = existing.photo;
+    if (db) {
+      await db.collection('jobcards').doc(id).set(body);
+    } else {
+      const i = jobs.findIndex((j) => j.id === id);
+      if (i >= 0) jobs[i] = { id, ...body }; else jobs.unshift({ id, ...body });
+      localSave();
+      renderList();
+    }
+    currentId = id;
+    return id;
+  }
+
+  async function deleteJob(id) {
+    if (db) await db.collection('jobcards').doc(id).delete();
+    else { jobs = jobs.filter((j) => j.id !== id); localSave(); renderList(); }
+  }
+
+  // ---------- list ----------
+  let filter = 'all';
+  const today = () => new Date().toISOString().slice(0, 10);
+  const fmtDate = (iso) => { if (!iso) return ''; const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
+
+  function renderList() {
+    const q = $('search').value.trim().toLowerCase();
+    const ul = $('jobs');
+    ul.textContent = '';
+    const shown = jobs.filter((j) => (filter === 'all' || (j.status || 'pending') === filter) &&
+      (!q || [j.name, j.phone, j.orderNo].some((v) => String(v || '').toLowerCase().includes(q))));
+    shown.forEach((j) => {
+      const li = document.createElement('li');
+      li.className = 'job' + (j.id === currentId ? ' active' : '');
+      li.tabIndex = 0;
+      const st = j.status || 'pending';
+      const overdue = st === 'pending' && j.dueDate && j.dueDate < today();
+      const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = j.name || 'Unnamed';
+      const badge = document.createElement('span'); badge.className = 'status ' + (overdue ? 'overdue' : st);
+      badge.textContent = overdue ? 'Overdue' : st;
+      const meta = document.createElement('span'); meta.className = 'meta';
+      meta.textContent = [j.orderNo && '#' + j.orderNo, j.phone, j.dueDate && 'due ' + fmtDate(j.dueDate), num(j.balance) ? '₹' + num(j.balance) + ' due' : ''].filter(Boolean).join(' · ');
+      li.append(nm, badge, meta);
+      li.onclick = () => openJob(j.id);
+      li.onkeydown = (e) => { if (e.key === 'Enter') openJob(j.id); };
+      ul.appendChild(li);
+    });
+    $('count').textContent = jobs.length ? `${shown.length} of ${jobs.length}` : '';
+    $('empty').hidden = jobs.length > 0;
+  }
+  $('search').addEventListener('input', renderList);
+  document.querySelectorAll('.chip').forEach((c) => c.addEventListener('click', () => {
+    filter = c.dataset.filter;
+    document.querySelectorAll('.chip').forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
+    renderList();
+  }));
+
+  function openJob(id) {
+    const j = jobs.find((x) => x.id === id);
+    if (!j) return;
+    currentId = id;
+    balanceTouched = true;
+    fillForm(j);
+    currentPhoto = j.photo || null;
+    showScanbar(currentPhoto, j.photo ? 'Scanned card photo. Tap to enlarge.' : '');
+    $('entryH').textContent = `Job card ${j.orderNo ? '#' + j.orderNo : ''}`.trim();
+    $('savedAt').textContent = 'Last saved ' + new Date(j.updatedAt).toLocaleString();
+    $('delBtn').hidden = false; resetDel();
+    dirty = false;
+    renderList();
+    if (window.innerWidth < 900) $('entryH').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function nextOrderNo() {
+    const n = jobs.map((j) => parseInt(j.orderNo, 10)).filter((x) => !isNaN(x));
+    return n.length ? String(Math.max(...n) + 1) : '';
+  }
+
+  function newCard() {
+    currentId = null; currentPhoto = null; balanceTouched = false;
+    fillForm({ status: 'pending', date: today(), orderNo: nextOrderNo() });
+    showScanbar(null);
+    $('entryH').textContent = 'New job card';
+    $('savedAt').textContent = '';
+    $('delBtn').hidden = true;
+    dirty = false;
+    renderList();
+  }
+  $('newBtn').addEventListener('click', newCard);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = readForm();
+    if (!data.name && !data.phone && !data.orderNo) { toast('Add at least a name, phone or order number'); return; }
+    if (currentPhoto) data.photo = currentPhoto;
+    $('saveBtn').disabled = true;
+    try {
+      await saveJob(data);
+      toast(db ? 'Saved. It now shows on every device.' : 'Saved in this browser');
+      clearMarks();
+      $('entryH').textContent = `Job card ${data.orderNo ? '#' + data.orderNo : ''}`.trim();
+      $('savedAt').textContent = 'Last saved ' + new Date().toLocaleString();
+      $('delBtn').hidden = false;
+      dirty = false;
+      renderList();
+    } catch (err) {
+      toast(err?.code === 'quota_exceeded' ? 'Storage is full. Delete old delivered cards, then save again.' : 'Could not save. Check your connection and try again.');
+    } finally { $('saveBtn').disabled = false; }
+  });
+
+  // Two-step delete (the viewer can't show confirm dialogs).
+  let delArmed = false;
+  function resetDel() { delArmed = false; $('delBtn').textContent = 'Delete'; }
+  $('delBtn').addEventListener('click', async () => {
+    if (!delArmed) { delArmed = true; $('delBtn').textContent = 'Tap again to delete'; setTimeout(resetDel, 4000); return; }
+    const id = currentId;
+    resetDel();
+    try { await deleteJob(id); toast('Deleted'); newCard(); } catch (e) { toast('Could not delete. Try again.'); }
+  });
+
+  $('copyBtn').addEventListener('click', async () => {
+    const d = readForm();
+    const rx = (eye) => ['dv', 'nv'].map((r) => `${r.toUpperCase()} ${['sph', 'cyl', 'axis'].map((c) => d.rx[eye][r][c] || '-').join(' / ')}`).join(', ');
+    const text = [
+      `Order ${d.orderNo || '-'} · Date ${fmtDate(d.date)} · Due ${fmtDate(d.dueDate)}`,
+      `Name: ${d.name}`, `Address: ${d.address}`, `Tel: ${d.phone}`,
+      `Re: ${rx('re')}`, `Le: ${rx('le')}`,
+      `Lens: ${d.lens}`, `Frame: ${d.frame}`,
+      `Total ₹${d.total || 0} · Advance ₹${d.advance || 0} · Balance ₹${d.balance || 0}`,
+    ].join('\n');
+    try { await navigator.clipboard.writeText(text); toast('Details copied'); }
+    catch (e) { toast('Copy is blocked here. Select the fields and copy them by hand.'); }
+  });
+
+  // ---------- scanning with Claude ----------
+  let sample = null, currentPhoto = null, ctl = null;
+
+  const PROMPT = `You are reading a photo of a handwritten job card from Optimex Opticals, an optical shop in Kerala, India.
+The printed card has two parts. Top slip: Ph number (printed shop phone, ignore it), Order No, Date, Due Date, Total, Name, Advance, Address, Balance.
+Bottom (shop copy): a row of boxes "Call | (blank) | Doctor | Clinic | Lab" with handwriting in the boxes below them, then Date, Due Date, No., Name, Address, Tel,
+then a prescription table with columns Re (right eye) Sph, Cyl, Axi and Le (left eye) Sph, Cyl, Axi and rows DV (distance vision) and NV (near vision),
+then Lens, Frame, and Total, Advance, Balance. Small G/C boxes near the totals may have ticks; mention them in notes if marked.
+
+Read ONLY the handwriting (ignore printed labels, the shop's printed phone number and printed address "Swathy Jn, Court Road, Alathur").
+The same detail may be written in both parts: use whichever is legible; if they disagree, prefer the bottom part and list the key in "unsure".
+Handwritten dates are day/month/year; output them as YYYY-MM-DD. If only the day and month are written, assume the year ${new Date().getFullYear()}.
+Prescription: keep the sign and decimals as written, e.g. "-1.25", "+2.00", "PL" or "plano" as "0.00". Sph/Cyl written without a sign stay unsigned. Axis is a whole number 0-180, no degree sign.
+Money: plain numbers without ₹ or "/-". Phone: digits only (keep a leading +91 if written).
+Use "" for anything blank or unreadable. Never invent values.
+Put every key you are not confident about in "unsure" (use the dotted key names below, e.g. "rx.le.dv.cyl").
+
+Reply with only this JSON object:
+{"orderNo":"","date":"","dueDate":"","name":"","address":"","phone":"","call":"","doctor":"","clinic":"","lab":"",
+"rx":{"re":{"dv":{"sph":"","cyl":"","axis":""},"nv":{"sph":"","cyl":"","axis":""}},"le":{"dv":{"sph":"","cyl":"","axis":""},"nv":{"sph":"","cyl":"","axis":""}}},
+"lens":"","frame":"","total":"","advance":"","balance":"","notes":"","unsure":[]}`;
+
+  function showScanbar(photo, msg, isErr) {
+    const bar = $('scanbar');
+    bar.hidden = !photo && !msg;
+    $('thumb').hidden = !photo;
+    if (photo) $('thumb').src = photo;
+    const m = $('scanmsg');
+    m.classList.toggle('error', !!isErr);
+    m.innerHTML = msg || '';
+  }
+  $('thumb').addEventListener('click', () => { $('viewerImg').src = $('thumb').src; $('viewer').hidden = false; });
+  $('viewer').addEventListener('click', () => { $('viewer').hidden = true; });
+  $('stopBtn').addEventListener('click', () => ctl?.abort());
+
+  // Small JPEG kept with the card so staff can compare against the paper later.
+  function thumbnail(file) {
+    return new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const w = Math.min(720, img.naturalWidth), h = Math.round(img.naturalHeight * (w / img.naturalWidth));
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url);
+        let q = 0.6, out = c.toDataURL('image/jpeg', q);
+        while (out.length > 180000 && q > 0.25) { q -= 0.1; out = c.toDataURL('image/jpeg', q); }
+        resolve(out.length <= 180000 ? out : null);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+      img.src = url;
+    });
+  }
+
+  const ERR = {
+    not_granted: 'Scanning needs your permission to use Claude. Reload the page and choose Allow to try again.',
+    sampling_disabled: 'Claude isn’t available on this account, so scanning is off. You can still type the card in.',
+    rate_limited: 'Too many scans in a short time, or your Claude usage limit was reached. Wait a little, then scan again.',
+    image_rejected: 'That photo couldn’t be used. Take a JPG or PNG photo of the card and try again.',
+    refused: 'The photo couldn’t be read. Retake it with the whole card in view.',
+    invalid_json: 'The reading came back incomplete. Tap Scan job card to try again.',
+    session_expired: 'You’ve been signed out of Claude. Sign in again, then scan.',
+  };
+
+  $('photo').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    newCard();
+    currentPhoto = await thumbnail(file);
+    const preview = currentPhoto || URL.createObjectURL(file);
+    if (!sample) {
+      showScanbar(preview, '<strong>Automatic reading is off here.</strong>Open this page in the Claude app or claude.ai to scan. You can type the details in below.', true);
+      return;
+    }
+    ctl = new AbortController();
+    $('stopBtn').hidden = false;
+    $('scanLabel').setAttribute('aria-disabled', 'true');
+    showScanbar(preview, '<span class="spinner"></span><strong style="display:inline">Reading the handwriting…</strong><br>This usually takes 15 to 40 seconds.');
+    try {
+      const r = await sample.json(PROMPT, { images: file, signal: ctl.signal, modelTier: 'default' });
+      if (!r || typeof r !== 'object') throw { code: 'invalid_json' };
+      const data = { status: 'pending' };
+      ['orderNo', 'date', 'dueDate', 'name', 'address', 'phone', 'call', 'doctor', 'clinic', 'lab', 'lens', 'frame', 'total', 'advance', 'balance', 'notes']
+        .forEach((k) => { data[k] = r[k] == null ? '' : String(r[k]).trim(); });
+      RX.forEach((k) => { const v = getPath(r, k); setPath(data, k, v == null ? '' : String(v).trim()); });
+      ['date', 'dueDate'].forEach((k) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(data[k])) data[k] = ''; });
+      if (!data.date) data.date = today();
+      if (!data.orderNo) data.orderNo = nextOrderNo();
+      if (!data.balance && num(data.total) != null) data.balance = String(num(data.total) - (num(data.advance) || 0));
+      balanceTouched = !!r.balance;
+      const unsure = Array.isArray(r.unsure) ? r.unsure.map(String) : [];
+      fillForm(data, { mark: true, unsure });
+      const filled = inputs().filter((el) => el.classList.contains('filled')).length;
+      showScanbar(preview, `<strong>Filled ${filled} fields from the photo.</strong>` +
+        (unsure.length ? `${unsure.length} marked <b style="color:var(--warn)">check</b>: compare them with the card. ` : 'Compare with the card, ') + 'then tap Save.');
+      dirty = true;
+    } catch (err) {
+      if (err?.code === 'cancelled') showScanbar(preview, 'Reading stopped. You can type the details in, or scan again.');
+      else showScanbar(preview, ERR[err?.code] || 'Something went wrong while reading the card. Tap Scan job card to try again.', true);
+    } finally {
+      $('stopBtn').hidden = true;
+      $('scanLabel').removeAttribute('aria-disabled');
+    }
+  });
+
+  // ---------- start ----------
+  newCard();
+  jobs = localLoad();
+  renderList();
+  $('sync').textContent = 'Connecting…';
+
+  if (window.claude && claude.use) {
+    claude.use('sample').then(async (s) => {
+      if (!s) return;
+      const lim = await s.limits().catch(() => null);
+      if (lim && lim.images) sample = s;
+    });
+    claude.use('db').then((d) => {
+      if (!d) { $('sync').textContent = 'Saving in this browser only.'; return; }
+      db = d;
+      db.collection('jobcards').orderBy('createdAt', 'desc').limit(500).onSnapshot((snap) => {
+        jobs = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        $('sync').textContent = 'Synced across your devices.';
+        renderList();
+        // If another device changed the card that's open and nothing is being typed here, refresh it.
+        if (currentId && !dirty && jobs.some((j) => j.id === currentId)) openJob(currentId);
+      }, () => { $('sync').textContent = 'Live sync stopped. Reload the page to reconnect.'; });
+    });
+  } else {
+    $('sync').textContent = 'Saving in this browser only.';
+  }
+})();
+</script>
