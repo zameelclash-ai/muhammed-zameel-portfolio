@@ -7,9 +7,8 @@ if ! command -v node >/dev/null 2>&1; then
   read -r -p "Press Enter to close."
   exit 1
 fi
-# The download comes set up for Windows; the first start on a Mac installs the Mac parts (needs internet once).
-if [ ! -f node_modules/.mac-ready ]; then
-  echo "Setting up for this Mac, please wait (needs internet once)..."
-  npm install --omit=dev --no-audit --no-fund && touch node_modules/.mac-ready
+if [ ! -d node_modules ]; then
+  echo "Installing for the first time, please wait (needs internet once)..."
+  npm install --omit=dev --no-audit --no-fund
 fi
 node server.js

@@ -18,7 +18,7 @@ screen, which looks like the paper card itself.
 
 1. Unzip this folder somewhere permanent, for example `Documents\Optimex Job Cards`.
 2. **Windows:** double-click `start.bat`. **Mac:** double-click `start.command`
-   (the first start on a Mac needs internet once to finish installing).
+   (if the Mac says it can't be opened, right-click it and choose **Open**).
    The job card screen opens in the browser at http://localhost:3000.
 3. If Windows asks whether to allow Node.js on the network, choose **Allow** for private networks.
    Phones can't connect otherwise.
@@ -100,3 +100,8 @@ cards. Only share that link with staff. Nothing is sent to the internet.
 - `npm test` reads photos of a filled test card (straight, tilted, upside down, blurry) and checks every field.
 
 Environment variables: `PORT` (default 3000), `DATA_DIR`, `OPEN_BROWSER=0` to not open a browser.
+
+`pack.sh` builds the ready-to-run zip (under 30 MB) that works on Windows, Mac and Linux without an
+install step: it installs the production dependencies, uses sharp's WebAssembly build instead of a
+per-platform binary, and removes files Node never loads (unused onnxruntime builds, fonts subsets,
+source maps, type definitions, docs).
