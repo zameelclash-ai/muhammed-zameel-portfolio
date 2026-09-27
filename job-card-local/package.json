@@ -1,0 +1,19 @@
+{
+  "name": "optimex-job-cards",
+  "version": "1.0.0",
+  "description": "Shop-computer job card entry for Optimex Opticals. Phones on the shop Wi-Fi scan handwritten job cards; the computer reads them and fills the form.",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
+    "qrcode": "^1.5.4"
+  }
+}

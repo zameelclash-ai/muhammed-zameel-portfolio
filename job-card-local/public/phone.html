@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Scan Job Card">
+<meta name="theme-color" content="#0b6e5b">
+<title>Scan Job Card</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%230b6e5b'/%3E%3Ccircle cx='12' cy='21' r='6' fill='none' stroke='white' stroke-width='2.6'/%3E%3Ccircle cx='28' cy='21' r='6' fill='none' stroke='white' stroke-width='2.6'/%3E%3C/svg%3E">
+<style>
+:root {
+  --paper: #f2f5f3; --surface: #ffffff; --sunk: #eef2f0; --ink: #15201c; --muted: #5a6762; --line: #d4dcd7;
+  --accent: #0b6e5b; --accent-ink: #ffffff; --accent-soft: #dff0e9; --warn: #9a5500; --warn-soft: #fbe9cf; --danger: #b3261e; --danger-soft: #fbe3e1;
+  --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --paper: #0e1412; --surface: #151e1b; --sunk: #1b2622; --ink: #e4ebe8; --muted: #93a39d; --line: #2a3632;
+    --accent: #3cc7a4; --accent-ink: #05201a; --accent-soft: #173a31; --warn: #f0b458; --warn-soft: #3a2c14; --danger: #f28b82; --danger-soft: #3b1d1b; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; padding: calc(12px + env(safe-area-inset-top, 0px)) 16px calc(28px + env(safe-area-inset-bottom, 0px)); background: var(--paper); color: var(--ink); font: 16px/1.5 var(--sans); }
+main { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; align-items: center; gap: 10px; }
+header svg { width: 34px; height: 34px; color: var(--accent); flex: none; }
+h1 { font-size: 1.25rem; margin: 0; line-height: 1.15; }
+header p { margin: 0; color: var(--muted); font-size: 0.82rem; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.big { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 64px; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); -webkit-tap-highlight-color: transparent; }
+.big.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); min-height: 76px; font-size: 1.2rem; }
+.big svg { width: 26px; height: 26px; }
+.big:active { transform: scale(.98); }
+.big[aria-disabled="true"] { opacity: .5; pointer-events: none; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.tips { margin: 0; padding-left: 20px; color: var(--muted); font-size: 0.9rem; }
+.result { display: flex; gap: 12px; align-items: center; }
+.result img { width: 64px; height: 86px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); flex: none; background: var(--sunk); }
+.result .msg strong { display: block; font-size: 1.02rem; }
+.result .msg span { color: var(--muted); font-size: 0.9rem; }
+.card.ok { background: var(--accent-soft); border-color: transparent; }
+.card.err { background: var(--danger-soft); border-color: transparent; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; display: inline-block; vertical-align: -3px; margin-right: 6px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 4px 0 0; font-weight: 600; }
+ul { list-style: none; margin: 0; padding: 0; }
+li { display: flex; justify-content: space-between; gap: 10px; padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+li:last-child { border-bottom: 0; }
+li .st { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
+li .st.ok { color: var(--accent); }
+li .st.err { color: var(--danger); }
+.conn { font-size: 0.8rem; color: var(--muted); text-align: center; margin: 0; }
+.warn { background: var(--warn-soft); border-color: transparent; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="11" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="29" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M18 21c1.2-1.4 2.8-1.4 4 0M4 20l-2-6M36 20l2-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <div><h1>Scan Job Card</h1><p>Optimex Opticals, Alathur</p></div>
+  </header>
+
+  <section class="card warn" id="notConnected" hidden>
+    <strong>This phone isn't connected yet.</strong>
+    <span>On the shop computer, open Optimex Job Cards, press <b>Connect a phone</b>, and scan the QR code with this phone's camera. The phone must be on the shop Wi-Fi.</span>
+  </section>
+
+  <section class="card" id="scanCard">
+    <label class="big primary" id="cameraBtn" for="camera">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      Take photo of job card
+    </label>
+    <input id="camera" class="sr" type="file" accept="image/*" capture="environment">
+    <label class="big" id="galleryBtn" for="gallery">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 16l5-5 4 4 3-3 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Choose from gallery
+    </label>
+    <input id="gallery" class="sr" type="file" accept="image/*">
+    <ul class="tips">
+      <li style="display:list-item;border:0;padding:0">Lay the card flat in good light, with no shadow on it.</li>
+      <li style="display:list-item;border:0;padding:0">Fit the whole card in the photo.</li>
+    </ul>
+  </section>
+
+  <section class="card" id="resultCard" hidden aria-live="polite">
+    <div class="result">
+      <img id="preview" alt="The photo you just took">
+      <div class="msg" id="resultMsg"></div>
+    </div>
+  </section>
+
+  <section id="recentWrap" hidden>
+    <h2>Sent from this phone today</h2>
+    <div class="card" style="padding:4px 14px"><ul id="recent"></ul></div>
+  </section>
+
+  <p class="conn" id="conn"></p>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+
+  // The QR code link carries the shop key; remember it so the home-screen icon keeps working.
+  const params = new URLSearchParams(location.search);
+  let key = params.get('key') || '';
+  try { if (key) localStorage.setItem('optimex.key', key); else key = localStorage.getItem('optimex.key') || ''; } catch (e) {}
+  if (params.get('key')) history.replaceState(null, '', location.pathname);
+  const withKey = (u) => key ? u + (u.includes('?') ? '&' : '?') + 'key=' + encodeURIComponent(key) : u;
+
+  let mine = [];
+  try { mine = JSON.parse(localStorage.getItem('optimex.mine') || '[]'); } catch (e) {}
+  const today = new Date().toDateString();
+  mine = mine.filter((m) => new Date(m.at).toDateString() === today);
+  const saveMine = () => { try { localStorage.setItem('optimex.mine', JSON.stringify(mine.slice(0, 30))); } catch (e) {} };
+
+  let current = null; // id of the photo shown in the result card
+  let busy = false;
+
+  function setBusy(b) {
+    busy = b;
+    ['cameraBtn', 'galleryBtn'].forEach((id) => (b ? $(id).setAttribute('aria-disabled', 'true') : $(id).removeAttribute('aria-disabled')));
+  }
+
+  function showResult(kind, html) {
+    const c = $('resultCard');
+    c.hidden = false;
+    c.classList.toggle('ok', kind === 'ok');
+    c.classList.toggle('err', kind === 'err');
+    $('resultMsg').innerHTML = html;
+  }
+
+  function describe(job) {
+    const s = job.scan?.state;
+    if (s === 'reading') return ['', '<strong><span class="spinner"></span>Reading on the computer…</strong><span>You can take the next photo now.</span>'];
+    if (s === 'done') return ['ok', `<strong>Filled on the computer ✓</strong><span>${job.name ? escapeHtml(job.name) + (job.orderNo ? ' · #' + escapeHtml(job.orderNo) : '') + '. ' : ''}Staff check it and press Save.</span>`];
+    if (s === 'error') return ['err', `<strong>Sent, but not read</strong><span>${escapeHtml(job.scan.message || '')} Staff can type the details on the computer.</span>`];
+    return ['ok', '<strong>Sent to the computer ✓</strong><span>Staff will type the details from the photo.</span>'];
+  }
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function renderRecent(jobsById) {
+    const ul = $('recent');
+    ul.textContent = '';
+    mine.forEach((m) => {
+      const j = jobsById[m.id];
+      const li = document.createElement('li');
+      const name = document.createElement('span');
+      name.textContent = (j && j.name) || new Date(m.at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ' photo';
+      const st = document.createElement('span');
+      const s = j?.scan?.state;
+      st.className = 'st' + (s === 'done' ? ' ok' : s === 'error' ? ' err' : '');
+      st.textContent = !j ? 'Removed' : s === 'reading' ? 'Reading…' : s === 'done' ? (j.review ? 'Filled, to check' : 'Saved') : s === 'error' ? 'Not read' : 'Sent';
+      li.append(name, st);
+      ul.appendChild(li);
+    });
+    $('recentWrap').hidden = mine.length === 0;
+  }
+
+  const jobsById = {};
+  function onJob(job) {
+    jobsById[job.id] = job;
+    if (job.id === current) { const [k, h] = describe(job); showResult(k, h); }
+    renderRecent(jobsById);
+  }
+
+  // Resize on the phone: faster upload on shop Wi-Fi, and converts iPhone HEIC photos to JPEG.
+  function shrink(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const s = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob((b) => (b ? resolve(b) : reject(new Error('Could not prepare the photo.'))), 'image/jpeg', 0.85);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('This phone could not open that photo. Take a new one with the camera button.')); };
+      img.src = url;
+    });
+  }
+
+  async function send(file) {
+    if (busy) return;
+    setBusy(true);
+    current = null;
+    $('preview').src = URL.createObjectURL(file);
+    showResult('', '<strong><span class="spinner"></span>Sending to the computer…</strong>');
+    try {
+      const blob = await shrink(file);
+      const res = await fetch('/api/scan', { method: 'POST', headers: { 'Content-Type': 'image/jpeg', 'x-shop-key': key }, body: blob });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 401) { $('notConnected').hidden = false; throw new Error(data.error); }
+      if (!res.ok) throw new Error(data.error || 'The computer did not accept the photo.');
+      current = data.id;
+      mine.unshift({ id: data.id, at: new Date().toISOString() });
+      saveMine();
+      onJob(data);
+    } catch (err) {
+      showResult('err', `<strong>Not sent</strong><span>${escapeHtml(err.message === 'Failed to fetch' ? 'Can’t reach the shop computer. Check this phone is on the shop Wi-Fi and the job card program is open on the computer.' : err.message)}</span>`);
+    } finally { setBusy(false); }
+  }
+
+  ['camera', 'gallery'].forEach((id) => $(id).addEventListener('change', (e) => {
+    const f = e.target.files[0];
+    e.target.value = '';
+    if (f) send(f);
+  }));
+
+  // Live status from the computer.
+  function connect() {
+    const es = new EventSource(withKey('/api/events'));
+    es.onopen = async () => {
+      $('conn').textContent = 'Connected to the shop computer';
+      try {
+        const res = await fetch('/api/jobs', { headers: { 'x-shop-key': key } });
+        if (res.status === 401) { $('notConnected').hidden = false; return; }
+        const list = await res.json();
+        const ids = new Set(mine.map((m) => m.id));
+        list.filter((j) => ids.has(j.id)).forEach(onJob);
+        renderRecent(jobsById);
+      } catch (e) {}
+    };
+    es.onerror = async () => {
+      $('conn').textContent = 'Not connected to the shop computer. Check the Wi-Fi.';
+      if (es.readyState !== EventSource.CLOSED) return;
+      // A closed stream is either a network problem (retry) or an old/wrong link (ask to rescan).
+      try {
+        const res = await fetch('/api/info', { headers: { 'x-shop-key': key } });
+        if (res.status === 401) { $('notConnected').hidden = false; $('conn').textContent = ''; return; }
+      } catch (e) {}
+      setTimeout(connect, 5000);
+    };
+    es.onmessage = (e) => {
+      const ev = JSON.parse(e.data);
+      if (ev.type === 'job' && mine.some((m) => m.id === ev.job.id)) onJob(ev.job);
+      if (ev.type === 'delete') { delete jobsById[ev.id]; renderRecent(jobsById); }
+    };
+  }
+
+  if (!key && !['localhost', '127.0.0.1'].includes(location.hostname)) $('notConnected').hidden = false;
+  renderRecent(jobsById);
+  connect();
+})();
+</script>
+</body>
+</html>

@@ -1,80 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Optimex Job Cards</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 :root {
-  --paper: #f2f5f3;
-  --surface: #ffffff;
-  --sunk: #eef2f0;
-  --ink: #15201c;
-  --muted: #5a6762;
-  --line: #d4dcd7;
-  --accent: #0b6e5b;
-  --accent-ink: #ffffff;
-  --accent-soft: #dff0e9;
-  --mark: #f3d34a;
-  --fill: #fdf6d6;
-  --warn: #9a5500;
-  --warn-soft: #fbe9cf;
-  --ready: #2f5aa8;
-  --ready-soft: #e3ebf8;
-  --danger: #b3261e;
+  --paper: #f2f5f3; --surface: #ffffff; --sunk: #eef2f0; --ink: #15201c; --muted: #5a6762; --line: #d4dcd7;
+  --accent: #0b6e5b; --accent-ink: #ffffff; --accent-soft: #dff0e9; --mark: #f3d34a; --fill: #fdf6d6;
+  --warn: #9a5500; --warn-soft: #fbe9cf; --ready: #2f5aa8; --ready-soft: #e3ebf8; --danger: #b3261e; --danger-soft: #fbe3e1;
   --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root {
     --paper: #0e1412; --surface: #151e1b; --sunk: #1b2622; --ink: #e4ebe8; --muted: #93a39d; --line: #2a3632;
     --accent: #3cc7a4; --accent-ink: #05201a; --accent-soft: #173a31; --mark: #c9a92b; --fill: #2e2a14;
-    --warn: #f0b458; --warn-soft: #3a2c14; --ready: #8fb2ee; --ready-soft: #1c2a42; --danger: #f28b82;
+    --warn: #f0b458; --warn-soft: #3a2c14; --ready: #8fb2ee; --ready-soft: #1c2a42; --danger: #f28b82; --danger-soft: #3b1d1b;
     color-scheme: dark;
   }
-}
-:root[data-theme="dark"] {
-  --paper: #0e1412; --surface: #151e1b; --sunk: #1b2622; --ink: #e4ebe8; --muted: #93a39d; --line: #2a3632;
-  --accent: #3cc7a4; --accent-ink: #05201a; --accent-soft: #173a31; --mark: #c9a92b; --fill: #2e2a14;
-  --warn: #f0b458; --warn-soft: #3a2c14; --ready: #8fb2ee; --ready-soft: #1c2a42; --danger: #f28b82;
-  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { margin: 0; padding: 0 16px 40px; background: var(--paper); color: var(--ink); font: 15px/1.5 var(--sans); }
-h1, h2 { font-family: var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
 button, input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--accent); }
 
-.top {
-  max-width: 1240px; margin: 0 auto; padding-block: 18px 14px;
-  display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between;
-}
+.top { max-width: 1240px; margin: 0 auto; padding-block: 18px 14px; display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand svg { width: 38px; height: 38px; color: var(--accent); flex: none; }
 .brand h1 { font-size: 1.45rem; line-height: 1.1; }
 .brand p { margin: 0; color: var(--muted); font-size: 0.85rem; }
 .top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  border: 1px solid var(--line); background: var(--surface); border-radius: 9px;
-  padding: 9px 14px; font-weight: 500; cursor: pointer; min-height: 42px;
-}
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 9px 14px; font-weight: 500; cursor: pointer; min-height: 42px; text-decoration: none; color: var(--ink); }
 .btn:hover { border-color: var(--accent); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.btn.big { font-size: 1.02rem; padding: 12px 18px; min-height: 50px; }
 .btn.ghost { background: transparent; border-color: transparent; color: var(--muted); }
 .btn.danger { color: var(--danger); }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
 .btn svg { width: 20px; height: 20px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.layout {
-  max-width: 1240px; margin: 0 auto;
-  display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 16px; align-items: start;
-}
-@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .list-pane { order: 2; } }
+.banner { max-width: 1240px; margin: 0 auto 12px; padding: 10px 14px; border-radius: 10px; background: var(--warn-soft); color: var(--ink); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.banner b { color: var(--warn); }
 
+.panel { max-width: 1240px; margin: 0 auto 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 18px; }
+.connect { grid-template-columns: 220px minmax(0, 1fr); align-items: center; }
+@media (max-width: 640px) { .connect { grid-template-columns: minmax(0, 1fr); } }
+.qr { width: 220px; max-width: 100%; aspect-ratio: 1; background: #fff; border-radius: 10px; padding: 8px; border: 1px solid var(--line); }
+.qr svg { width: 100%; height: 100%; display: block; }
+.panel h2 { font-size: 1.15rem; margin-bottom: 6px; }
+.panel ol { margin: 6px 0 10px; padding-left: 20px; }
+.panel li { margin-bottom: 4px; }
+.link { font: 0.85rem var(--mono); word-break: break-all; background: var(--sunk); padding: 8px 10px; border-radius: 7px; user-select: all; }
+.hint { color: var(--muted); font-size: 0.85rem; margin: 6px 0 0; }
+.settings-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.settings-row input { flex: 1 1 320px; border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; background: var(--surface); font-family: var(--mono); min-height: 42px; }
+
+.layout { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .list-pane { order: 2; } }
 .pane { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
 
-/* ---- job list ---- */
 .list-pane { display: flex; flex-direction: column; gap: 10px; }
 .list-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .list-head h2 { font-size: 1.05rem; }
@@ -84,32 +75,30 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 11px; font-size: 0.82rem; cursor: pointer; }
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .jobs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; max-height: 70vh; overflow-y: auto; }
-.job {
-  display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 8px;
-  border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px;
-}
+.job { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 8px; border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px; }
 .job:hover { background: var(--sunk); }
 .job.active { background: var(--accent-soft); }
 .job .nm { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .job .meta { grid-column: 1 / -1; color: var(--muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
-.job .no { font: 0.8rem var(--mono); color: var(--muted); }
-.status { font: 500 0.7rem/1 var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 4px 7px; border-radius: 4px; align-self: center; }
+.status { font: 500 0.7rem/1 var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 4px 7px; border-radius: 4px; align-self: center; white-space: nowrap; }
 .status.pending { background: var(--warn-soft); color: var(--warn); }
 .status.ready { background: var(--ready-soft); color: var(--ready); }
 .status.delivered { background: var(--accent-soft); color: var(--accent); }
 .status.overdue { background: var(--danger); color: #fff; }
+.status.check { background: var(--mark); color: #2a2200; }
+.status.reading { background: var(--sunk); color: var(--muted); }
+.status.failed { background: var(--danger-soft); color: var(--danger); }
 .empty { color: var(--muted); font-size: 0.9rem; padding: 6px 2px; }
 .empty ol { padding-left: 20px; margin: 6px 0 0; }
-.sync { font-size: 0.78rem; color: var(--muted); }
+.sync { font-size: 0.78rem; color: var(--muted); margin: 0; }
 
-/* ---- entry form ---- */
 .entry { display: flex; flex-direction: column; gap: 16px; }
 .entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
 .entry-head h2 { font-size: 1.2rem; }
 .scanbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: var(--sunk); }
-.scanbar .thumb { width: 64px; height: 88px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); cursor: zoom-in; }
+.scanbar.error { background: var(--danger-soft); }
+.thumb { width: 72px; height: 96px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); cursor: zoom-in; }
 .scanmsg { flex: 1 1 220px; font-size: 0.92rem; }
-.scanmsg.error { color: var(--danger); }
 .scanmsg strong { display: block; }
 .spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; display: inline-block; vertical-align: -3px; margin-right: 6px; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -122,9 +111,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (max-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .span2 { grid-column: 1 / -1; } }
 .f { display: flex; flex-direction: column; gap: 3px; min-width: 0; position: relative; }
 .f label { font-size: 0.8rem; color: var(--muted); }
-.f input, .f textarea, .f select, .rx input {
-  width: 100%; border: 1px solid var(--line); border-radius: 7px; padding: 8px 9px; background: var(--surface); min-height: 40px;
-}
+.f input, .f textarea, .f select, .rx input { width: 100%; border: 1px solid var(--line); border-radius: 7px; padding: 8px 9px; background: var(--surface); min-height: 40px; }
 .f textarea { resize: vertical; }
 .f input:focus, .f textarea:focus, .rx input:focus, .f select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
 .filled { background: var(--fill) !important; }
@@ -145,36 +132,67 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .totals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; }
 @media (max-width: 480px) { .totals { grid-template-columns: minmax(0, 1fr); } }
 .balance-note { font-size: 0.78rem; color: var(--muted); }
-
 .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
 .actions .spacer { flex: 1; }
 .saved-at { font-size: 0.82rem; color: var(--muted); }
 
-.viewer { position: fixed; inset: 0; background: rgba(0,0,0,.8); display: grid; place-items: center; padding: 16px; z-index: 10; cursor: zoom-out; }
+.viewer { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: grid; place-items: center; padding: 16px; z-index: 10; cursor: zoom-out; }
 .viewer img { max-height: 100%; max-width: 100%; border-radius: 6px; background: #fff; }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 8px; max-width: calc(100% - 32px); z-index: 11; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 18px; background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 8px; max-width: calc(100% - 32px); z-index: 11; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 </style>
-
+</head>
+<body>
 <header class="top">
   <div class="brand">
     <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="11" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="29" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M18 21c1.2-1.4 2.8-1.4 4 0M4 20l-2-6M36 20l2-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
     <div><h1>Optimex Job Cards</h1><p>Optimex Opticals · Computerised Eye Clinic · Alathur</p></div>
   </div>
   <div class="top-actions">
-    <label class="btn primary big" id="scanLabel" for="photo">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      Scan job card
-    </label>
-    <input id="photo" class="sr" type="file" accept="image/jpeg,image/png,image/webp" capture="environment">
-    <label class="btn big" id="galleryLabel" for="gallery">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 16l5-5 4 4 3-3 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="15.5" cy="8.5" r="1.5" fill="currentColor"/></svg>
-      Upload photo
-    </label>
-    <input id="gallery" class="sr" type="file" accept="image/jpeg,image/png,image/webp">
-    <button class="btn big" id="newBtn" type="button">New blank card</button>
+    <button class="btn primary" id="connectBtn" type="button" aria-expanded="false" aria-controls="connectPanel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Connect a phone
+    </button>
+    <label class="btn" id="uploadLabel" for="upload">Upload photo</label>
+    <input id="upload" class="sr" type="file" accept="image/*">
+    <button class="btn" id="newBtn" type="button">New blank card</button>
+    <button class="btn ghost" id="settingsBtn" type="button" aria-expanded="false" aria-controls="settingsPanel">Settings</button>
   </div>
 </header>
+
+<div class="banner" id="keyBanner" hidden>
+  <span><b>Handwriting reading is off.</b> Phone photos still arrive here, but the details won't fill in until you add an Anthropic API key.</span>
+  <button class="btn" type="button" id="bannerSettings">Add API key</button>
+</div>
+
+<section class="panel connect" id="connectPanel" hidden aria-labelledby="connectH">
+  <div class="qr" id="qr" role="img" aria-label="QR code for the phone scanning page"></div>
+  <div>
+    <h2 id="connectH">Connect a phone</h2>
+    <ol>
+      <li>Connect the phone to the <b>same Wi-Fi</b> as this computer.</li>
+      <li>Open the phone camera and point it at this QR code, then tap the link.</li>
+      <li>On the phone, tap <b>Add to Home Screen</b> so it opens like an app next time.</li>
+    </ol>
+    <p class="hint">Or type this link into the phone's browser. It includes the shop's private key, so only share it with staff.</p>
+    <p class="link" id="phoneLink"></p>
+    <p class="hint" id="otherLinks"></p>
+  </div>
+</section>
+
+<section class="panel" id="settingsPanel" hidden aria-labelledby="settingsH">
+  <div>
+    <h2 id="settingsH">Handwriting reading</h2>
+    <p class="hint" style="margin-bottom:10px">Photos are read by Claude through the Anthropic API. Create a key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> and add some credit. Each scan costs a few rupees. The key stays on this computer; phones never see it.</p>
+    <form class="settings-row" id="settingsForm">
+      <label class="sr" for="apiKey">Anthropic API key</label>
+      <input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-...">
+      <button class="btn primary" type="submit">Save key</button>
+      <button class="btn ghost" type="button" id="removeKey">Remove key</button>
+    </form>
+    <p class="hint" id="keyState"></p>
+  </div>
+</section>
 
 <main class="layout">
   <aside class="pane list-pane" aria-labelledby="listH">
@@ -182,6 +200,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <input id="search" type="search" placeholder="Search name, phone or order no." aria-label="Search job cards">
     <div class="filters" role="group" aria-label="Filter by status">
       <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-filter="check" aria-pressed="false">To check</button>
       <button class="chip" type="button" data-filter="pending" aria-pressed="false">Pending</button>
       <button class="chip" type="button" data-filter="ready" aria-pressed="false">Ready</button>
       <button class="chip" type="button" data-filter="delivered" aria-pressed="false">Delivered</button>
@@ -190,12 +209,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <div class="empty" id="empty">
       No job cards yet. How it works:
       <ol>
-        <li>Open this page on your phone and tap <b>Scan job card</b>.</li>
-        <li>Photograph the filled card. The details fill in automatically.</li>
-        <li>Check the highlighted fields and tap <b>Save</b>. The card appears here on every device.</li>
+        <li>Press <b>Connect a phone</b> and scan the QR code with a phone on the shop Wi-Fi.</li>
+        <li>On the phone, tap <b>Take photo</b> and photograph a filled job card.</li>
+        <li>The card opens here with the details filled in. Check them and press <b>Save</b>.</li>
       </ol>
     </div>
-    <p class="sync" id="sync"></p>
+    <p class="sync" id="sync">Connecting…</p>
   </aside>
 
   <section class="pane entry" aria-labelledby="entryH">
@@ -212,9 +231,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
     </div>
 
     <div class="scanbar" id="scanbar" hidden>
-      <img class="thumb" id="thumb" alt="Scanned job card, tap to enlarge">
+      <img class="thumb" id="thumb" alt="Photo of the job card, click to enlarge">
       <div class="scanmsg" id="scanmsg" role="status"></div>
-      <button class="btn" id="stopBtn" type="button" hidden>Stop</button>
+      <button class="btn" id="readBtn" type="button" hidden>Read again</button>
     </div>
 
     <form id="form" autocomplete="off" novalidate>
@@ -224,12 +243,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
           <div class="f"><label for="orderNo">Order no.</label><input id="orderNo" data-key="orderNo" inputmode="numeric"></div>
           <div class="f"><label for="date">Date</label><input id="date" data-key="date" type="date"></div>
           <div class="f"><label for="dueDate">Due date</label><input id="dueDate" data-key="dueDate" type="date"></div>
-          <div class="f"><label for="phone">Tel</label><input id="phone" data-key="phone" type="tel" inputmode="tel"></div>
+          <div class="f"><label for="phone">Tel</label><input id="phone" data-key="phone" type="tel"></div>
           <div class="f span2"><label for="name">Name</label><input id="name" data-key="name"></div>
           <div class="f span2"><label for="address">Address</label><input id="address" data-key="address"></div>
         </div>
       </div>
-
       <div style="margin-top:16px">
         <p class="section-label">Referral</p>
         <div class="grid">
@@ -239,7 +257,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
           <div class="f"><label for="lab">Lab</label><input id="lab" data-key="lab"></div>
         </div>
       </div>
-
       <div style="margin-top:16px">
         <p class="section-label">Prescription</p>
         <div class="rx-wrap">
@@ -252,7 +269,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
           </table>
         </div>
       </div>
-
       <div style="margin-top:16px">
         <p class="section-label">Order</p>
         <div class="grid">
@@ -261,7 +277,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
           <div class="f span4"><label for="notes">Notes</label><input id="notes" data-key="notes"></div>
         </div>
       </div>
-
       <div style="margin-top:16px">
         <p class="section-label">Payment (₹)</p>
         <div class="totals">
@@ -270,9 +285,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
           <div class="f money"><label for="balance">Balance</label><input id="balance" data-key="balance" inputmode="decimal"><span class="balance-note" id="balNote"></span></div>
         </div>
       </div>
-
       <div class="actions" style="margin-top:16px">
-        <button class="btn primary big" type="submit" id="saveBtn">Save job card</button>
+        <button class="btn primary" type="submit" id="saveBtn">Save job card</button>
         <button class="btn" type="button" id="copyBtn">Copy details</button>
         <span class="saved-at" id="savedAt"></span>
         <span class="spacer"></span>
@@ -282,7 +296,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   </section>
 </main>
 
-<div class="viewer" id="viewer" hidden><img id="viewerImg" alt="Scanned job card"></div>
+<div class="viewer" id="viewer" hidden><img id="viewerImg" alt="Job card photo"></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
@@ -290,6 +304,21 @@ button, input, select, textarea { font: inherit; color: inherit; }
   'use strict';
   const $ = (id) => document.getElementById(id);
   const form = $('form');
+
+  // A second computer on the shop network opens this page with ?key=...; this computer needs none.
+  const params = new URLSearchParams(location.search);
+  let shopKey = params.get('key') || '';
+  try { if (shopKey) localStorage.setItem('optimex.key', shopKey); else shopKey = localStorage.getItem('optimex.key') || ''; } catch (e) {}
+  const withKey = (u) => shopKey ? u + (u.includes('?') ? '&' : '?') + 'key=' + encodeURIComponent(shopKey) : u;
+  async function api(method, url, body, type) {
+    const headers = shopKey ? { 'x-shop-key': shopKey } : {};
+    if (body && !type) headers['Content-Type'] = 'application/json';
+    if (type) headers['Content-Type'] = type;
+    const res = await fetch(url, { method, headers, body: body && !type ? JSON.stringify(body) : body });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'The shop computer did not respond.');
+    return data;
+  }
 
   // ---------- prescription grid ----------
   const RX = [];
@@ -322,18 +351,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
     ks.slice(0, -1).forEach((k) => { cur = cur[k] = cur[k] || {}; });
     cur[ks[ks.length - 1]] = v;
   }
-
   function readForm() {
     const d = {};
     inputs().forEach((el) => setPath(d, el.dataset.key, el.value.trim()));
     return d;
   }
-
   function clearMarks() {
     document.querySelectorAll('.filled, .unsure').forEach((el) => el.classList.remove('filled', 'unsure'));
     document.querySelectorAll('.flag').forEach((el) => el.remove());
   }
-
   function fillForm(d, opts = {}) {
     clearMarks();
     inputs().forEach((el) => {
@@ -353,17 +379,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
     updateBalanceNote();
   }
 
+  let dirty = false, balanceTouched = false;
   form.addEventListener('input', (e) => {
     e.target.classList.remove('unsure', 'filled');
     e.target.closest('.f')?.querySelector('.flag')?.remove();
+    if (e.target.id === 'balance') balanceTouched = true;
     if (['total', 'advance'].includes(e.target.id)) autoBalance();
     updateBalanceNote();
     dirty = true;
   });
-
   const num = (s) => { const n = parseFloat(String(s).replace(/[^\d.\-]/g, '')); return isNaN(n) ? null : n; };
-  let balanceTouched = false;
-  $('balance').addEventListener('input', () => { balanceTouched = true; });
   function autoBalance() {
     const t = num($('total').value), a = num($('advance').value);
     if (t != null && !balanceTouched) $('balance').value = String(t - (a || 0));
@@ -373,66 +398,42 @@ button, input, select, textarea { font: inherit; color: inherit; }
     $('balNote').textContent = t != null && b != null && Math.abs(t - (a || 0) - b) > 0.01 ? `Total − advance = ${t - (a || 0)}` : '';
   }
 
-  // ---------- toast ----------
   let tt;
-  function toast(m) { const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => { t.hidden = true; }, 2600); }
+  function toast(m) { const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => { t.hidden = true; }, 3000); }
 
-  // ---------- storage: shared db, falling back to this browser ----------
-  let db = null, jobs = [], currentId = null, dirty = false;
-  const LOCAL = 'optimex.jobcards.v1';
-  const localLoad = () => { try { return JSON.parse(localStorage.getItem(LOCAL)) || []; } catch (e) { return []; } };
-  const localSave = () => { try { localStorage.setItem(LOCAL, JSON.stringify(jobs)); } catch (e) {} };
-
-  function newId() { return 'jc' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
-
-  async function saveJob(data) {
-    const id = currentId || newId();
-    const now = new Date().toISOString();
-    const existing = jobs.find((j) => j.id === id);
-    const body = { ...data, createdAt: existing?.createdAt || now, updatedAt: now };
-    if (existing?.photo && !body.photo) body.photo = existing.photo;
-    if (db) {
-      await db.collection('jobcards').doc(id).set(body);
-    } else {
-      const i = jobs.findIndex((j) => j.id === id);
-      if (i >= 0) jobs[i] = { id, ...body }; else jobs.unshift({ id, ...body });
-      localSave();
-      renderList();
-    }
-    currentId = id;
-    return id;
-  }
-
-  async function deleteJob(id) {
-    if (db) await db.collection('jobcards').doc(id).delete();
-    else { jobs = jobs.filter((j) => j.id !== id); localSave(); renderList(); }
-  }
-
-  // ---------- list ----------
-  let filter = 'all';
-  const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  // ---------- job list ----------
+  let jobs = [], currentId = null, filter = 'all';
+  const localDate = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   const fmtDate = (iso) => { if (!iso) return ''; const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
+  const sortJobs = () => jobs.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+
+  function badge(j) {
+    if (j.scan?.state === 'reading') return ['reading', 'Reading'];
+    if (j.scan?.state === 'error') return ['failed', 'Not read'];
+    if (j.review) return ['check', 'To check'];
+    const st = j.status || 'pending';
+    if (st === 'pending' && j.dueDate && j.dueDate < localDate()) return ['overdue', 'Overdue'];
+    return [st, st];
+  }
 
   function renderList() {
     const q = $('search').value.trim().toLowerCase();
     const ul = $('jobs');
     ul.textContent = '';
-    const shown = jobs.filter((j) => (filter === 'all' || (j.status || 'pending') === filter) &&
+    const shown = jobs.filter((j) => (filter === 'all' || (filter === 'check' ? j.review || j.scan?.state === 'error' || j.scan?.state === 'reading' : !j.review && (j.status || 'pending') === filter)) &&
       (!q || [j.name, j.phone, j.orderNo].some((v) => String(v || '').toLowerCase().includes(q))));
     shown.forEach((j) => {
       const li = document.createElement('li');
       li.className = 'job' + (j.id === currentId ? ' active' : '');
       li.tabIndex = 0;
-      const st = j.status || 'pending';
-      const overdue = st === 'pending' && j.dueDate && j.dueDate < today();
-      const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = j.name || 'Unnamed';
-      const badge = document.createElement('span'); badge.className = 'status ' + (overdue ? 'overdue' : st);
-      badge.textContent = overdue ? 'Overdue' : st;
+      const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = j.name || (j.photo ? 'Card from phone' : 'Unnamed');
+      const [cls, label] = badge(j);
+      const b = document.createElement('span'); b.className = 'status ' + cls; b.textContent = label;
       const meta = document.createElement('span'); meta.className = 'meta';
       meta.textContent = [j.orderNo && '#' + j.orderNo, j.phone, j.dueDate && 'due ' + fmtDate(j.dueDate), num(j.balance) ? '₹' + num(j.balance) + ' due' : ''].filter(Boolean).join(' · ');
-      li.append(nm, badge, meta);
-      li.onclick = () => openJob(j.id);
-      li.onkeydown = (e) => { if (e.key === 'Enter') openJob(j.id); };
+      li.append(nm, b, meta);
+      li.onclick = () => confirmLeave('job:' + j.id, () => openJob(j.id));
+      li.onkeydown = (e) => { if (e.key === 'Enter') li.onclick(); };
       ul.appendChild(li);
     });
     $('count').textContent = jobs.length ? `${shown.length} of ${jobs.length}` : '';
@@ -445,67 +446,106 @@ button, input, select, textarea { font: inherit; color: inherit; }
     renderList();
   }));
 
+  // Unsaved typing is never thrown away silently: switching cards asks twice.
+  let leaveArmed = null;
+  function confirmLeave(target, go) {
+    if (!dirty || leaveArmed === target) { leaveArmed = null; go(); return; }
+    leaveArmed = target;
+    toast('You have unsaved changes. Click again to leave without saving.');
+    setTimeout(() => { if (leaveArmed === target) leaveArmed = null; }, 4000);
+  }
+
+  // ---------- open / new ----------
+  function showScan(j) {
+    const bar = $('scanbar'), msg = $('scanmsg');
+    if (!j || !j.photo) { bar.hidden = true; return; }
+    bar.hidden = false;
+    bar.classList.toggle('error', j.scan?.state === 'error');
+    $('thumb').src = withKey('/photos/' + j.photo);
+    $('readBtn').hidden = !(j.scan?.state === 'error' || j.scan?.state === 'none' || j.scan?.state === 'done');
+    $('readBtn').textContent = j.scan?.state === 'done' ? 'Read again' : 'Read';
+    const s = j.scan?.state;
+    if (s === 'reading') msg.innerHTML = '<span class="spinner"></span><strong style="display:inline">Reading the handwriting…</strong><br>Usually 15 to 40 seconds. The form fills in by itself.';
+    else if (s === 'error' || s === 'none') msg.textContent = j.scan.message || 'Not read yet.';
+    else if (s === 'done' && j.review) {
+      const n = inputs().filter((el) => el.classList.contains('filled')).length;
+      const u = (j.scan.unsure || []).length;
+      msg.innerHTML = `<strong>Filled ${n} fields from the photo.</strong>` + (u ? `${u} marked <b style="color:var(--warn)">check</b>. Compare them with the photo, ` : 'Compare with the photo, ') + 'then press Save.';
+    } else msg.textContent = 'Photo of the paper card. Click it to enlarge.';
+  }
+
   function openJob(id) {
     const j = jobs.find((x) => x.id === id);
     if (!j) return;
     currentId = id;
     balanceTouched = true;
-    fillForm(j);
-    currentPhoto = j.photo || null;
-    showScanbar(currentPhoto, j.photo ? 'Scanned card photo. Tap to enlarge.' : '');
-    $('entryH').textContent = `Job card ${j.orderNo ? '#' + j.orderNo : ''}`.trim();
-    $('savedAt').textContent = 'Last saved ' + new Date(j.updatedAt).toLocaleString();
+    fillForm(j, j.review && j.scan?.state === 'done' ? { mark: true, unsure: j.scan.unsure } : {});
+    showScan(j);
+    $('entryH').textContent = j.orderNo ? `Job card #${j.orderNo}` : 'Job card';
+    $('savedAt').textContent = j.review ? 'Not checked yet' : 'Last saved ' + new Date(j.updatedAt).toLocaleString();
     $('delBtn').hidden = false; resetDel();
     dirty = false;
     renderList();
-    if (window.innerWidth < 900) $('entryH').scrollIntoView({ behavior: 'smooth' });
   }
 
   function nextOrderNo() {
     const n = jobs.map((j) => parseInt(j.orderNo, 10)).filter((x) => !isNaN(x));
     return n.length ? String(Math.max(...n) + 1) : '';
   }
-
   function newCard() {
-    currentId = null; currentPhoto = null; balanceTouched = false;
-    fillForm({ status: 'pending', date: today(), orderNo: nextOrderNo() });
-    showScanbar(null);
+    currentId = null; balanceTouched = false;
+    fillForm({ status: 'pending', date: localDate(), orderNo: nextOrderNo() });
+    showScan(null);
     $('entryH').textContent = 'New job card';
     $('savedAt').textContent = '';
     $('delBtn').hidden = true;
     dirty = false;
     renderList();
   }
-  $('newBtn').addEventListener('click', newCard);
+  $('newBtn').addEventListener('click', () => confirmLeave('new', newCard));
+
+  function upsert(job) {
+    const i = jobs.findIndex((j) => j.id === job.id);
+    if (i >= 0) jobs[i] = job; else { jobs.push(job); sortJobs(); }
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = readForm();
     if (!data.name && !data.phone && !data.orderNo) { toast('Add at least a name, phone or order number'); return; }
-    if (currentPhoto) data.photo = currentPhoto;
     $('saveBtn').disabled = true;
     try {
-      await saveJob(data);
-      toast(db ? 'Saved. It now shows on every device.' : 'Saved in this browser');
-      clearMarks();
-      $('entryH').textContent = `Job card ${data.orderNo ? '#' + data.orderNo : ''}`.trim();
-      $('savedAt').textContent = 'Last saved ' + new Date().toLocaleString();
-      $('delBtn').hidden = false;
+      const job = currentId ? await api('PUT', '/api/jobs/' + currentId, data) : await api('POST', '/api/jobs', data);
+      upsert(job);
       dirty = false;
-      renderList();
-    } catch (err) {
-      toast(err?.code === 'quota_exceeded' ? 'Storage is full. Delete old delivered cards, then save again.' : 'Could not save. Check your connection and try again.');
-    } finally { $('saveBtn').disabled = false; }
+      openJob(job.id);
+      toast('Saved');
+    } catch (err) { toast(err.message); }
+    finally { $('saveBtn').disabled = false; }
   });
 
-  // Two-step delete (the viewer can't show confirm dialogs).
   let delArmed = false;
   function resetDel() { delArmed = false; $('delBtn').textContent = 'Delete'; }
   $('delBtn').addEventListener('click', async () => {
-    if (!delArmed) { delArmed = true; $('delBtn').textContent = 'Tap again to delete'; setTimeout(resetDel, 4000); return; }
-    const id = currentId;
+    if (!delArmed) { delArmed = true; $('delBtn').textContent = 'Click again to delete'; setTimeout(resetDel, 4000); return; }
     resetDel();
-    try { await deleteJob(id); toast('Deleted'); newCard(); } catch (e) { toast('Could not delete. Try again.'); }
+    try { await api('DELETE', '/api/jobs/' + currentId); jobs = jobs.filter((j) => j.id !== currentId); dirty = false; newCard(); toast('Deleted'); }
+    catch (err) { toast(err.message); }
+  });
+
+  // Reading again replaces what staff typed, so a filled card needs a second click.
+  let readArmed = false;
+  $('readBtn').addEventListener('click', async () => {
+    const j = jobs.find((x) => x.id === currentId);
+    if (j?.scan?.state === 'done' && !readArmed) {
+      readArmed = true;
+      $('readBtn').textContent = 'Click again to replace';
+      toast('Reading again replaces the details on this card with a fresh reading of the photo.');
+      setTimeout(() => { readArmed = false; if ($('readBtn').textContent !== 'Read') $('readBtn').textContent = 'Read again'; }, 4000);
+      return;
+    }
+    readArmed = false;
+    try { upsert(await api('POST', `/api/jobs/${currentId}/read`)); dirty = false; openJob(currentId); } catch (err) { toast(err.message); }
   });
 
   $('copyBtn').addEventListener('click', async () => {
@@ -514,171 +554,114 @@ button, input, select, textarea { font: inherit; color: inherit; }
     const text = [
       `Order ${d.orderNo || '-'} · Date ${fmtDate(d.date)} · Due ${fmtDate(d.dueDate)}`,
       `Name: ${d.name}`, `Address: ${d.address}`, `Tel: ${d.phone}`,
-      `Re: ${rx('re')}`, `Le: ${rx('le')}`,
-      `Lens: ${d.lens}`, `Frame: ${d.frame}`,
+      `Re: ${rx('re')}`, `Le: ${rx('le')}`, `Lens: ${d.lens}`, `Frame: ${d.frame}`,
       `Total ₹${d.total || 0} · Advance ₹${d.advance || 0} · Balance ₹${d.balance || 0}`,
     ].join('\n');
     try { await navigator.clipboard.writeText(text); toast('Details copied'); }
-    catch (e) { toast('Copy is blocked here. Select the fields and copy them by hand.'); }
+    catch (e) { toast('Copy was blocked by the browser.'); }
   });
 
-  // ---------- scanning with Claude ----------
-  let sample = null, currentPhoto = null, ctl = null;
-
-  const PROMPT = `You are reading a photo of a handwritten job card from Optimex Opticals, an optical shop in Kerala, India.
-The printed card has two parts. Top slip: Ph number (printed shop phone, ignore it), Order No, Date, Due Date, Total, Name, Advance, Address, Balance.
-Bottom (shop copy): a row of boxes "Call | (blank) | Doctor | Clinic | Lab" with handwriting in the boxes below them, then Date, Due Date, No., Name, Address, Tel,
-then a prescription table with columns Re (right eye) Sph, Cyl, Axi and Le (left eye) Sph, Cyl, Axi and rows DV (distance vision) and NV (near vision),
-then Lens, Frame, and Total, Advance, Balance. Small G/C boxes near the totals may have ticks; mention them in notes if marked.
-
-Read ONLY the handwriting (ignore printed labels, the shop's printed phone number and printed address "Swathy Jn, Court Road, Alathur").
-The same detail may be written in both parts: use whichever is legible; if they disagree, prefer the bottom part and list the key in "unsure".
-Handwritten dates are day/month/year; output them as YYYY-MM-DD. If only the day and month are written, assume the year ${new Date().getFullYear()}.
-Prescription: keep the sign and decimals as written, e.g. "-1.25", "+2.00", "PL" or "plano" as "0.00". Sph/Cyl written without a sign stay unsigned. Axis is a whole number 0-180, no degree sign.
-Money: plain numbers without ₹ or "/-". Phone: digits only (keep a leading +91 if written).
-Use "" for anything blank or unreadable. Never invent values.
-Put every key you are not confident about in "unsure" (use the dotted key names below, e.g. "rx.le.dv.cyl").
-
-Reply with only this JSON object:
-{"orderNo":"","date":"","dueDate":"","name":"","address":"","phone":"","call":"","doctor":"","clinic":"","lab":"",
-"rx":{"re":{"dv":{"sph":"","cyl":"","axis":""},"nv":{"sph":"","cyl":"","axis":""}},"le":{"dv":{"sph":"","cyl":"","axis":""},"nv":{"sph":"","cyl":"","axis":""}}},
-"lens":"","frame":"","total":"","advance":"","balance":"","notes":"","unsure":[]}`;
-
-  function showScanbar(photo, msg, isErr) {
-    const bar = $('scanbar');
-    bar.hidden = !photo && !msg;
-    $('thumb').hidden = !photo;
-    if (photo) $('thumb').src = photo;
-    const m = $('scanmsg');
-    m.classList.toggle('error', !!isErr);
-    m.innerHTML = msg || '';
-  }
   $('thumb').addEventListener('click', () => { $('viewerImg').src = $('thumb').src; $('viewer').hidden = false; });
   $('viewer').addEventListener('click', () => { $('viewer').hidden = true; });
-  $('stopBtn').addEventListener('click', () => ctl?.abort());
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('viewer').hidden = true; });
 
-  // Small JPEG kept with the card so staff can compare against the paper later.
-  function thumbnail(file) {
-    return new Promise((resolve) => {
+  // ---------- photo upload from this computer ----------
+  function shrink(file) {
+    return new Promise((resolve, reject) => {
       const url = URL.createObjectURL(file);
       const img = new Image();
       img.onload = () => {
-        const w = Math.min(720, img.naturalWidth), h = Math.round(img.naturalHeight * (w / img.naturalWidth));
-        const c = document.createElement('canvas'); c.width = w; c.height = h;
-        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        const s = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
         URL.revokeObjectURL(url);
-        let q = 0.6, out = c.toDataURL('image/jpeg', q);
-        while (out.length > 180000 && q > 0.25) { q -= 0.1; out = c.toDataURL('image/jpeg', q); }
-        resolve(out.length <= 180000 ? out : null);
+        c.toBlob((b) => (b ? resolve(b) : reject(new Error('Could not prepare the photo.'))), 'image/jpeg', 0.85);
       };
-      img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('That file could not be opened as a photo.')); };
       img.src = url;
     });
   }
-
-  const ERR = {
-    not_granted: 'Scanning needs your permission to use Claude. Reload the page and choose Allow to try again.',
-    sampling_disabled: 'Claude isn’t available on this account, so scanning is off. You can still type the card in.',
-    rate_limited: 'Too many scans in a short time, or your Claude usage limit was reached. Wait a little, then scan again.',
-    image_rejected: 'That photo couldn’t be used. Take a JPG or PNG photo of the card and try again.',
-    refused: 'The photo couldn’t be read. Retake it with the whole card in view.',
-    invalid_json: 'The reading came back incomplete. Tap Scan job card to try again.',
-    session_expired: 'You’ve been signed out of Claude. Sign in again, then scan.',
-  };
-
-  // Two ways in from a phone: "Scan job card" opens the camera, "Upload photo" opens the
-  // gallery / files. On a computer both open the file picker, and a photo can be dropped on the form.
-  let busy = false;
-  ['photo', 'gallery'].forEach((id) => $(id).addEventListener('change', (e) => {
+  $('upload').addEventListener('change', async (e) => {
     const file = e.target.files[0];
     e.target.value = '';
-    if (file) handlePhoto(file);
-  }));
-  const entry = document.querySelector('.entry');
-  entry.addEventListener('dragover', (e) => { if ([...e.dataTransfer.types].includes('Files')) e.preventDefault(); });
-  entry.addEventListener('drop', (e) => {
-    const file = [...e.dataTransfer.files].find((f) => f.type.startsWith('image/'));
     if (!file) return;
-    e.preventDefault();
-    handlePhoto(file);
+    try {
+      const blob = await shrink(file);
+      const job = await api('POST', '/api/scan', blob, 'image/jpeg');
+      upsert(job);
+      if (dirty) { renderList(); toast('Photo added. It\u2019s in the list under To check.'); }
+      else openJob(job.id);
+    } catch (err) { toast(err.message); }
   });
 
-  async function handlePhoto(file) {
-    if (busy) { toast('Still reading the last card. Wait for it, or tap Stop.'); return; }
-    if (file.type && !/^image\/(jpeg|png|webp|gif)$/.test(file.type)) {
-      toast('Use a JPG or PNG photo. On iPhone, set Camera › Formats to Most Compatible if HEIC photos are rejected.');
-      return;
-    }
-    busy = true;
-    try { await readCard(file); } finally { busy = false; }
+  // ---------- panels ----------
+  function toggle(btn, panel, show) {
+    const open = show ?? panel.hidden;
+    panel.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
   }
+  $('connectBtn').addEventListener('click', () => { toggle($('connectBtn'), $('connectPanel')); loadInfo(); });
+  $('settingsBtn').addEventListener('click', () => toggle($('settingsBtn'), $('settingsPanel')));
+  $('bannerSettings').addEventListener('click', () => { toggle($('settingsBtn'), $('settingsPanel'), true); $('apiKey').focus(); });
 
-  async function readCard(file) {
-    newCard();
-    currentPhoto = await thumbnail(file);
-    const preview = currentPhoto || URL.createObjectURL(file);
-    if (!sample) {
-      showScanbar(preview, window.claude
-        ? '<strong>Automatic reading isn\u2019t available in this view.</strong>This Claude app can\u2019t send photos for reading. Open the link in a web browser signed in to claude.ai, or type the details in below.'
-        : '<strong>Automatic reading is off.</strong>This copy of the page was opened as a plain file, so it can\u2019t read handwriting. Use the claude.ai link, or the shop computer version. You can type the details in below.', true);
-      return;
-    }
-    ctl = new AbortController();
-    $('stopBtn').hidden = false;
-    ['scanLabel', 'galleryLabel'].forEach((id) => $(id).setAttribute('aria-disabled', 'true'));
-    showScanbar(preview, '<span class="spinner"></span><strong style="display:inline">Reading the handwriting…</strong><br>This usually takes 15 to 40 seconds.');
+  async function loadInfo() {
     try {
-      const r = await sample.json(PROMPT, { images: file, signal: ctl.signal, modelTier: 'default' });
-      if (!r || typeof r !== 'object') throw { code: 'invalid_json' };
-      const data = { status: 'pending' };
-      ['orderNo', 'date', 'dueDate', 'name', 'address', 'phone', 'call', 'doctor', 'clinic', 'lab', 'lens', 'frame', 'total', 'advance', 'balance', 'notes']
-        .forEach((k) => { data[k] = r[k] == null ? '' : String(r[k]).trim(); });
-      RX.forEach((k) => { const v = getPath(r, k); setPath(data, k, v == null ? '' : String(v).trim()); });
-      ['date', 'dueDate'].forEach((k) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(data[k])) data[k] = ''; });
-      if (!data.date) data.date = today();
-      if (!data.orderNo) data.orderNo = nextOrderNo();
-      if (!data.balance && num(data.total) != null) data.balance = String(num(data.total) - (num(data.advance) || 0));
-      balanceTouched = !!r.balance;
-      const unsure = Array.isArray(r.unsure) ? r.unsure.map(String) : [];
-      fillForm(data, { mark: true, unsure });
-      const filled = inputs().filter((el) => el.classList.contains('filled')).length;
-      showScanbar(preview, `<strong>Filled ${filled} fields from the photo.</strong>` +
-        (unsure.length ? `${unsure.length} marked <b style="color:var(--warn)">check</b>: compare them with the card. ` : 'Compare with the card, ') + 'then tap Save.');
-      dirty = true;
-    } catch (err) {
-      if (err?.code === 'cancelled') showScanbar(preview, 'Reading stopped. You can type the details in, or scan again.');
-      else showScanbar(preview, ERR[err?.code] || 'Something went wrong while reading the card. Tap Scan job card to try again.', true);
-    } finally {
-      $('stopBtn').hidden = true;
-      ['scanLabel', 'galleryLabel'].forEach((id) => $(id).removeAttribute('aria-disabled'));
-    }
+      const info = await api('GET', '/api/info');
+      $('keyBanner').hidden = info.hasApiKey;
+      $('keyState').textContent = info.apiKeyFromEnv ? 'Using the key from the ANTHROPIC_API_KEY environment variable.' : info.hasApiKey ? `A key is saved. Reading uses ${info.model}.` : 'No key saved yet.';
+      if (!info.isLocal) { $('settingsBtn').hidden = true; $('settingsPanel').hidden = true; }
+      if (info.phoneLink) {
+        $('qr').innerHTML = info.qr;
+        $('phoneLink').textContent = info.phoneLink;
+        $('otherLinks').textContent = info.phoneLinks.length > 1 ? 'If the QR code doesn’t open on the phone, try: ' + info.phoneLinks.slice(1).join('  or  ') : '';
+      } else {
+        $('qr').innerHTML = '';
+        $('phoneLink').textContent = 'This computer isn’t connected to a network. Connect it to the shop Wi-Fi and press Connect a phone again.';
+      }
+    } catch (err) { toast(err.message); }
   }
 
-  // ---------- start ----------
+  $('settingsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try { await api('POST', '/api/settings', { apiKey: $('apiKey').value }); $('apiKey').value = ''; toast('API key saved'); loadInfo(); }
+    catch (err) { toast(err.message); }
+  });
+  $('removeKey').addEventListener('click', async () => {
+    try { await api('POST', '/api/settings', { apiKey: '' }); toast('API key removed'); loadInfo(); } catch (err) { toast(err.message); }
+  });
+
+  // ---------- live updates ----------
+  function connect() {
+    const es = new EventSource(withKey('/api/events'));
+    es.onopen = async () => {
+      $('sync').textContent = 'Connected. New phone scans appear here by themselves.';
+      try { jobs = await api('GET', '/api/jobs'); sortJobs(); renderList(); if (currentId && !dirty) openJob(currentId); } catch (err) { toast(err.message); }
+    };
+    es.onerror = () => { $('sync').textContent = 'Lost connection to the job card program. Is its window still open on the shop computer? Retrying…'; };
+    es.onmessage = (e) => {
+      const ev = JSON.parse(e.data);
+      if (ev.type === 'delete') {
+        jobs = jobs.filter((j) => j.id !== ev.id);
+        if (ev.id === currentId) { dirty = false; newCard(); } else renderList();
+        return;
+      }
+      const job = ev.job, isNew = !jobs.some((j) => j.id === job.id);
+      upsert(job);
+      if (job.id === currentId) {
+        if (!dirty) openJob(job.id);
+        else { renderList(); if (job.scan?.state === 'done') toast('The photo has been read. Save or discard your typing to see the filled form.'); }
+      } else if (isNew && job.source === 'phone') {
+        if (!dirty) { openJob(job.id); toast('New job card from phone'); }
+        else { renderList(); toast('New job card from phone. It’s in the list under To check.'); }
+      } else renderList();
+    };
+  }
+
   newCard();
-  jobs = localLoad();
-  renderList();
-  $('sync').textContent = 'Connecting…';
-
-  if (window.claude && claude.use) {
-    claude.use('sample').then(async (s) => {
-      if (!s) return;
-      const lim = await s.limits().catch(() => null);
-      if (lim && lim.images) sample = s;
-    });
-    claude.use('db').then((d) => {
-      if (!d) { $('sync').textContent = 'Saving in this browser only.'; return; }
-      db = d;
-      db.collection('jobcards').orderBy('createdAt', 'desc').limit(500).onSnapshot((snap) => {
-        jobs = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        $('sync').textContent = 'Synced across your devices.';
-        renderList();
-        // If another device changed the card that's open and nothing is being typed here, refresh it.
-        if (currentId && !dirty && jobs.some((j) => j.id === currentId)) openJob(currentId);
-      }, () => { $('sync').textContent = 'Live sync stopped. Reload the page to reconnect.'; });
-    });
-  } else {
-    $('sync').textContent = 'Saving in this browser only.';
-  }
+  loadInfo();
+  connect();
 })();
 </script>
+</body>
+</html>
