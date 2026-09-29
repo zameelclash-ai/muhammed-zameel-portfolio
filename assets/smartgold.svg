@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 620" font-family="Inter,Segoe UI,Arial,sans-serif">
+<rect width="300" height="620" rx="42" fill="#0b1213"/><rect x="8" y="8" width="284" height="604" rx="36" fill="#14110a"/>
+<rect x="110" y="16" width="80" height="20" rx="10" fill="#0b1213"/>
+<text x="24" y="66" font-size="11" fill="#9aa" opacity=".8">9:41</text>
+<text x="24" y="98" font-size="20" font-weight="700" fill="#fff">Smart Gold</text>
+<rect x="20" y="116" width="260" height="150" rx="18" fill="#2a2210"/>
+<text x="36" y="146" font-size="11" fill="#e8c56a">Gold 24K / 10g</text><text x="36" y="188" font-size="30" font-weight="800" fill="#f6d77a">₹ 73,480</text>
+<text x="36" y="212" font-size="12" fill="#7ee08a">▲ +0.82% today</text>
+<path d="M36 250 C70 240 90 224 120 232 S170 210 200 218 S250 196 268 190" stroke="#f6d77a" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="20" y="282" width="125" height="90" rx="18" fill="#ffffff10"/><rect x="155" y="282" width="125" height="90" rx="18" fill="#ffffff10"/><text x="34" y="310" font-size="10" fill="#c9b27a">22K</text><text x="34" y="340" font-size="20" font-weight="700" fill="#fff">₹ 67,350</text><text x="169" y="310" font-size="10" fill="#c9b27a">18K</text><text x="169" y="340" font-size="20" font-weight="700" fill="#fff">₹ 55,110</text><rect x="20" y="388" width="260" height="64" rx="18" fill="#ffffff10"/><text x="36" y="415" font-size="12" fill="#fff" font-weight="600">Price alert</text><text x="36" y="436" font-size="11" fill="#c9b27a">Notify me above ₹ 75,000</text><rect x="222" y="408" width="44" height="24" rx="12" fill="#f6d77a"/><circle cx="254" cy="420" r="9" fill="#14110a"/><rect x="20" y="466" width="260" height="110" rx="18" fill="#ffffff10"/><text x="36" y="494" font-size="12" fill="#fff" font-weight="600">My portfolio</text><rect x="36" y="508" width="200" height="8" rx="4" fill="#f6d77a"/><rect x="36" y="528" width="140" height="8" rx="4" fill="#f6d77a" opacity=".6"/><rect x="36" y="548" width="90" height="8" rx="4" fill="#f6d77a" opacity=".35"/>
+</svg>

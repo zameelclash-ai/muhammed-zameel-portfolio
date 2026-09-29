@@ -45,7 +45,7 @@
   .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 
   /* nav */
-  .nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 6px 6px 6px 20px; background: var(--surface); border-radius: 999px; border: 1px solid var(--line); }
+  .nav { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 8px); z-index: 20; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 6px 6px 6px 20px; background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 999px; border: 1px solid var(--line); }
   .nav b { font-weight: 800; letter-spacing: -.02em; }
   .nav nav { display: flex; gap: 6px; flex-wrap: wrap; }
   .pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: var(--surface-2); color: var(--fg); text-decoration: none; font-weight: 500; font-size: 14px; border: 0; }
@@ -99,7 +99,7 @@
   .section-head p { color: var(--muted); max-width: 34ch; }
 
   .work { display: grid; gap: 14px; }
-  .item { display: grid; grid-template-columns: 90px 1.1fr 1.4fr auto; gap: 24px; align-items: center; padding: 26px; border-radius: 28px; background: var(--surface); border: 1px solid var(--line); }
+  .item { display: grid; grid-template-columns: 64px 130px 1.1fr 1.3fr auto; gap: 24px; align-items: center; padding: 26px; border-radius: 28px; background: var(--surface); border: 1px solid var(--line); }
   .item:hover, .item:focus-visible, .item.sel { background: var(--blue); color: #fff; border-color: transparent; }
   .item:hover .muted, .item:focus-visible .muted, .item.sel .muted, .item:hover .chip, .item:focus-visible .chip, .item.sel .chip { color: rgba(255,255,255,.8); }
   .item:hover .chip, .item:focus-visible .chip, .item.sel .chip { border-color: rgba(255,255,255,.4); }
@@ -125,7 +125,7 @@
   /* contact */
   .contact { display: grid; gap: 22px; padding: clamp(24px, 5vw, 56px); border-radius: 36px; }
   .contact h2 { font-size: clamp(40px, 9vw, 110px); letter-spacing: -.055em; line-height: .88; font-weight: 800; }
-  .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+  .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 10px; }
   .links div { padding: 14px 18px; border-radius: 20px; background: rgba(20, 28, 16, .1); }
   .links small { display: block; opacity: .65; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
   .links a, .links span { font-weight: 700; font-size: 17px; overflow-wrap: anywhere; }
@@ -134,6 +134,57 @@
   .item { cursor: pointer; transition: transform .2s, box-shadow .2s, background .25s, color .25s; }
   .item:hover, .item:focus-visible { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,.25); outline: none; }
   .item:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+
+
+  /* text + selection */
+  ::selection { background: var(--lime); color: #141c10; }
+  .ch { display: inline-block; transition: transform .18s ease-out, color .18s; color: color-mix(in srgb, var(--hl, var(--lime-text)) calc(var(--p, 0) * 100%), currentColor); will-change: transform; }
+  .w { display: inline-block; white-space: nowrap; }
+  .wd { border-radius: 4px; transition: background .15s, color .15s, box-shadow .15s; }
+  .wd:hover { background: var(--wb, var(--lime)); color: var(--wt, #141c10); box-shadow: 0 0 0 3px var(--wb, var(--lime)); }
+  .lime-card, .lime { --hl: #1747d6; --wb: #141c10; --wt: #d9f56b; }
+  .white, .soft { --hl: #1747d6; }
+  .blue { --wb: #d9f56b; --wt: #141c10; --hl: #d9f56b; }
+  .item:hover, .item:focus-visible, .item.sel { --hl: #d9f56b; --wb: #d9f56b; --wt: #141c10; }
+  .pre .ch { opacity: 0; }
+  .fxin .ch { animation: chin .7s cubic-bezier(.2,.8,.2,1) backwards; animation-delay: calc(var(--i, 0) * 24ms); }
+  @keyframes chin { from { opacity: 0; transform: translateY(.6em) rotate(5deg); } }
+  @media (prefers-reduced-motion: reduce) { .pre .ch { opacity: 1; } .fxin .ch { animation: none; } }
+
+  #work, #tools, #contact { scroll-margin-top: 84px; }
+  @media (max-width: 520px) { .me .mtag.t2 { top: auto; bottom: 14px; right: 14px; } .me .mtag { font-size: 12px; padding: 6px 12px; } .me { min-height: 300px; } }
+
+  /* hero photo */
+  .me { grid-column: span 5; padding: 0; min-height: 340px; position: relative; overflow: hidden; display: flex; align-items: flex-end; justify-content: center; border: 0;
+    background: radial-gradient(circle at 50% 35%, #e6ff86 0%, #cfee5c 45%, #a9c93a 100%); }
+  .me img { width: min(100%, 440px); height: auto; display: block; transition: transform .25s ease-out; filter: contrast(1.06); }
+  .mtag { position: absolute; padding: 8px 14px; border-radius: 999px; background: rgba(15, 28, 31, .86); color: #f2f6ec; font-size: 13px; font-weight: 600; backdrop-filter: blur(8px); animation: float 4s ease-in-out infinite; }
+  .mtag.t1 { top: 16px; left: 16px; } .mtag.t2 { top: 16px; right: 16px; animation-delay: -2s; }
+  @keyframes float { 50% { transform: translateY(-6px); } }
+
+  /* project thumbnails */
+  .th { height: 108px; border-radius: 18px; overflow: hidden; background: #0b1213; }
+  .th img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .item:hover .th img, .item.sel .th img { transform: scale(1.12); }
+
+  /* toolkit */
+  .tk-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+  .tk { display: flex; flex-direction: column; gap: 16px; padding: 28px; }
+  .tk .tools span { transition: transform .25s cubic-bezier(.3,1.4,.5,1), background .2s, color .2s, border-color .2s; will-change: transform; }
+  .tk .tools span:hover { background: var(--blue); color: #fff; border-color: transparent; }
+  .lime-card.tk .tools span { background: rgba(20, 28, 16, .1); border-color: rgba(20, 28, 16, .25); }
+  .lime-card.tk .tools span:hover { background: #141c10; color: #d9f56b; }
+  @media (max-width: 860px) { .tk-grid .s7, .tk-grid .s5 { grid-column: span 12; } .item { grid-template-columns: 1fr; } .th { height: 190px; } .tk { padding: 20px; } .tools span { padding: 9px 16px; font-size: 15px; } }
+
+  /* gallery + lightbox */
+  .gs { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .gs:has(.gi:only-child) { justify-content: center; }
+  .gi { margin: 0; flex: none; height: clamp(240px, 36vw, 360px); border-radius: 20px; overflow: hidden; background: #0b1213; cursor: zoom-in; scroll-snap-align: start; transition: transform .25s; }
+  .gi:hover { transform: translateY(-4px) scale(1.02); }
+  .gi img { height: 100%; width: auto; max-width: none; display: block; }
+  .lb { position: fixed; inset: 0; z-index: 60; display: none; place-items: center; background: rgba(0, 0, 0, .92); padding: 16px; cursor: zoom-out; }
+  .lb.open { display: grid; }
+  .lb img { max-width: 94vw; max-height: 90vh; border-radius: 16px; object-fit: contain; background: #fff0; }
 
   /* project overview */
   body.lock { overflow: hidden; }
@@ -254,11 +305,12 @@
     .week i { height: 72px; }
   }
   @media (max-width: 860px) {
-    .profile, .photo-slot, .cal, .chart, .stat { grid-column: span 12; }
+    .profile, .me, .cal, .chart, .stat { grid-column: span 12; }
     .stat { grid-column: span 6; }
     .item { grid-template-columns: 1fr; gap: 12px; }
     .metric { text-align: left; }
-    .nav nav .pill:not(.lime) { display: none; }
+    .nav { padding-left: 14px; }
+    .nav nav .pill { padding: 8px 12px; font-size: 13px; }
   }
 </style>
 
@@ -285,10 +337,11 @@
       </div>
     </div>
 
-    <label class="card photo-slot" data-hint="Click to add your photo">
-      <span class="ph">MZ</span>
-      <input type="file" accept="image/*">
-    </label>
+    <div class="card me" id="me">
+      <img src="assets/me.png" alt="Muhammed Zameel" width="463" height="422">
+      <span class="mtag t1">Performance Marketer</span>
+      <span class="mtag t2">Thrissur, Kerala</span>
+    </div>
 
     <div class="card cal">
       <div class="mono" style="color:var(--muted)">Availability</div>
@@ -311,9 +364,9 @@
     </div>
 
     <div class="card stat">
-      <div class="mono" style="color:var(--muted)">Mandhi Zouk reach</div>
+      <div class="mono" style="color:var(--muted)">Mandhi Zouk views</div>
       <div class="num">236<small>K</small></div>
-      <p>on ₹1,260 ad spend</p>
+      <p>Instagram views in 30 days</p>
     </div>
     <div class="card stat">
       <div class="mono" style="color:var(--muted)">Smart Gold</div>
@@ -330,48 +383,56 @@
   <section class="work">
     <article class="item" tabindex="0" role="button" data-p="0" aria-label="Open project overview">
       <div class="no">01</div>
+      <div class="th"><img src="assets/chaya-1.jpg" alt="" loading="lazy"></div>
       <div><h3>Chaya Restaurant</h3><div class="chips"><span class="chip where">Victox Freelance Agency, Calicut</span><span class="chip">Video</span><span class="chip">Social</span></div></div>
       <p class="muted">Video and social campaigns built around storytelling, lifting engagement and bringing people through the door.</p>
       <div class="metric"><b>+40%</b><span>Footfall</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="1" aria-label="Open project overview">
       <div class="no">02</div>
+      <div class="th"><img src="assets/mandhi-2.jpg" alt="" loading="lazy"></div>
       <div><h3>Mandhi Zouk</h3><div class="chips"><span class="chip where">Victox Freelance Agency, Calicut</span><span class="chip">Meta Ads</span><span class="chip">Analytics</span></div></div>
       <p class="muted">Multi-channel performance campaign with full analytics reporting and tight audience targeting.</p>
-      <div class="metric"><b>236K</b><span>Reach</span></div>
+      <div class="metric"><b>236K</b><span>IG views</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="2" aria-label="Open project overview">
       <div class="no">03</div>
+      <div class="th"><img src="assets/zeko-1.jpg" alt="" loading="lazy"></div>
       <div><h3>ZEKO</h3><div class="chips"><span class="chip where">UAE</span><span class="chip">Web</span><span class="chip">Branding</span></div></div>
       <p class="muted">Premium painting and construction solutions brand with a clean product catalog across four categories.</p>
       <div class="metric"><b>100%</b><span>Responsive</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="3" aria-label="Open project overview">
       <div class="no">04</div>
+      <div class="th"><img src="assets/smartgold.svg" alt="" loading="lazy"></div>
       <div><h3>Smart Gold</h3><div class="chips"><span class="chip where">Android app</span><span class="chip">Live rates</span></div></div>
       <p class="muted">Real-time gold tracking with 30-second updates, charts, alerts and portfolio tracking.</p>
       <div class="metric"><b>2K+</b><span>Installs</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="4" aria-label="Open project overview">
       <div class="no">05</div>
+      <div class="th"><img src="assets/auditoriumhub.svg" alt="" loading="lazy"></div>
       <div><h3>AuditoriumHub</h3><div class="chips"><span class="chip where">Marketplace</span><span class="chip">Full-stack</span></div></div>
       <p class="muted">Venue booking platform connecting organisers with auditoriums, payments included.</p>
       <div class="metric"><b>₹50L+</b><span>Transactions</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="5" aria-label="Open project overview">
       <div class="no">06</div>
+      <div class="th"><img src="assets/petstore.svg" alt="" loading="lazy"></div>
       <div><h3>Shopify Pet Store</h3><div class="chips"><span class="chip where">E-commerce</span><span class="chip">Shopify</span></div></div>
       <p class="muted">Conversion-focused store with a tuned funnel and paid acquisition behind it.</p>
       <div class="metric"><b>$30K+</b><span>Per month</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="6" aria-label="Open project overview">
       <div class="no">07</div>
+      <div class="th"><img src="assets/optimex.svg" alt="" loading="lazy"></div>
       <div><h3>Optimex Optical</h3><div class="chips"><span class="chip where">Local business</span><span class="chip">Web</span></div></div>
       <p class="muted">Booking-led website for an optical brand, turning search traffic into appointments.</p>
       <div class="metric"><b>12%</b><span>Booking rate</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="7" aria-label="Open project overview">
       <div class="no">08</div>
+      <div class="th"><img src="assets/carousel.svg" alt="" loading="lazy"></div>
       <div><h3>Daily Carousel Engine</h3><div class="chips"><span class="chip where">Automation</span><span class="chip">Claude</span></div></div>
       <p class="muted">Social content automation that turns one idea into a ready-to-post carousel every day.</p>
       <div class="metric"><b>1/day</b><span>Auto posts</span></div>
@@ -382,8 +443,15 @@
     <h2>Toolkit</h2>
     <p>What I use to plan, build, publish and measure.</p>
   </div>
-  <div class="tools">
-    <span>Claude</span><span>Canva</span><span>Metricool</span><span>Meta Ads</span><span>Shopify</span><span>Google Analytics</span><span>HTML / CSS / JS</span><span>Android</span>
+  <div class="tk-grid">
+    <div class="card tk s7">
+      <div class="mono" style="color:var(--muted)">Tools</div>
+      <div class="tools"><span>WordPress</span><span>Shopify</span><span>Elementor</span><span>Hostinger</span><span>Google Ads</span><span>Meta Ads</span><span>Premiere Pro</span><span>CapCut</span><span>Canva</span><span>Claude</span><span>Metricool</span></div>
+    </div>
+    <div class="card tk lime-card s5">
+      <div class="mono">Skills</div>
+      <div class="tools"><span>Social media management</span><span>Google Ads</span><span>Meta Ads</span><span>SEO</span><span>Web designing</span><span>Video editing</span><span>Photo editing</span></div>
+    </div>
   </div>
 
   <section class="card lime-card contact" id="contact">
@@ -399,44 +467,45 @@
   <footer>Muhammed Zameel, Thrissur, Kerala</footer>
 </div>
 
+<div class="lb" id="lb" role="dialog" aria-label="Image preview"><img alt=""></div>
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="Project overview"><div class="pv" id="pv"></div></div>
 
 <script>
   var P = [
     { n: 'Chaya Restaurant', where: 'Victox Freelance Agency, Calicut', kind: 'Restaurant marketing', tags: ['Video', 'Social media'], sum: 'Video and social campaigns built around storytelling, lifting engagement and bringing people through the door.',
-      res: [['+40%', 'Footfall'], ['High', 'Engagement'], ['Video', 'Format']], big: [40, '%', 'Footfall growth', 0, '+'], series: [18, 24, 22, 30, 36, 34, 48, 58, 66, 80], cl: 'Footfall', cv: '+40%', tag: 'Concept to footfall',
+      res: [['+40%', 'Footfall'], ['214K', 'IG views'], ['Video', 'Format']], big: [40, '%', 'Footfall growth', 0, '+'], series: [18, 24, 22, 30, 36, 34, 48, 58, 66, 80], cl: 'Footfall', cv: '+40%', imgs: ['assets/chaya-1.jpg','assets/chaya-2.jpg','assets/chaya-3.jpg'], cap: 'Instagram profile and insights from the campaign window, Feb 14 to Mar 15.', tag: 'Concept to footfall',
       ph: [['Concept', 0, 30], ['Video shoot', 18, 55], ['Social rollout', 42, 82], ['Review', 66, 100]], ticks: ['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4', 'Wk 5'], now: 66 },
-    { n: 'Mandhi Zouk', where: 'Victox Freelance Agency, Calicut', kind: 'Performance marketing', tags: ['Meta Ads', 'Analytics'], sum: 'Multi-channel performance campaign with full analytics reporting and tight audience targeting.',
-      res: [['236K', 'Reach'], ['\u20B91,260', 'Ad spend'], ['Multi', 'Channel']], big: [236, 'K', 'People reached', 0, ''], series: [10, 16, 28, 26, 40, 52, 50, 66, 78, 88, 96, 100], cl: 'Weekly reach', cv: '236K', tag: 'Research to reporting',
+    { n: 'Mandhi Zouk', where: 'Victox Freelance Agency, Calicut', kind: 'Performance marketing', tags: ['Meta Ads', 'Analytics'], sum: 'Multi-channel performance campaign with full analytics reporting and tight audience targeting. Two Meta ads ran on \u20B91,260 of spend.',
+      res: [['236K', 'IG views'], ['310K', 'Ad reach'], ['300', 'Chats started']], big: [236, 'K', 'Instagram views, 30 days', 0, ''], series: [10, 16, 28, 26, 40, 52, 50, 66, 78, 88, 96, 100], cl: 'Weekly views', cv: '236K', imgs: ['assets/mandhi-1.jpg','assets/mandhi-2.jpg','assets/mandhi-3.jpg','assets/mandhi-4.jpg','assets/mandhi-5.jpg','assets/mandhi-6.jpg'], cap: 'Instagram insights (236,130 views) and Meta Ads results: \u20B91,259.70 on 2 ads, 462K views, 310K reach, 300 conversations started.', tag: 'Research to reporting',
       ph: [['Audience research', 0, 34], ['Creative and copy', 24, 54], ['Ads live', 46, 84], ['Analytics report', 66, 100]], ticks: ['Jan', 'Feb', 'Mar', 'Apr'], now: 82 },
     { n: 'ZEKO', where: 'UAE', kind: 'Brand website', tags: ['Web', 'Branding'], sum: 'Premium painting and construction solutions brand with a clean product catalog across four categories.',
-      res: [['4', 'Categories'], ['100%', 'Responsive'], ['UAE', 'Market']], big: [100, '%', 'Mobile responsive', 0, ''], seg: ['Category 1', 'Category 2', 'Category 3', 'Category 4'], cl: 'Catalog', cv: '4', tag: 'Brand to launch',
+      res: [['4', 'Categories'], ['100%', 'Responsive'], ['UAE', 'Market']], big: [100, '%', 'Mobile responsive', 0, ''], seg: ['Category 1', 'Category 2', 'Category 3', 'Category 4'], cl: 'Catalog', cv: '4', imgs: ['assets/zeko-1.jpg','assets/zeko-2.jpg'], cap: 'Brand creatives for the UAE market: UAE National Day and a weekend campaign post.', tag: 'Brand to launch',
       ph: [['Brand and catalog', 0, 32], ['Design', 24, 58], ['Build', 50, 82], ['Responsive QA', 68, 100]], ticks: ['Sprint 1', 'Sprint 2', 'Sprint 3', 'Sprint 4'], now: 88 },
     { n: 'Smart Gold', where: 'Android app', kind: 'Mobile product', tags: ['Live rates', 'Alerts'], sum: 'Real-time gold tracking with 30-second updates, charts, alerts and portfolio tracking.',
-      res: [['2K+', 'Installs'], ['4.6\u2605', 'Rating'], ['30s', 'Refresh']], big: [2, 'K+', 'Installs', 0, ''], series: [40, 46, 43, 52, 58, 55, 63, 60, 68, 72, 70, 76], cl: 'Live rate feed', cv: 'Live', live: true, tag: 'Data to Play Store', rate: '4.6',
+      res: [['2K+', 'Installs'], ['4.6\u2605', 'Rating'], ['30s', 'Refresh']], big: [2, 'K+', 'Installs', 0, ''], series: [40, 46, 43, 52, 58, 55, 63, 60, 68, 72, 70, 76], cl: 'Live rate feed', cv: 'Live', imgs: ['assets/smartgold.svg'], cap: 'Preview mockup of the app. Send real screenshots and I will swap them in.', live: true, tag: 'Data to Play Store', rate: '4.6',
       ph: [['Rate feed', 0, 32], ['App build', 18, 52], ['Charts and alerts', 44, 78], ['Play Store', 66, 100]], ticks: ['M1', 'M2', 'M3', 'M4'], now: 100, lv: true },
     { n: 'AuditoriumHub', where: 'Marketplace platform', kind: 'Full-stack product', tags: ['Bookings', 'Payments'], sum: 'Venue booking platform connecting organisers with auditoriums, payments included.',
-      res: [['1.2K+', 'Venues'], ['\u20B950L+', 'Volume'], ['Live', 'Bookings']], big: [1.2, 'K+', 'Venues listed', 1, ''], series: [8, 12, 18, 26, 34, 44, 56, 66, 78, 100], cl: 'Venue growth', cv: '1.2K+', tag: 'Onboarding to scale',
+      res: [['1.2K+', 'Venues'], ['\u20B950L+', 'Volume'], ['Live', 'Bookings']], big: [1.2, 'K+', 'Venues listed', 1, ''], series: [8, 12, 18, 26, 34, 44, 56, 66, 78, 100], cl: 'Venue growth', cv: '1.2K+', imgs: ['assets/auditoriumhub.svg'], cap: 'Preview mockup of the booking flow. Send real screenshots and I will swap them in.', tag: 'Onboarding to scale',
       ph: [['Venue onboarding', 0, 30], ['Booking flow', 22, 54], ['Payments', 46, 80], ['Scale', 66, 100]], ticks: ['Q1', 'Q2', 'Q3', 'Q4'], now: 100, lv: true },
     { n: 'Shopify Pet Store', where: 'E-commerce', kind: 'Store and paid growth', tags: ['Shopify', 'Ads'], sum: 'Conversion-focused store with a tuned funnel and paid acquisition behind it.',
-      res: [['$30K+', 'Monthly'], ['3.2%', 'Conversion'], ['Paid', 'Traffic']], big: [30, 'K+', 'Dollars a month', 0, '$'], series: [14, 20, 26, 40, 38, 54, 62, 70, 82, 100], cl: 'Monthly revenue', cv: '$30K+', tag: 'Setup to scale', gauge: 3.2,
+      res: [['$30K+', 'Monthly'], ['3.2%', 'Conversion'], ['Paid', 'Traffic']], big: [30, 'K+', 'Dollars a month', 0, '$'], series: [14, 20, 26, 40, 38, 54, 62, 70, 82, 100], cl: 'Monthly revenue', cv: '$30K+', imgs: ['assets/petstore.svg'], cap: 'Preview mockup of the storefront. Send real screenshots and I will swap them in.', tag: 'Setup to scale', gauge: 3.2,
       ph: [['Store setup', 0, 32], ['Funnel and CRO', 18, 52], ['Paid ads', 44, 82], ['Scale', 68, 100]], ticks: ['M1', 'M2', 'M3', 'M4', 'M5'], now: 100, lv: true },
     { n: 'Optimex Optical', where: 'Local business', kind: 'Booking website', tags: ['Web', 'Local search'], sum: 'Booking-led website for an optical brand, turning search traffic into appointments.',
-      res: [['5K+', 'Visitors'], ['12%', 'Booking'], ['Local', 'Search']], big: [12, '%', 'Booking rate', 0, ''], fun: ['5K+ monthly visitors', '12% book'], cl: 'Funnel', cv: '12%', tag: 'Site to bookings',
+      res: [['5K+', 'Visitors'], ['12%', 'Booking'], ['Local', 'Search']], big: [12, '%', 'Booking rate', 0, ''], fun: ['5K+ monthly visitors', '12% book'], cl: 'Funnel', cv: '12%', imgs: ['assets/optimex.svg'], cap: 'Preview mockup of the booking page. Send real screenshots and I will swap them in.', tag: 'Site to bookings',
       ph: [['Site and booking form', 0, 34], ['Local search', 26, 62], ['Launch', 56, 84], ['Tune', 66, 100]], ticks: ['Wk 1', 'Wk 3', 'Wk 5', 'Wk 7'], now: 90 },
     { n: 'Daily Carousel Engine', where: 'Automation', kind: 'Content automation', tags: ['Claude', 'Social'], sum: 'Social content automation that turns one idea into a ready-to-post carousel every day.',
-      res: [['1/day', 'Carousel'], ['Auto', 'Workflow'], ['AI', 'Assisted']], big: [7, '/wk', 'Carousels a week', 0, ''], week: true, cl: 'This week', cv: '7', tag: 'Prompt to post',
+      res: [['1/day', 'Carousel'], ['Auto', 'Workflow'], ['AI', 'Assisted']], big: [7, '/wk', 'Carousels a week', 0, ''], week: true, cl: 'This week', cv: '7', imgs: ['assets/carousel.svg'], cap: 'Preview mockup of a generated carousel. Send real screenshots and I will swap them in.', tag: 'Prompt to post',
       ph: [['Prompt design', 0, 32], ['Template system', 20, 52], ['Automation', 46, 80], ['Daily posting', 66, 100]], ticks: ['Mon', 'Wed', 'Fri', 'Sun'], now: 100, lv: true }
   ];
   var CFG = [
-    [['hero', 7, 'lime'], ['results', 5, 'soft'], ['roadmap', 7, 'white'], ['chart', 5, 'dark', 'line'], ['date', 4, 'soft'], ['big', 4, 'grey'], ['photo', 4]],
-    [['hero', 5, 'blue'], ['chart', 7, 'dark', 'bars'], ['big', 4, 'lime'], ['roadmap', 8, 'white'], ['results', 12, 'soft'], ['date', 6, 'grey'], ['photo', 6]],
-    [['hero', 8, 'dark'], ['date', 4, 'lime'], ['chart', 5, 'white', 'ring'], ['results', 7, 'blue'], ['roadmap', 12, 'soft'], ['big', 6, 'lime'], ['photo', 6]],
-    [['hero', 6, 'lime'], ['chart', 6, 'dark', 'line'], ['rating', 4, 'blue'], ['roadmap', 4, 'white'], ['results', 4, 'soft'], ['photo', 12]],
-    [['hero', 7, 'blue'], ['big', 5, 'lime'], ['chart', 6, 'white', 'bars'], ['roadmap', 6, 'dark'], ['results', 8, 'soft'], ['date', 4, 'grey'], ['photo', 12]],
-    [['hero', 5, 'dark'], ['chart', 4, 'white', 'gauge'], ['big', 3, 'lime'], ['chart', 7, 'blue', 'line'], ['results', 5, 'white'], ['roadmap', 12, 'soft'], ['photo', 12]],
-    [['hero', 7, 'white'], ['chart', 5, 'blue', 'funnel'], ['results', 12, 'dark'], ['roadmap', 7, 'lime'], ['date', 5, 'soft'], ['big', 6, 'grey'], ['photo', 6]],
-    [['hero', 6, 'lime'], ['chart', 6, 'dark', 'week'], ['roadmap', 12, 'white'], ['results', 6, 'blue'], ['big', 3, 'soft'], ['date', 3, 'grey']]
+    [['hero', 7, 'lime'], ['results', 5, 'soft'], ['gallery', 12], ['roadmap', 7, 'white'], ['chart', 5, 'dark', 'line'], ['date', 6, 'soft'], ['big', 6, 'grey']],
+    [['hero', 5, 'blue'], ['chart', 7, 'dark', 'bars'], ['gallery', 12], ['big', 4, 'lime'], ['roadmap', 8, 'white'], ['results', 12, 'soft'], ['date', 12, 'grey']],
+    [['hero', 8, 'dark'], ['date', 4, 'lime'], ['gallery', 12], ['chart', 5, 'white', 'ring'], ['results', 7, 'blue'], ['roadmap', 12, 'soft'], ['big', 12, 'lime']],
+    [['hero', 6, 'lime'], ['chart', 6, 'dark', 'line'], ['gallery', 12], ['rating', 4, 'blue'], ['roadmap', 4, 'white'], ['results', 4, 'soft']],
+    [['hero', 7, 'blue'], ['big', 5, 'lime'], ['gallery', 12], ['chart', 6, 'white', 'bars'], ['roadmap', 6, 'dark'], ['results', 8, 'soft'], ['date', 4, 'grey']],
+    [['hero', 5, 'dark'], ['chart', 4, 'white', 'gauge'], ['big', 3, 'lime'], ['gallery', 12], ['chart', 7, 'blue', 'line'], ['results', 5, 'white'], ['roadmap', 12, 'soft']],
+    [['hero', 7, 'white'], ['chart', 5, 'blue', 'funnel'], ['gallery', 12], ['results', 12, 'dark'], ['roadmap', 7, 'lime'], ['date', 5, 'soft'], ['big', 12, 'grey']],
+    [['hero', 6, 'lime'], ['chart', 6, 'dark', 'week'], ['gallery', 12], ['roadmap', 12, 'white'], ['results', 6, 'blue'], ['big', 3, 'soft'], ['date', 3, 'grey']]
   ];
   var ov = document.getElementById('ov'), pv = document.getElementById('pv'), cur = 0, opener = null, timers = [], binders = [];
   var rows = document.querySelectorAll('.item');
@@ -544,7 +613,7 @@
     if (t === 'rating') return '<div class="c ' + sp + ' ' + col + '"><div class="mono sub">Play Store rating</div><div class="stars" role="img" aria-label="4.6 out of 5 stars"></div><div class="bigc"><div class="n" style="margin:0"><span data-to="4.6" data-dec="1" data-suf="">0</span><small>/5</small></div></div></div>';
     if (t === 'date') return '<div class="c datep ' + sp + ' ' + col + '"><div class="d">' + no + '</div><div>' + p.where + '</div></div>';
     if (t === 'big') { var b = p.big; return '<div class="c bigc ' + sp + ' ' + col + '"><div class="l"><i><b>\u2605</b></i><span>' + b[2] + '</span></div><div class="n">' + b[4] + '<span data-to="' + b[0] + '" data-dec="' + b[3] + '" data-suf="">0</span><small>' + b[1] + '</small></div></div>'; }
-    if (t === 'photo') return '<label class="c photo photo-slot ' + sp + '" data-hint="Add project screenshot"><span class="ph" style="font-size:64px">' + no + '</span><input type="file" accept="image/*"></label>';
+    if (t === 'gallery') return '<div class="c gal s12 soft"><div class="top"><h3>Project<br>visuals</h3><span class="add">' + p.imgs.length + (p.imgs.length > 1 ? ' images' : ' image') + '</span></div><div class="gs">' + p.imgs.map(function (u, k) { return '<figure class="gi"><img src="' + u + '" alt="' + p.n + ' visual ' + (k + 1) + '" data-lb="1"></figure>'; }).join('') + '</div><div class="sub">' + p.cap + '</div></div>';
     return '';
   }
 
@@ -565,6 +634,7 @@
     document.getElementById('pp').onclick = function () { go((cur + 7) % 8); };
     document.getElementById('pnx').onclick = function () { go((cur + 1) % 8); };
     rows.forEach(function (r, k) { r.classList.toggle('sel', k === i); });
+    if (window.fxScan) window.fxScan(pv, true);
   }
   function go(i) { cur = i; render(i); ov.scrollTop = 0; document.getElementById('xb').focus(); }
   function open(i) { ov.classList.add('open'); document.body.classList.add('lock'); go(i); }
@@ -575,16 +645,89 @@
     el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opener = el; open(+el.dataset.p); } });
   });
   ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov.classList.contains('open')) close(); });
+  var lb = document.getElementById('lb'), lbi = lb.querySelector('img');
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t.matches && t.matches('img[data-lb]')) { lbi.src = t.src; lbi.alt = t.alt; lb.classList.add('open'); }
+    else if (lb.classList.contains('open')) lb.classList.remove('open');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (lb.classList.contains('open')) lb.classList.remove('open'); else if (ov.classList.contains('open')) close();
+  });
   pv.addEventListener('pointermove', function (e) {
     var c = e.target.closest && e.target.closest('.c'); if (!c) return;
     var r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
   });
-  document.addEventListener('change', function (e) {
-    var input = e.target, slot = input.closest && input.closest('.photo-slot');
-    if (!slot || !input.files || !input.files[0]) return;
-    var r = new FileReader();
-    r.onload = function () { slot.style.backgroundImage = 'url(' + r.result + ')'; slot.classList.add('filled'); };
-    r.readAsDataURL(input.files[0]);
-  });
+  (function () {
+    var HEAD = '.title, .section-head h2, .contact h2, .profile h2, .item h3, .cal h3, .tk .mono, .card h3, .c h2, .c h3';
+    var WORDS = '.profile p, .section-head p, .item .muted, .sum, .sub, .stat p, footer, .contact .mono';
+    var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.remove('pre'); en.target.classList.add('fxin'); io.unobserve(en.target); } });
+    }, { threshold: .15 }) : null;
+
+    function split(el, mode) {
+      if (el.dataset.fx || el.closest('[data-to]')) return;
+      el.dataset.fx = mode;
+      if (mode === 'ch') el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+      var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [], n, idx = 0;
+      while ((n = w.nextNode())) { if (n.nodeValue.trim() && !n.parentElement.closest('[data-to], .ch, .wd')) nodes.push(n); }
+      nodes.forEach(function (node) {
+        var frag = document.createDocumentFragment();
+        node.nodeValue.split(/(\s+)/).forEach(function (p) {
+          if (!p) return;
+          if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var sp = document.createElement('span');
+          if (mode === 'ch') {
+            sp.className = 'w'; sp.setAttribute('aria-hidden', 'true');
+            Array.from(p).forEach(function (c) { var k = document.createElement('span'); k.className = 'ch'; k.style.setProperty('--i', idx++); k.textContent = c; sp.appendChild(k); });
+          } else { sp.className = 'wd'; sp.textContent = p; }
+          frag.appendChild(sp);
+        });
+        node.parentNode.replaceChild(frag, node);
+      });
+    }
+    window.fxScan = function (root, now) {
+      root.querySelectorAll(HEAD).forEach(function (el) {
+        if (el.dataset.fx) return; split(el, 'ch');
+        if (now || !io) { el.classList.add('fxin'); } else { el.classList.add('pre'); io.observe(el); }
+      });
+      root.querySelectorAll(WORDS).forEach(function (el) { split(el, 'wd'); });
+    };
+    window.fxScan(document.querySelector('.wrap'), false);
+
+    var active = null, raf = 0, lx = 0, ly = 0;
+    function reset(el) { if (!el) return; el.querySelectorAll('.ch').forEach(function (c) { c.style.transform = ''; c.style.setProperty('--p', 0); }); }
+    function frame() {
+      raf = 0; if (!active) return;
+      active.querySelectorAll('.ch').forEach(function (c) {
+        var r = c.getBoundingClientRect(), d = Math.hypot(lx - (r.left + r.width / 2), ly - (r.top + r.height / 2));
+        var p = Math.max(0, 1 - d / 110);
+        c.style.setProperty('--p', p.toFixed(2));
+        c.style.transform = p ? 'translateY(' + (-p * .16).toFixed(3) + 'em) scale(' + (1 + p * .3).toFixed(3) + ')' : '';
+      });
+    }
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      var el = e.target.closest && e.target.closest('[data-fx="ch"]');
+      if (el !== active) { reset(active); active = el; }
+      lx = e.clientX; ly = e.clientY;
+      if (active && !raf) raf = requestAnimationFrame(frame);
+      var me = document.getElementById('me');
+      if (me && me.contains(e.target)) { var r = me.getBoundingClientRect(); me.querySelector('img').style.transform = 'translate(' + ((e.clientX - r.left) / r.width - .5) * 14 + 'px,' + ((e.clientY - r.top) / r.height - .5) * 8 + 'px) scale(1.03)'; }
+    });
+    document.addEventListener('pointerleave', function () { reset(active); active = null; }, true);
+    var me0 = document.getElementById('me'); if (me0) me0.addEventListener('pointerleave', function () { me0.querySelector('img').style.transform = ''; });
+
+    document.querySelectorAll('.tk').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        if (e.pointerType === 'touch') return;
+        card.querySelectorAll('.tools span').forEach(function (c) {
+          var r = c.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2), d = Math.hypot(dx, dy), k = Math.max(0, 1 - d / 130);
+          c.style.transform = k ? 'translate(' + (dx * k * .22).toFixed(1) + 'px,' + (dy * k * .22).toFixed(1) + 'px) scale(' + (1 + k * .08).toFixed(3) + ')' : '';
+        });
+      });
+      card.addEventListener('pointerleave', function () { card.querySelectorAll('.tools span').forEach(function (c) { c.style.transform = ''; }); });
+    });
+  })();
 </script>
