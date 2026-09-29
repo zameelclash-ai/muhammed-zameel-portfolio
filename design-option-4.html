@@ -131,6 +131,85 @@
   .links a, .links span { font-weight: 700; font-size: 17px; overflow-wrap: anywhere; }
   footer { text-align: center; color: var(--muted); font-size: 13px; padding-top: 18px; }
 
+  .item { cursor: pointer; transition: transform .2s, box-shadow .2s; }
+  .item:hover, .item:focus-visible { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,.25); outline: none; }
+  .item:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+
+  /* project overview */
+  body.lock { overflow: hidden; }
+  .ov { position: fixed; inset: 0; z-index: 50; display: none; overflow-y: auto; background: rgba(6, 11, 12, .78); backdrop-filter: blur(8px); padding: 16px; }
+  .ov.open { display: block; }
+  .pv { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; padding-block: 8px 32px; }
+  .pv > * { min-width: 0; }
+  .pa { grid-column: span 7; background: var(--lime); color: var(--lime-ink); border-radius: 32px; padding: 24px; display: flex; flex-direction: column; gap: 14px; position: relative; }
+  .pa h2 { font-size: clamp(32px, 6vw, 54px); letter-spacing: -.045em; line-height: 1; font-weight: 700; padding-right: 56px; }
+  .pa .kind { font-size: 14px; opacity: .75; }
+  .pa .sum { font-size: 16px; max-width: 46ch; }
+  .pa .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pa .tags span { padding: 4px 12px; border: 1px solid currentColor; border-radius: 999px; font-size: 13px; }
+  .pa .prog { margin-top: auto; }
+  .pa .prog .row { margin-bottom: 8px; }
+  .pa .prog .bar { margin: 0; }
+  .x { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #0b1213; color: #f2f6ec; font-size: 20px; cursor: pointer; display: grid; place-items: center; }
+  .pb { grid-column: span 5; background: var(--surface-2); border-radius: 32px; padding: 24px; display: flex; flex-direction: column; gap: 16px; color: var(--fg); }
+  .pb h3, .pc h3 { font-size: clamp(26px, 4vw, 34px); letter-spacing: -.04em; line-height: 1; font-weight: 600; }
+  .res { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: auto; }
+  .res div { background: var(--surface); border-radius: 999px; padding: 16px 4px 14px; text-align: center; }
+  .res div.on { background: var(--lime); color: var(--lime-ink); }
+  .res b { display: block; font-size: 20px; letter-spacing: -.03em; overflow-wrap: anywhere; }
+  .res span { font-size: 11px; color: var(--muted); }
+  .res div.on span { color: var(--lime-ink); opacity: .7; }
+  .pc { grid-column: span 7; background: var(--surface); border: 1px solid var(--line); border-radius: 32px; padding: 24px; display: flex; flex-direction: column; gap: 18px; color: var(--fg); }
+  .pc .top { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+  .pc .add { background: #0b1213; color: #f2f6ec; border-radius: 999px; padding: 12px 20px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .gantt { position: relative; display: grid; gap: 10px; padding-block: 4px; }
+  .gantt .now { position: absolute; top: -6px; bottom: 26px; width: 2px; background: var(--fg); }
+  .gantt .now::before { content: ""; position: absolute; top: -4px; left: -4px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--fg); background: var(--surface); }
+  .g-row { position: relative; height: 40px; }
+  .g-bar { position: absolute; top: 0; height: 100%; border-radius: 999px; background: var(--surface-2); display: flex; justify-content: space-between; align-items: center; padding: 0 14px; font-size: 13px; overflow: hidden; }
+  .g-bar i { position: absolute; inset: 0 auto 0 0; background: var(--lime); z-index: 0; }
+  .g-bar span { position: relative; z-index: 1; color: var(--fg); }
+  .g-bar span:first-of-type { color: var(--lime-ink); }
+  .g-labels { display: grid; grid-template-columns: repeat(5, 1fr); font-size: 13px; color: var(--muted); }
+  .g-labels span:last-child { text-align: right; }
+  .pd { grid-column: span 5; background: #060b0c; color: #f2f6ec; border-radius: 32px; padding: 24px; display: flex; flex-direction: column; gap: 6px; }
+  .pd h3 { font-size: 22px; font-weight: 500; letter-spacing: -.02em; }
+  .pd small { color: #9db0a8; }
+  .pd svg { width: 100%; height: auto; margin-top: auto; }
+  .pd .note { font-size: 11px; color: #9db0a8; margin-top: 4px; }
+  .pe { grid-column: span 4; background: var(--surface-2); border-radius: 999px; padding: 12px 22px 12px 12px; display: flex; align-items: center; gap: 14px; color: var(--fg); }
+  .pe .d { width: 56px; height: 56px; border-radius: 50%; background: #0b1213; color: #f2f6ec; display: grid; place-items: center; font-size: 22px; font-weight: 600; flex: none; }
+  .pe div:last-child { font-size: 15px; line-height: 1.25; font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
+  .pf { grid-column: span 4; background: #8a9a87; color: #fff; border-radius: 32px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+  .pf .n { font-size: clamp(38px, 6vw, 54px); letter-spacing: -.05em; line-height: 1; overflow-wrap: anywhere; }
+  .pf .n small { font-size: .45em; opacity: .8; }
+  .pf .l { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .pf .l i { width: 40px; height: 40px; border-radius: 50%; background: #fff; color: #10201f; display: grid; place-items: center; font-style: normal; flex: none; }
+  .pg { grid-column: span 4; min-height: 150px; border-radius: 32px; }
+  .pn { grid-column: span 12; display: flex; justify-content: space-between; gap: 10px; }
+  .pn .pill { cursor: pointer; }
+  .pn .pill.lime { margin-left: auto; }
+
+  @media (max-width: 860px) {
+    .pa, .pb, .pc, .pd { grid-column: span 12; }
+    .pe { grid-column: span 12; }
+    .pf { grid-column: span 6; }
+    .pg { grid-column: span 6; }
+    .pc .top { flex-direction: column; }
+    .g-bar { font-size: 12px; padding: 0 10px; }
+  }
+  @media (max-width: 520px) {
+    .card, .item, .pa, .pb, .pc, .pd { padding: 18px; border-radius: 24px; }
+    .res b { font-size: 16px; }
+    .pf, .pg { grid-column: span 12; }
+    .pg { min-height: 200px; }
+    .days { gap: 4px; }
+    .day { padding: 10px 0; font-size: 11px; }
+    .day b { font-size: 15px; }
+    .pn .pill { padding: 9px 12px; }
+    .g-bar span:last-of-type { display: none; }
+    .g-bar { white-space: nowrap; }
+  }
   @media (max-width: 860px) {
     .profile, .photo-slot, .cal, .chart, .stat { grid-column: span 12; }
     .stat { grid-column: span 6; }
@@ -202,53 +281,53 @@
 
   <div class="section-head" id="work">
     <h2>Selected<br>work</h2>
-    <p>Marketing case studies and products, each with the agency or market behind it.</p>
+    <p>Marketing case studies and products. Tap any project to open its overview.</p>
   </div>
 
   <section class="work">
-    <article class="item">
+    <article class="item" tabindex="0" role="button" data-p="0" aria-label="Open project overview">
       <div class="no">01</div>
       <div><h3>Chaya Restaurant</h3><div class="chips"><span class="chip where">Victox Freelance Agency, Calicut</span><span class="chip">Video</span><span class="chip">Social</span></div></div>
       <p class="muted">Video and social campaigns built around storytelling, lifting engagement and bringing people through the door.</p>
       <div class="metric"><b>+40%</b><span>Footfall</span></div>
     </article>
-    <article class="item">
+    <article class="item" tabindex="0" role="button" data-p="1" aria-label="Open project overview">
       <div class="no">02</div>
       <div><h3>Mandhi Zouk</h3><div class="chips"><span class="chip where">Victox Freelance Agency, Calicut</span><span class="chip">Meta Ads</span><span class="chip">Analytics</span></div></div>
       <p class="muted">Multi-channel performance campaign with full analytics reporting and tight audience targeting.</p>
       <div class="metric"><b>236K</b><span>Reach</span></div>
     </article>
-    <article class="item">
+    <article class="item" tabindex="0" role="button" data-p="2" aria-label="Open project overview">
       <div class="no">03</div>
       <div><h3>ZEKO</h3><div class="chips"><span class="chip where">UAE</span><span class="chip">Web</span><span class="chip">Branding</span></div></div>
       <p class="muted">Premium painting and construction solutions brand with a clean product catalog across four categories.</p>
       <div class="metric"><b>100%</b><span>Responsive</span></div>
     </article>
-    <article class="item">
+    <article class="item" tabindex="0" role="button" data-p="3" aria-label="Open project overview">
       <div class="no">04</div>
       <div><h3>Smart Gold</h3><div class="chips"><span class="chip where">Android app</span><span class="chip">Live rates</span></div></div>
       <p class="muted">Real-time gold tracking with 30-second updates, charts, alerts and portfolio tracking.</p>
       <div class="metric"><b>2K+</b><span>Installs</span></div>
     </article>
-    <article class="item">
+    <article class="item" tabindex="0" role="button" data-p="4" aria-label="Open project overview">
       <div class="no">05</div>
       <div><h3>AuditoriumHub</h3><div class="chips"><span class="chip where">Marketplace</span><span class="chip">Full-stack</span></div></div>
       <p class="muted">Venue booking platform connecting organisers with auditoriums, payments included.</p>
       <div class="metric"><b>₹50L+</b><span>Transactions</span></div>
     </article>
-    <article class="item">
+    <article class="item" tabindex="0" role="button" data-p="5" aria-label="Open project overview">
       <div class="no">06</div>
       <div><h3>Shopify Pet Store</h3><div class="chips"><span class="chip where">E-commerce</span><span class="chip">Shopify</span></div></div>
       <p class="muted">Conversion-focused store with a tuned funnel and paid acquisition behind it.</p>
       <div class="metric"><b>$30K+</b><span>Per month</span></div>
     </article>
-    <article class="item">
+    <article class="item" tabindex="0" role="button" data-p="6" aria-label="Open project overview">
       <div class="no">07</div>
       <div><h3>Optimex Optical</h3><div class="chips"><span class="chip where">Local business</span><span class="chip">Web</span></div></div>
       <p class="muted">Booking-led website for an optical brand, turning search traffic into appointments.</p>
       <div class="metric"><b>12%</b><span>Booking rate</span></div>
     </article>
-    <article class="item">
+    <article class="item" tabindex="0" role="button" data-p="7" aria-label="Open project overview">
       <div class="no">08</div>
       <div><h3>Daily Carousel Engine</h3><div class="chips"><span class="chip where">Automation</span><span class="chip">Claude</span></div></div>
       <p class="muted">Social content automation that turns one idea into a ready-to-post carousel every day.</p>
@@ -277,15 +356,80 @@
   <footer>Muhammed Zameel, Thrissur, Kerala</footer>
 </div>
 
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="Project overview"><div class="pv" id="pv"></div></div>
+
 <script>
-  document.querySelectorAll('.photo-slot').forEach(function (slot) {
-    var input = slot.querySelector('input');
-    input.addEventListener('change', function () {
-      var f = input.files && input.files[0];
-      if (!f) return;
-      var r = new FileReader();
-      r.onload = function () { slot.style.backgroundImage = 'url(' + r.result + ')'; slot.classList.add('filled'); };
-      r.readAsDataURL(f);
-    });
+  var P = [
+    { n: 'Chaya Restaurant', where: 'Victox Freelance Agency, Calicut', kind: 'Restaurant marketing', tags: ['Video', 'Social media'], sum: 'Video and social campaigns built around storytelling, lifting engagement and bringing people through the door.',
+      res: [['+40%', 'Footfall'], ['High', 'Engagement'], ['Video', 'Format']], big: ['+40', '%', 'Footfall growth'], series: [18, 24, 22, 30, 36, 34, 48, 58, 66, 80], cl: 'Footfall', cv: '+40%' },
+    { n: 'Mandhi Zouk', where: 'Victox Freelance Agency, Calicut', kind: 'Performance marketing', tags: ['Meta Ads', 'Analytics'], sum: 'Multi-channel performance campaign with full analytics reporting and tight audience targeting.',
+      res: [['236K', 'Reach'], ['₹1,260', 'Spend'], ['Multi', 'Channel']], big: ['236', 'K', 'People reached'], series: [10, 16, 28, 26, 40, 52, 50, 66, 78, 88], cl: 'Reach', cv: '236K' },
+    { n: 'ZEKO', where: 'UAE', kind: 'Brand website', tags: ['Web', 'Branding'], sum: 'Premium painting and construction solutions brand with a clean product catalog across four categories.',
+      res: [['4', 'Categories'], ['100%', 'Responsive'], ['UAE', 'Market']], big: ['4', '', 'Product categories'], series: [12, 20, 30, 34, 44, 52, 60, 64, 74, 82], cl: 'Catalog', cv: '4 cats' },
+    { n: 'Smart Gold', where: 'Android app', kind: 'Mobile product', tags: ['Live rates', 'Alerts'], sum: 'Real-time gold tracking with 30-second updates, charts, alerts and portfolio tracking.',
+      res: [['2K+', 'Installs'], ['4.6★', 'Rating'], ['30s', 'Refresh']], big: ['2', 'K+', 'Installs'], series: [8, 14, 18, 30, 34, 46, 58, 62, 76, 86], cl: 'Installs', cv: '2K+' },
+    { n: 'AuditoriumHub', where: 'Marketplace platform', kind: 'Full-stack product', tags: ['Bookings', 'Payments'], sum: 'Venue booking platform connecting organisers with auditoriums, payments included.',
+      res: [['1.2K+', 'Venues'], ['₹50L+', 'Volume'], ['Live', 'Bookings']], big: ['1.2', 'K+', 'Venues listed'], series: [10, 12, 22, 28, 40, 44, 58, 66, 74, 90], cl: 'Volume', cv: '₹50L+' },
+    { n: 'Shopify Pet Store', where: 'E-commerce', kind: 'Store and paid growth', tags: ['Shopify', 'Ads'], sum: 'Conversion-focused store with a tuned funnel and paid acquisition behind it.',
+      res: [['$30K+', 'Monthly'], ['3.2%', 'Conversion'], ['Paid', 'Traffic']], big: ['30', 'K+', 'Dollars a month'], series: [14, 20, 26, 40, 38, 54, 62, 70, 82, 92], cl: 'Revenue', cv: '$30K+' },
+    { n: 'Optimex Optical', where: 'Local business', kind: 'Booking website', tags: ['Web', 'Local SEO'], sum: 'Booking-led website for an optical brand, turning search traffic into appointments.',
+      res: [['5K+', 'Visitors'], ['12%', 'Booking'], ['Local', 'Search']], big: ['12', '%', 'Booking rate'], series: [16, 22, 20, 34, 42, 40, 54, 62, 70, 78], cl: 'Bookings', cv: '12%' },
+    { n: 'Daily Carousel Engine', where: 'Automation', kind: 'Content automation', tags: ['Claude', 'Social'], sum: 'Social content automation that turns one idea into a ready-to-post carousel every day.',
+      res: [['1/day', 'Carousel'], ['Auto', 'Workflow'], ['AI', 'Assisted']], big: ['1', '/day', 'Automated posts'], series: [20, 24, 30, 30, 44, 50, 54, 68, 72, 84], cl: 'Output', cv: '1/day' }
+  ];
+  var PH = [['Research', 0, 34], ['Build / Creative', 14, 56], ['Launch', 44, 78], ['Optimise', 60, 100]];
+  var ov = document.getElementById('ov'), pv = document.getElementById('pv'), cur = 0, opener = null;
+
+  function chart(s, label) {
+    var W = 240, H = 130, n = s.length, mx = 0, i;
+    var pts = s.map(function (v, k) { return [k * (W / (n - 1)), H - 14 - v * 1.0]; });
+    var d = 'M' + pts[0][0] + ' ' + pts[0][1];
+    for (i = 1; i < n; i++) { var m = (pts[i - 1][0] + pts[i][0]) / 2; d += ' C' + m + ' ' + pts[i - 1][1] + ' ' + m + ' ' + pts[i][1] + ' ' + pts[i][0] + ' ' + pts[i][1]; }
+    var area = d + ' L' + W + ' ' + H + ' L0 ' + H + ' Z';
+    var pk = pts[n - 3], px = Math.min(Math.max(pk[0], 34), W - 34);
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + label + ' trend, illustrative"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9f56b" stop-opacity=".4"/><stop offset="1" stop-color="#d9f56b" stop-opacity="0"/></linearGradient></defs>' +
+      '<path d="' + area + '" fill="url(#cg)"/><path d="' + d + '" fill="none" stroke="#d9f56b" stroke-width="3" stroke-linecap="round"/>' +
+      '<line x1="' + pk[0] + '" y1="' + pk[1] + '" x2="' + pk[0] + '" y2="' + H + '" stroke="#d9f56b" stroke-opacity=".35" stroke-dasharray="3 4"/>' +
+      '<circle cx="' + pk[0] + '" cy="' + pk[1] + '" r="6" fill="#060b0c" stroke="#d9f56b" stroke-width="3"/>';
+  }
+
+  function render(i) {
+    var p = P[i], no = ('0' + (i + 1)).slice(-2);
+    var res = p.res.map(function (r, k) { return '<div' + (k === 0 ? ' class="on"' : '') + '><b>' + r[0] + '</b><span>' + r[1] + '</span></div>'; }).join('');
+    var g = PH.map(function (r) { return '<div class="g-row"><div class="g-bar" style="left:' + r[1] + '%;width:' + (r[2] - r[1]) + '%"><i style="width:100%"></i><span>' + r[0] + '</span><span>100%</span></div></div>'; }).join('');
+    var ch = chart(p.series, p.cl);
+    var pk = p.series.length - 3;
+    var tipx = Math.min(Math.max(pk * (240 / (p.series.length - 1)), 34), 206);
+    pv.innerHTML =
+      '<div class="pa"><button class="x" id="xb" aria-label="Close">✕</button><div class="mono">Project ' + no + ' / 08</div><h2>' + p.n + '</h2><div class="kind">' + p.kind + ' • ' + p.where + '</div>' +
+      '<p class="sum">' + p.sum + '</p><div class="tags">' + p.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+      '<div class="prog"><div class="row"><span>Delivery</span><b>100%</b></div><div class="bar"><i></i></div></div></div>' +
+      '<div class="pb"><div class="mono" style="color:var(--muted)">Key results</div><h3>What it<br>delivered</h3><div class="res">' + res + '</div></div>' +
+      '<div class="pc"><div class="top"><h3>Project<br>Roadmap</h3><span class="add">Discovery to growth</span></div><div class="gantt"><div class="now" style="left:60%"></div>' + g + '</div><div class="g-labels"><span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span><span>Week 5</span></div></div>' +
+      '<div class="pd"><h3>' + p.cl + '</h3><small>Trend, illustrative</small><div style="position:relative;margin-top:auto"><span style="position:absolute;left:' + (tipx / 240 * 100) + '%;top:-6px;transform:translateX(-50%);background:#f2f6ec;color:#060b0c;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap">' + p.cv + '</span>' + ch + '</svg></div></div>' +
+      '<div class="pe"><div class="d">' + no + '</div><div>' + p.where + '</div></div>' +
+      '<div class="pf"><div class="l"><i>★</i><span>' + p.big[2] + '</span></div><div class="n">' + p.big[0] + '<small>' + p.big[1] + '</small></div></div>' +
+      '<label class="pg card photo-slot" data-hint="Add project screenshot"><span class="ph" style="font-size:64px">' + no + '</span><input type="file" accept="image/*"></label>' +
+      '<div class="pn"><button class="pill" id="pp">← Prev</button><button class="pill lime" id="pnx">Next project →</button></div>';
+    document.getElementById('xb').onclick = close;
+    document.getElementById('pp').onclick = function () { open((cur + 7) % 8); };
+    document.getElementById('pnx').onclick = function () { open((cur + 1) % 8); };
+  }
+  function open(i) { cur = i; render(i); ov.classList.add('open'); document.body.classList.add('lock'); ov.scrollTop = 0; document.getElementById('xb').focus(); }
+  function close() { ov.classList.remove('open'); document.body.classList.remove('lock'); if (opener) opener.focus(); }
+
+  document.querySelectorAll('.item').forEach(function (el) {
+    el.addEventListener('click', function () { opener = el; open(+el.dataset.p); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opener = el; open(+el.dataset.p); } });
+  });
+  ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov.classList.contains('open')) close(); });
+
+  document.addEventListener('change', function (e) {
+    var input = e.target, slot = input.closest && input.closest('.photo-slot');
+    if (!slot || !input.files || !input.files[0]) return;
+    var r = new FileReader();
+    r.onload = function () { slot.style.backgroundImage = 'url(' + r.result + ')'; slot.classList.add('filled'); };
+    r.readAsDataURL(input.files[0]);
   });
 </script>
