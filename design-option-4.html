@@ -99,7 +99,7 @@
   .section-head p { color: var(--muted); max-width: 34ch; }
 
   .work { display: grid; gap: 14px; }
-  .item { display: grid; grid-template-columns: 64px 130px 1.1fr 1.3fr auto; gap: 24px; align-items: center; padding: 26px; border-radius: 28px; background: var(--surface); border: 1px solid var(--line); }
+  .item { display: grid; grid-template-columns: 56px 200px 1.1fr 1.2fr auto; gap: 24px; align-items: center; padding: 26px; border-radius: 28px; background: var(--surface); border: 1px solid var(--line); }
   .item:hover, .item:focus-visible, .item.sel { background: var(--blue); color: #fff; border-color: transparent; }
   .item:hover .muted, .item:focus-visible .muted, .item.sel .muted, .item:hover .chip, .item:focus-visible .chip, .item.sel .chip { color: rgba(255,255,255,.8); }
   .item:hover .chip, .item:focus-visible .chip, .item.sel .chip { border-color: rgba(255,255,255,.4); }
@@ -163,8 +163,8 @@
   @keyframes float { 50% { transform: translateY(-6px); } }
 
   /* project thumbnails */
-  .th { height: 108px; border-radius: 18px; overflow: hidden; background: #0b1213; }
-  .th img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .th { aspect-ratio: 3 / 2; border-radius: 18px; overflow: hidden; background: #0b1213; box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+  .th img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
   .item:hover .th img, .item.sel .th img { transform: scale(1.12); }
 
   /* toolkit */
@@ -174,7 +174,7 @@
   .tk .tools span:hover { background: var(--blue); color: #fff; border-color: transparent; }
   .lime-card.tk .tools span { background: rgba(20, 28, 16, .1); border-color: rgba(20, 28, 16, .25); }
   .lime-card.tk .tools span:hover { background: #141c10; color: #d9f56b; }
-  @media (max-width: 860px) { .tk-grid .s7, .tk-grid .s5 { grid-column: span 12; } .item { grid-template-columns: 1fr; } .th { height: 190px; } .tk { padding: 20px; } .tools span { padding: 9px 16px; font-size: 15px; } }
+  @media (max-width: 860px) { .tk-grid .s7, .tk-grid .s5 { grid-column: span 12; } .item { grid-template-columns: 1fr; } .th { aspect-ratio: 3 / 2; } .tk { padding: 20px; } .tools span { padding: 9px 16px; font-size: 15px; } }
 
   /* gallery + lightbox */
   .gs { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
@@ -383,56 +383,56 @@
   <section class="work">
     <article class="item" tabindex="0" role="button" data-p="0" aria-label="Open project overview">
       <div class="no">01</div>
-      <div class="th"><img src="assets/chaya-1.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/chaya.jpg" alt="" loading="lazy"></div>
       <div><h3>Chaya Restaurant</h3><div class="chips"><span class="chip where">Victox Freelance Agency, Calicut</span><span class="chip">Video</span><span class="chip">Social</span></div></div>
       <p class="muted">Video and social campaigns built around storytelling, lifting engagement and bringing people through the door.</p>
       <div class="metric"><b>+40%</b><span>Footfall</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="1" aria-label="Open project overview">
       <div class="no">02</div>
-      <div class="th"><img src="assets/mandhi-2.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/mandhi.jpg" alt="" loading="lazy"></div>
       <div><h3>Mandhi Zouk</h3><div class="chips"><span class="chip where">Victox Freelance Agency, Calicut</span><span class="chip">Meta Ads</span><span class="chip">Analytics</span></div></div>
       <p class="muted">Multi-channel performance campaign with full analytics reporting and tight audience targeting.</p>
       <div class="metric"><b>236K</b><span>IG views</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="2" aria-label="Open project overview">
       <div class="no">03</div>
-      <div class="th"><img src="assets/zeko-1.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/zeko.jpg" alt="" loading="lazy"></div>
       <div><h3>ZEKO</h3><div class="chips"><span class="chip where">UAE</span><span class="chip">Web</span><span class="chip">Branding</span></div></div>
       <p class="muted">Premium painting and construction solutions brand with a clean product catalog across four categories.</p>
       <div class="metric"><b>100%</b><span>Responsive</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="3" aria-label="Open project overview">
       <div class="no">04</div>
-      <div class="th"><img src="assets/smartgold.svg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/smartgold.jpg" alt="" loading="lazy"></div>
       <div><h3>Smart Gold</h3><div class="chips"><span class="chip where">Android app</span><span class="chip">Live rates</span></div></div>
       <p class="muted">Real-time gold tracking with 30-second updates, charts, alerts and portfolio tracking.</p>
       <div class="metric"><b>2K+</b><span>Installs</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="4" aria-label="Open project overview">
       <div class="no">05</div>
-      <div class="th"><img src="assets/auditoriumhub.svg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/auditoriumhub.jpg" alt="" loading="lazy"></div>
       <div><h3>AuditoriumHub</h3><div class="chips"><span class="chip where">Marketplace</span><span class="chip">Full-stack</span></div></div>
       <p class="muted">Venue booking platform connecting organisers with auditoriums, payments included.</p>
       <div class="metric"><b>₹50L+</b><span>Transactions</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="5" aria-label="Open project overview">
       <div class="no">06</div>
-      <div class="th"><img src="assets/petstore.svg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/petstore.jpg" alt="" loading="lazy"></div>
       <div><h3>Shopify Pet Store</h3><div class="chips"><span class="chip where">E-commerce</span><span class="chip">Shopify</span></div></div>
       <p class="muted">Conversion-focused store with a tuned funnel and paid acquisition behind it.</p>
       <div class="metric"><b>$30K+</b><span>Per month</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="6" aria-label="Open project overview">
       <div class="no">07</div>
-      <div class="th"><img src="assets/optimex.svg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/optimex.jpg" alt="" loading="lazy"></div>
       <div><h3>Optimex Optical</h3><div class="chips"><span class="chip where">Local business</span><span class="chip">Web</span></div></div>
       <p class="muted">Booking-led website for an optical brand, turning search traffic into appointments.</p>
       <div class="metric"><b>12%</b><span>Booking rate</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="7" aria-label="Open project overview">
       <div class="no">08</div>
-      <div class="th"><img src="assets/carousel.svg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/carousel.jpg" alt="" loading="lazy"></div>
       <div><h3>Daily Carousel Engine</h3><div class="chips"><span class="chip where">Automation</span><span class="chip">Claude</span></div></div>
       <p class="muted">Social content automation that turns one idea into a ready-to-post carousel every day.</p>
       <div class="metric"><b>1/day</b><span>Auto posts</span></div>
@@ -613,7 +613,7 @@
     if (t === 'rating') return '<div class="c ' + sp + ' ' + col + '"><div class="mono sub">Play Store rating</div><div class="stars" role="img" aria-label="4.6 out of 5 stars"></div><div class="bigc"><div class="n" style="margin:0"><span data-to="4.6" data-dec="1" data-suf="">0</span><small>/5</small></div></div></div>';
     if (t === 'date') return '<div class="c datep ' + sp + ' ' + col + '"><div class="d">' + no + '</div><div>' + p.where + '</div></div>';
     if (t === 'big') { var b = p.big; return '<div class="c bigc ' + sp + ' ' + col + '"><div class="l"><i><b>\u2605</b></i><span>' + b[2] + '</span></div><div class="n">' + b[4] + '<span data-to="' + b[0] + '" data-dec="' + b[3] + '" data-suf="">0</span><small>' + b[1] + '</small></div></div>'; }
-    if (t === 'gallery') return '<div class="c gal s12 soft"><div class="top"><h3>Project<br>visuals</h3><span class="add">' + p.imgs.length + (p.imgs.length > 1 ? ' images' : ' image') + '</span></div><div class="gs">' + p.imgs.map(function (u, k) { return '<figure class="gi"><img src="' + u + '" alt="' + p.n + ' visual ' + (k + 1) + '" data-lb="1"></figure>'; }).join('') + '</div><div class="sub">' + p.cap + '</div></div>';
+    if (t === 'gallery') return '<div class="c gal s12 soft"><div class="top"><h3>Project<br>visuals</h3><span class="add">' + (p.imgs.length + 1) + ' images' + '</span></div><div class="gs">' + ['assets/covers/' + ['chaya','mandhi','zeko','smartgold','auditoriumhub','petstore','optimex','carousel'][cur] + '.jpg'].concat(p.imgs).map(function (u, k) { return '<figure class="gi"><img src="' + u + '" alt="' + p.n + ' visual ' + (k + 1) + '" data-lb="1"></figure>'; }).join('') + '</div><div class="sub">' + p.cap + '</div></div>';
     return '';
   }
 
