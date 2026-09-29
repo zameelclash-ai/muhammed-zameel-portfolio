@@ -151,7 +151,7 @@
   @keyframes chin { from { opacity: 0; transform: translateY(.6em) rotate(5deg); } }
   @media (prefers-reduced-motion: reduce) { .pre .ch { opacity: 1; } .fxin .ch { animation: none; } }
 
-  #work, #tools, #contact { scroll-margin-top: 84px; }
+  #about, #work, #tools, #contact { scroll-margin-top: 84px; }
   @media (max-width: 520px) { .me .mtag.t2 { top: auto; bottom: 14px; right: 14px; } .me .mtag { font-size: 12px; padding: 6px 12px; } .me { min-height: 300px; } }
 
   /* hero photo */
@@ -185,6 +185,62 @@
   .lb { position: fixed; inset: 0; z-index: 60; display: none; place-items: center; background: rgba(0, 0, 0, .92); padding: 16px; cursor: zoom-out; }
   .lb.open { display: grid; }
   .lb img { max-width: 94vw; max-height: 90vh; border-radius: 16px; object-fit: contain; background: #fff0; }
+
+
+  /* about */
+  .ab-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+  .ab-grid > * { min-width: 0; }
+  .ab-bio { justify-content: space-between; gap: 22px; min-height: 380px; }
+  .ab-bio .lead { font-size: clamp(22px, 3.2vw, 34px); letter-spacing: -.03em; line-height: 1.15; font-weight: 600; max-width: 26ch; }
+  .ab-bio p { max-width: 52ch; font-size: 16px; opacity: .8; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pills span { padding: 7px 14px; border-radius: 999px; border: 1px solid currentColor; font-size: 13px; font-weight: 500; opacity: .85; transition: transform .25s cubic-bezier(.3,1.4,.5,1), background .2s, color .2s, opacity .2s; }
+  .pills span:hover { background: var(--st); color: var(--ink); border-color: var(--st); opacity: 1; transform: translateY(-3px) rotate(-2deg); }
+  .ab-photo { padding: 0; min-height: 380px; background: #0b1213 url(assets/me-2.jpg) center 20% / cover no-repeat; border: 0; justify-content: flex-end; }
+  .ab-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,11,12,.85)); pointer-events: none; }
+  .ab-photo .cap { position: absolute; z-index: 2; left: 20px; bottom: 20px; color: #f2f6ec; }
+  .ab-photo .cap b { display: block; font-size: 22px; letter-spacing: -.03em; }
+  .ab-photo .cap span { font-size: 13px; opacity: .8; }
+  .ab-photo .thumb { position: absolute; z-index: 2; right: 18px; bottom: 18px; width: 118px; height: 118px; border-radius: 50%; border: 4px solid var(--lime); background: url(assets/me-3.jpg) center / cover; transition: transform .35s cubic-bezier(.3,1.4,.5,1); }
+  .ab-photo:hover .thumb { transform: scale(1.12) rotate(-6deg); }
+  .ab-photo .spin { position: absolute; z-index: 2; left: 18px; top: 18px; width: 92px; height: 92px; border-radius: 50%; background: var(--lime); color: #141c10; display: grid; place-items: center; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-align: center; animation: spin 12s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .ab-stat .num { font-size: clamp(44px, 6vw, 64px); letter-spacing: -.05em; line-height: 1; font-weight: 700; margin-top: auto; }
+  .ab-stat .num small { font-size: .42em; opacity: .75; margin-left: 3px; letter-spacing: 0; }
+  .ab-stat p { font-size: 14px; opacity: .75; }
+  .ab-stat { min-height: 170px; }
+  .tl { list-style: none; margin: 8px 0 0; padding: 0 0 0 26px; position: relative; display: grid; gap: 22px; }
+  .tl::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: color-mix(in srgb, currentColor 18%, transparent); }
+  .tl::after { content: ""; position: absolute; left: 6px; top: 6px; width: 2px; height: calc(100% - 12px); background: var(--st); transform-origin: top; transform: scaleY(1); transition: transform 1.6s cubic-bezier(.2,.8,.2,1); }
+  .tl.js::after { transform: scaleY(0); } .tl.js.in::after { transform: scaleY(1); }
+  .tl li { position: relative; transition: opacity .6s, transform .6s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--i, 0) * 140ms); }
+  .tl.js li { opacity: 0; transform: translateX(-14px); } .tl.js.in li { opacity: 1; transform: none; }
+  .tl li::before { content: ""; position: absolute; left: -26px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 3px solid var(--st); transition: transform .25s, background .25s; }
+  .tl li:hover::before { transform: scale(1.5); background: var(--st); }
+  .tl .when { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .6; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .tl h4 { margin: 2px 0 0; font-size: 20px; letter-spacing: -.03em; font-weight: 700; }
+  .tl .co { font-size: 14px; color: var(--st); font-weight: 600; }
+  .tl p { font-size: 14px; opacity: .78; margin-top: 6px; max-width: 60ch; }
+  .edu { display: grid; gap: 12px; margin-top: auto; }
+  .edu div { padding: 16px 18px; border-radius: 22px; background: rgba(255,255,255,.14); transition: transform .25s, background .25s; }
+  .edu div:hover { transform: translateX(6px); background: rgba(255,255,255,.24); }
+  .edu b { display: block; font-size: 17px; letter-spacing: -.02em; }
+  .edu span { font-size: 13px; opacity: .8; }
+  .lang { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .lang div { padding: 14px 16px; border-radius: 20px; background: color-mix(in srgb, currentColor 10%, transparent); transition: transform .25s cubic-bezier(.3,1.4,.5,1); }
+  .lang div:hover { transform: translateY(-4px) scale(1.03); }
+  .lang b { display: block; font-size: 18px; letter-spacing: -.02em; }
+  .lang span { font-size: 12px; opacity: .7; }
+  .skillc h3 { font-size: 22px; } .skillc .ic { width: 44px; height: 44px; border-radius: 50%; background: var(--st); color: var(--ink); display: grid; place-items: center; font-size: 20px; font-weight: 700; flex: none; }
+  .skillc .hd { display: flex; align-items: center; gap: 12px; }
+  .marq { grid-column: span 12; overflow: hidden; border-radius: 999px; background: var(--lime); color: #141c10; padding: 16px 0; display: flex; }
+  .marq .track { display: flex; gap: 36px; flex: none; padding-right: 36px; animation: marq 26s linear infinite; font-size: clamp(20px, 3vw, 30px); font-weight: 700; letter-spacing: -.03em; white-space: nowrap; }
+  .marq:hover .track { animation-play-state: paused; }
+  .marq .track span::after { content: "\2726"; margin-left: 36px; opacity: .55; }
+  @keyframes marq { to { transform: translateX(-100%); } }
+  @media (prefers-reduced-motion: reduce) { .marq .track, .ab-photo .spin { animation: none; } .tl.js li { opacity: 1; transform: none; } .tl.js::after { transform: none; } }
+  @media (max-width: 860px) { .ab-grid .s3 { grid-column: span 6; } .ab-bio, .ab-photo { min-height: 320px; } .lang { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .ab-grid .s3 { grid-column: span 6; } .ab-stat { min-height: 140px; } .ab-photo .thumb { width: 92px; height: 92px; } .ab-photo .spin { width: 76px; height: 76px; font-size: 9px; } .nav nav { flex-wrap: nowrap; gap: 4px; } .nav nav .pill { padding: 8px 9px; font-size: 12px; } .nav { padding-left: 12px; gap: 6px; } .ab-photo .thumb { bottom: auto; top: 18px; right: 18px; } }
 
   /* project overview */
   body.lock { overflow: hidden; }
@@ -318,6 +374,7 @@
   <header class="nav">
     <b>MZ.</b>
     <nav>
+      <a class="pill" href="#about">About</a>
       <a class="pill" href="#work">Projects</a>
       <a class="pill" href="#tools">Tools</a>
       <a class="pill lime" href="#contact">Contact</a>
@@ -372,6 +429,69 @@
       <div class="mono" style="color:var(--muted)">Smart Gold</div>
       <div class="num">4.6<small>★</small></div>
       <p>2K+ installs on Android</p>
+    </div>
+  </section>
+
+  <div class="section-head" id="about">
+    <h2>About me</h2>
+    <p>Marketer by craft, builder by training. Here is the short version of who I am and how I work.</p>
+  </div>
+
+  <section class="ab-grid">
+    <div class="c s7 dark ab-bio">
+      <div class="mono" style="opacity:.6">Hello</div>
+      <div class="lead">Results-driven digital marketer, social media strategist and content producer.</div>
+      <p>With a foundation in Computer Applications (BCA), I run multi-channel performance marketing, B2B lead generation and high-converting video production across hospitality, real estate and digital platforms. I like building the whole campaign, from concept and camera to analytics and reporting.</p>
+      <div class="pills"><span>Strategies</span><span>Ad campaigns</span><span>Brand growth</span><span>Cinematics</span><span>Trends</span><span>Visuals</span></div>
+    </div>
+
+    <div class="c s5 ab-photo" role="img" aria-label="Portrait of Muhammed Zameel">
+      <div class="spin">AVAILABLE<br>NOW</div>
+      <div class="thumb"></div>
+      <div class="cap"><b>Muhammed Zameel C. A.</b><span>Kerala, India</span></div>
+    </div>
+
+    <div class="c s3 lime ab-stat"><div class="mono">Roles since 2026</div><div class="num"><span data-to="4" data-dec="0">0</span></div><p>Marketing Lead, Freelance, Agency Contract, Intern</p></div>
+    <div class="c s3 blue ab-stat"><div class="mono">Projects</div><div class="num"><span data-to="8" data-dec="0">0</span></div><p>Marketing case studies and products</p></div>
+    <div class="c s3 white ab-stat"><div class="mono">Languages</div><div class="num"><span data-to="4" data-dec="0">0</span></div><p>English, Arabic, Hindi, Malayalam</p></div>
+    <div class="c s3 soft ab-stat"><div class="mono">Instagram views</div><div class="num"><span data-to="236" data-dec="0">0</span><small>K</small></div><p>Mandhi Zouk, last 30 days</p></div>
+
+    <div class="c s7 white">
+      <div class="top"><h3>Experience</h3><span class="add">2026 to now</span></div>
+      <ol class="tl" id="tl">
+        <li style="--i:0"><div class="when">Apr 2026 to Jul 2026</div><h4>Marketing Lead</h4><div class="co">MGL Gemfinity</div><p>Architected pre-launch performance strategies and automated content workflows for a global real-time gemstone valuation platform, and led brand positioning to drive early user acquisition.</p></li>
+        <li style="--i:1"><div class="when">2026 to present</div><h4>Freelance Digital Marketer and Content Strategist</h4><div class="co">Self-employed</div><p>Directed media production from concept and camera work to post in DaVinci Resolve and CapCut, partnered with regional agencies on pitches, and ran international B2B lead generation through LinkedIn and cold email.</p></li>
+        <li style="--i:2"><div class="when">Feb 2026 to Apr 2026</div><h4>Lead Marketer and Strategist (Contract)</h4><div class="co">Victox Agency, Kerala</div><p>Designed revenue-focused strategies, managed performance campaigns for local and regional clients, and built monthly analytics dashboards with 3D-styled data visuals. Handled a 14-floor apartment launch and FMCG campaigns.</p></li>
+        <li style="--i:3"><div class="when">Jan 2026</div><h4>Marketing Strategist Intern</h4><div class="co">Haris and Co. Academy, Kozhikode</div><p>Ran live campaigns using agency frameworks for lead generation, audience targeting and content distribution.</p></li>
+      </ol>
+    </div>
+
+    <div class="s5" style="display:grid;gap:14px;grid-template-rows:auto auto 1fr">
+      <div class="c blue">
+        <h3>Education</h3>
+        <div class="edu">
+          <div><b>Bachelor of Computer Applications</b><span>Mahatma Gandhi University, 2022 to 2025</span></div>
+          <div><b>Advanced Digital Marketing Program</b><span>Haris and Co. Academy, Calicut</span></div>
+        </div>
+      </div>
+      <div class="c lime">
+        <h3>Languages</h3>
+        <div class="lang"><div><b>English</b><span>Professional</span></div><div><b>Arabic</b><span>Professional, read and write</span></div><div><b>Hindi</b><span>Professional</span></div><div><b>Malayalam</b><span>Professional</span></div></div>
+      </div>
+      <div class="c soft">
+        <h3>Core competencies</h3>
+        <div class="pills"><span>Strategic planning</span><span>Team leadership</span><span>Brand development</span><span>Market analysis</span><span>Cross-functional collaboration</span></div>
+      </div>
+    </div>
+
+    <div class="c s6 soft skillc"><div class="hd"><div class="ic">$</div><h3>Performance and paid media</h3></div><div class="pills"><span>Meta Ads Manager</span><span>Google Ads</span><span>LinkedIn Campaign Manager</span><span>Lead generation</span><span>ROI and conversion optimization</span></div></div>
+    <div class="c s6 dark skillc"><div class="hd"><div class="ic">%</div><h3>Strategy and analytics</h3></div><div class="pills"><span>B2B funnel building</span><span>Google Analytics 4</span><span>Data visualization</span><span>Multi-channel campaigns</span><span>Brand strategy</span></div></div>
+    <div class="c s6 blue skillc"><div class="hd"><div class="ic">&#9654;</div><h3>Content and creative</h3></div><div class="pills"><span>Directing</span><span>Videography: Sony A7 IV, Canon</span><span>DaVinci Resolve</span><span>CapCut</span><span>Premiere Pro</span><span>Scriptwriting</span><span>Creative direction</span></div></div>
+    <div class="c s6 white skillc"><div class="hd"><div class="ic">{ }</div><h3>Technical foundation</h3></div><div class="pills"><span>BCA</span><span>WordPress</span><span>Shopify</span><span>Elementor</span><span>Workflow automation</span><span>CRM systems</span><span>Performance reporting</span></div></div>
+
+    <div class="marq" aria-hidden="true">
+      <div class="track"><span>Performance marketing</span><span>Lead generation</span><span>Video production</span><span>Brand growth</span><span>Analytics</span><span>Storytelling</span></div>
+      <div class="track"><span>Performance marketing</span><span>Lead generation</span><span>Video production</span><span>Brand growth</span><span>Analytics</span><span>Storytelling</span></div>
     </div>
   </section>
 
@@ -655,7 +775,7 @@
     if (e.key !== 'Escape') return;
     if (lb.classList.contains('open')) lb.classList.remove('open'); else if (ov.classList.contains('open')) close();
   });
-  pv.addEventListener('pointermove', function (e) {
+  document.addEventListener('pointermove', function (e) {
     var c = e.target.closest && e.target.closest('.c'); if (!c) return;
     var r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
   });
@@ -729,5 +849,18 @@
       });
       card.addEventListener('pointerleave', function () { card.querySelectorAll('.tools span').forEach(function (c) { c.style.transform = ''; }); });
     });
+  })();
+  (function () {
+    var tl = document.getElementById('tl'); if (tl) tl.classList.add('js');
+    if (!('IntersectionObserver' in window)) { if (tl) tl.classList.add('in'); document.querySelectorAll('.ab-grid [data-to]').forEach(countUp); return; }
+    var io2 = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        if (en.target === tl) tl.classList.add('in'); else countUp(en.target);
+        io2.unobserve(en.target);
+      });
+    }, { threshold: .3 });
+    if (tl) io2.observe(tl);
+    document.querySelectorAll('.ab-grid [data-to]').forEach(function (el) { io2.observe(el); });
   })();
 </script>
