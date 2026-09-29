@@ -1,0 +1,300 @@
+<title>Portfolio Design Options - Choose Your Style</title>
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f1419;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+  header {
+    text-align: center;
+    padding: 60px 20px 40px;
+  }
+
+  header h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #00d9ff, #ff006e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  header p {
+    font-size: 18px;
+    color: #b0b0b0;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #888888;
+    margin-top: 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 60px;
+  }
+
+  .card {
+    background: linear-gradient(135deg, #1a1f3a, #242f4a);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 16px;
+    padding: 40px 30px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    border-color: #00d9ff;
+    box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
+    transform: translateY(-10px);
+  }
+
+  .card-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: #00d9ff;
+    margin-bottom: 16px;
+  }
+
+  .card h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .card-tag {
+    display: inline-block;
+    background: rgba(0, 217, 255, 0.1);
+    color: #00d9ff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    width: fit-content;
+  }
+
+  .card-description {
+    color: #b0b0b0;
+    margin-bottom: 20px;
+    flex: 1;
+    line-height: 1.8;
+  }
+
+  .features {
+    background: rgba(0, 217, 255, 0.05);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+
+  .features h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #00d9ff;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .features ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .features li {
+    font-size: 13px;
+    color: #b0b0b0;
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #00d9ff;
+    font-weight: 700;
+  }
+
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #00d9ff, #00b0e0);
+    color: #0f1419;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+  }
+
+  .info-section {
+    background: rgba(0, 217, 255, 0.05);
+    border: 1px solid rgba(0, 217, 255, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    margin-top: 60px;
+  }
+
+  .info-section h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #00d9ff;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+  }
+
+  .info-item h3 {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .info-item p {
+    color: #b0b0b0;
+    line-height: 1.8;
+  }
+
+  .note {
+    background: rgba(255, 100, 68, 0.1);
+    border-left: 4px solid #ff6444;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: #ffb3a0;
+  }
+
+  @media (max-width: 1024px) {
+    .grid { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="container">
+  <header>
+    <h1>Choose Your Portfolio Design</h1>
+    <p>Three professional UI options with updated project details</p>
+    <div class="subtitle">✓ Victox Agency details included • ✓ UAE/ZEKO location noted • ✓ Photo placeholders ready</div>
+  </header>
+
+  <div class="grid">
+    <!-- Option 1 -->
+    <div class="card">
+      <div class="card-number">01</div>
+      <h2>Dark Premium</h2>
+      <span class="card-tag">CYBERPUNK AESTHETIC</span>
+      <p class="card-description">Bold gradient effects with dark theme. Perfect for showcasing your creative and tech-forward identity with animated hover effects and glow elements.</p>
+      <div class="features">
+        <h3>Features</h3>
+        <ul>
+          <li>Gradient text animations</li>
+          <li>Dark theme with cyan accents</li>
+          <li>Smooth hover animations</li>
+          <li>Grid-based project showcase</li>
+          <li>Glass-morphism effects</li>
+        </ul>
+      </div>
+      <a href="design-option-1.html" class="btn">View Design</a>
+    </div>
+
+    <!-- Option 2 -->
+    <div class="card">
+      <div class="card-number">02</div>
+      <h2>Clean Minimal</h2>
+      <span class="card-tag">PROFESSIONAL</span>
+      <p class="card-description">Light, minimalist design that emphasizes your work. Perfect for corporate clients and agencies. Clean typography and generous whitespace.</p>
+      <div class="features">
+        <h3>Features</h3>
+        <ul>
+          <li>Minimal light theme</li>
+          <li>Alternating project layouts</li>
+          <li>Professional typography</li>
+          <li>Focus on content</li>
+          <li>Mobile-first design</li>
+        </ul>
+      </div>
+      <a href="design-option-2.html" class="btn">View Design</a>
+    </div>
+
+    <!-- Option 3 -->
+    <div class="card">
+      <div class="card-number">03</div>
+      <h2>Bold Colorful</h2>
+      <span class="card-tag">MODERN & VIBRANT</span>
+      <p class="card-description">Vibrant colors with orange and blue gradients. Modern and playful while remaining professional. Card-based project showcase with eye-catching visuals.</p>
+      <div class="features">
+        <h3>Features</h3>
+        <ul>
+          <li>Orange/blue gradients</li>
+          <li>Card-based layouts</li>
+          <li>Vibrant color scheme</li>
+          <li>Playful animations</li>
+          <li>High visual impact</li>
+        </ul>
+      </div>
+      <a href="design-option-3.html" class="btn">View Design</a>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <h2>📋 What's Included in All Designs</h2>
+    <div class="info-grid">
+      <div class="info-item">
+        <h3>✅ Updated Project Information</h3>
+        <p>All designs now include Victox Freelance Agency (Calicut) for Chaya Restaurant and Mandhi Zouk Analytics, plus UAE designation for ZEKO project.</p>
+      </div>
+      <div class="info-item">
+        <h3>✅ Photo Placeholders</h3>
+        <p>Each project has emoji placeholders where your actual photos/screenshots can be added. Ready for your portfolio images and work samples.</p>
+      </div>
+      <div class="info-item">
+        <h3>✅ Responsive Design</h3>
+        <p>All three designs are fully responsive and work perfectly on mobile, tablet, and desktop. No coding required for responsiveness.</p>
+      </div>
+      <div class="info-item">
+        <h3>✅ Dark/Light Mode Ready</h3>
+        <p>Designs automatically adapt to user's system preference for dark or light mode. Modern, accessible experience for all visitors.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>💡 Next Steps:</strong> Choose your preferred design above, then provide your actual photos/screenshots to replace the emoji placeholders. We can integrate them immediately. Need any customizations? Let us know!
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 60px; padding-bottom: 40px; border-bottom: 1px solid rgba(0,217,255,0.1);">
+    <p style="color: #888888; font-size: 14px;">All designs include Victox Agency branding, location details, and are ready for photo integration</p>
+  </div>
+
+  <div style="text-align: center; padding: 40px 0;">
+    <h3 style="color: #ffffff; margin-bottom: 20px;">Need to Upload Your Photos?</h3>
+    <p style="color: #b0b0b0; margin-bottom: 20px;">Send us your portfolio photos and project screenshots to add to whichever design you choose.</p>
+    <a href="mailto:zameelclash@gmail.com?subject=Portfolio%20Design%20-%20Photo%20Upload" class="btn">Send Photos</a>
+  </div>
+</div>
