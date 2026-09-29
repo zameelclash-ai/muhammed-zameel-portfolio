@@ -1,5 +1,6 @@
 <title>Zameel Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
   :root {
@@ -423,9 +424,19 @@
   @keyframes shine { 0%, 55% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
   .item .no { display: inline-block; transition: transform .35s cubic-bezier(.3,1.4,.5,1); }
   .item:hover .no { transform: translateX(8px) scale(1.12); }
-  .th img { scale: 1.16; will-change: translate; }
+  .th img { scale: 1.06; will-change: translate; }
   .title, .me img { will-change: translate; }
   @media (prefers-reduced-motion: reduce) { .lime-card, .pill.lime::after, .cue i::after { animation: none; } .cur, .sp { display: none; } .chart .hl { stroke-dashoffset: 0 !important; animation: none !important; } }
+
+  /* image loading */
+  @keyframes shim { to { background-position: -200% 0; } }
+  .th, .gi, .me { background-image: linear-gradient(100deg, rgba(255,255,255,.04) 30%, rgba(255,255,255,.16) 50%, rgba(255,255,255,.04) 70%); background-size: 200% 100%; animation: shim 1.4s linear infinite; }
+  .me { animation: none; }
+  html.ldon .th img, html.ldon .gi img, html.ldon .me img { opacity: 0; }
+  html.ldon .th img.ld, html.ldon .gi img.ld, html.ldon .me img.ld { opacity: 1; }
+  .th img { transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+  .gi img, .me img { transition: opacity .5s ease; }
+  .me img { transition: opacity .5s ease, transform .25s ease-out; }
 </style>
 
 <div class="sp" id="sp" aria-hidden="true"></div>
@@ -456,7 +467,7 @@
     </div>
 
     <div class="card me" id="me">
-      <img src="assets/me.png" alt="Muhammed Zameel" width="463" height="422">
+      <img src="assets/me.webp" alt="Muhammed Zameel" width="463" height="422" fetchpriority="high" decoding="async">
       <span class="mtag t1">Performance Marketer</span>
       <span class="mtag t2">Thrissur, Kerala</span>
     </div>
@@ -564,56 +575,56 @@
   <section class="work">
     <article class="item" tabindex="0" role="button" data-p="0" aria-label="Open project overview">
       <div class="no">01</div>
-      <div class="th"><img src="assets/covers/chaya.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/chaya.jpg" alt="" loading="lazy" decoding="async" width="720" height="480"></div>
       <div><h3>Chaya Restaurant</h3><div class="chips"><span class="chip where">Victox Freelance Agency, Calicut</span><span class="chip">Video</span><span class="chip">Social</span></div></div>
       <p class="muted">Video and social campaigns built around storytelling, lifting engagement and bringing people through the door.</p>
       <div class="metric"><b>+40%</b><span>Footfall</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="1" aria-label="Open project overview">
       <div class="no">02</div>
-      <div class="th"><img src="assets/covers/mandhi.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/mandhi.jpg" alt="" loading="lazy" decoding="async" width="720" height="480"></div>
       <div><h3>Mandhi Zouk</h3><div class="chips"><span class="chip where">Victox Freelance Agency, Calicut</span><span class="chip">Meta Ads</span><span class="chip">Analytics</span></div></div>
       <p class="muted">Multi-channel performance campaign with full analytics reporting and tight audience targeting.</p>
       <div class="metric"><b>236K</b><span>IG views</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="2" aria-label="Open project overview">
       <div class="no">03</div>
-      <div class="th"><img src="assets/covers/zeko.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/zeko.jpg" alt="" loading="lazy" decoding="async" width="720" height="480"></div>
       <div><h3>ZEKO</h3><div class="chips"><span class="chip where">UAE</span><span class="chip">Web</span><span class="chip">Branding</span></div></div>
       <p class="muted">Premium painting and construction solutions brand with a clean product catalog across four categories.</p>
       <div class="metric"><b>100%</b><span>Responsive</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="3" aria-label="Open project overview">
       <div class="no">04</div>
-      <div class="th"><img src="assets/covers/smartgold.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/smartgold.jpg" alt="" loading="lazy" decoding="async" width="720" height="480"></div>
       <div><h3>Smart Gold</h3><div class="chips"><span class="chip where">Android app</span><span class="chip">Live rates</span></div></div>
       <p class="muted">Real-time gold tracking with 1-second live updates, charts, alerts and portfolio tracking.</p>
       <div class="metric"><b>2K+</b><span>Installs</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="4" aria-label="Open project overview">
       <div class="no">05</div>
-      <div class="th"><img src="assets/covers/auditoriumhub.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/auditoriumhub.jpg" alt="" loading="lazy" decoding="async" width="720" height="480"></div>
       <div><h3>AuditoriumHub</h3><div class="chips"><span class="chip where">Marketplace</span><span class="chip">Full-stack</span></div></div>
       <p class="muted">Venue booking platform connecting organisers with auditoriums, payments included.</p>
       <div class="metric"><b>₹50L+</b><span>Transactions</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="5" aria-label="Open project overview">
       <div class="no">06</div>
-      <div class="th"><img src="assets/covers/petstore.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/petstore.jpg" alt="" loading="lazy" decoding="async" width="720" height="480"></div>
       <div><h3>Shopify Pet Store</h3><div class="chips"><span class="chip where">E-commerce</span><span class="chip">Shopify</span></div></div>
       <p class="muted">Conversion-focused store with a tuned funnel and paid acquisition behind it.</p>
       <div class="metric"><b>$30K+</b><span>Per month</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="6" aria-label="Open project overview">
       <div class="no">07</div>
-      <div class="th"><img src="assets/covers/optimex.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/optimex.jpg" alt="" loading="lazy" decoding="async" width="720" height="480"></div>
       <div><h3>Optimex Optical</h3><div class="chips"><span class="chip where">Local business</span><span class="chip">Web</span></div></div>
       <p class="muted">Booking-led website for an optical brand, turning search traffic into appointments.</p>
       <div class="metric"><b>12%</b><span>Booking rate</span></div>
     </article>
     <article class="item" tabindex="0" role="button" data-p="7" aria-label="Open project overview">
       <div class="no">08</div>
-      <div class="th"><img src="assets/covers/carousel.jpg" alt="" loading="lazy"></div>
+      <div class="th"><img src="assets/covers/carousel.jpg" alt="" loading="lazy" decoding="async" width="720" height="480"></div>
       <div><h3>Daily Carousel Engine</h3><div class="chips"><span class="chip where">Automation</span><span class="chip">Claude</span></div></div>
       <p class="muted">Social content automation that turns one idea into a ready-to-post carousel every day.</p>
       <div class="metric"><b>1/day</b><span>Auto posts</span></div>
@@ -795,7 +806,7 @@
     if (t === 'rating') return '<div class="c ' + sp + ' ' + col + '"><div class="mono sub">Play Store rating</div><div class="stars" role="img" aria-label="4.6 out of 5 stars"></div><div class="bigc"><div class="n" style="margin:0"><span data-to="4.6" data-dec="1" data-suf="">0</span><small>/5</small></div></div></div>';
     if (t === 'date') return '<div class="c datep ' + sp + ' ' + col + '"><div class="d">' + no + '</div><div>' + p.where + '</div></div>';
     if (t === 'big') { var b = p.big; return '<div class="c bigc ' + sp + ' ' + col + '"><div class="l"><i><b>\u2605</b></i><span>' + b[2] + '</span></div><div class="n">' + b[4] + '<span data-to="' + b[0] + '" data-dec="' + b[3] + '" data-suf="">0</span><small>' + b[1] + '</small></div></div>'; }
-    if (t === 'gallery') return '<div class="c gal s12 soft"><div class="top"><h3>Project<br>visuals</h3><span class="add">' + (p.imgs.length + 1) + ' images' + '</span></div><div class="gs">' + ['assets/covers/' + ['chaya','mandhi','zeko','smartgold','auditoriumhub','petstore','optimex','carousel'][cur] + '.jpg'].concat(p.imgs).map(function (u, k) { return '<figure class="gi"><img src="' + u + '" alt="' + p.n + ' visual ' + (k + 1) + '" data-lb="1"></figure>'; }).join('') + '</div><div class="sub">' + p.cap + '</div></div>';
+    if (t === 'gallery') return '<div class="c gal s12 soft"><div class="top"><h3>Project<br>visuals</h3><span class="add">' + (p.imgs.length + 1) + ' images' + '</span></div><div class="gs">' + ['assets/covers/' + ['chaya','mandhi','zeko','smartgold','auditoriumhub','petstore','optimex','carousel'][cur] + '.jpg'].concat(p.imgs).map(function (u, k) { return '<figure class="gi"><img src="' + u + '" alt="' + p.n + ' visual ' + (k + 1) + '" data-lb="1" loading="lazy" decoding="async"></figure>'; }).join('') + '</div><div class="sub">' + p.cap + '</div></div>';
     return '';
   }
 
@@ -1017,7 +1028,7 @@
         thumbs.forEach(function (im) {
           var r = im.parentElement.getBoundingClientRect();
           if (r.bottom < -50 || r.top > innerHeight + 50) return;
-          im.style.translate = '0 ' + (((r.top + r.height / 2) - innerHeight / 2) / innerHeight * -16).toFixed(1) + 'px';
+          im.style.translate = '0 ' + (((r.top + r.height / 2) - innerHeight / 2) / innerHeight * -8).toFixed(1) + 'px';
         });
         vel = y - lastY; lastY = y;
         var target = (vel < 0 ? -1 : 1) * (1 + Math.min(Math.abs(vel) * .35, 7));
@@ -1041,5 +1052,20 @@
       });
       document.addEventListener('pointerleave', function () { cur.classList.remove('on'); }, true);
     }
+  })();
+  (function () {
+    document.documentElement.classList.add('ldon');
+    function ld(i) { i.classList.add('ld'); }
+    document.addEventListener('load', function (e) { if (e.target && e.target.tagName === 'IMG') ld(e.target); }, true);
+    document.addEventListener('error', function (e) { if (e.target && e.target.tagName === 'IMG') ld(e.target); }, true);
+    document.querySelectorAll('img').forEach(function (i) { if (i.complete) ld(i); });
+    var warmed = {};
+    document.querySelectorAll('.item').forEach(function (el) {
+      el.addEventListener('pointerenter', function () {
+        var k = +el.dataset.p; if (warmed[k]) return; warmed[k] = 1;
+        var cov = ['chaya','mandhi','zeko','smartgold','auditoriumhub','petstore','optimex','carousel'][k];
+        ['assets/covers/' + cov + '.jpg'].concat(P[k].imgs).forEach(function (u) { var im = new Image(); im.src = u; });
+      }, { once: true });
+    });
   })();
 </script>
