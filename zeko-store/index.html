@@ -3,72 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZEKO Tools — Professional Paint Tools</title>
-<meta name="description" content="Demo storefront for ZEKO Tools: professional paint rollers, trays, drop sheets, tapes and tool kits.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%236a2ea6%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22>Z</text></svg>">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<title>ZEKO — Professional Paint Tools</title>
+<meta name="description" content="ZEKO makes the drop sheets, rollers, trays and tapes that painters reach for on every job. Built for coverage, grip and a clean edge.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%235b2896%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Georgia%22 font-weight=%22bold%22>Z</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;0,900;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="promo-bar">This is a demo storefront built to showcase the ZEKO Tools product line — no real orders are placed.</div>
-
-<header class="site-header">
-  <div class="wrap header-inner">
+<header class="site-nav">
+  <div class="wrap nav-inner">
     <a class="logo" href="#top">
       <span class="logo-mark">Z</span>
-      <span class="logo-text">ZEKO<small>Professional Paint Tools</small></span>
+      <span class="logo-text">ZEKO</span>
     </a>
-    <nav class="main-nav" aria-label="Primary">
-      <a href="#shop">Shop</a>
-      <a href="#kits">Kits</a>
-      <a href="#about">About</a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="#story">Story</a></li>
+        <li><a href="#range">The Range</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
     </nav>
-    <div class="header-actions">
-      <button class="icon-btn" id="cart-toggle" aria-haspopup="dialog" aria-controls="cart-drawer" aria-label="Open cart">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.4" fill="currentColor"/><circle cx="18" cy="21" r="1.4" fill="currentColor"/></svg>
-        <span class="cart-badge" id="cart-count" hidden>0</span>
-      </button>
+    <div class="nav-actions">
+      <a href="#range" class="btn btn-ghost">Explore the Range</a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span></button>
     </div>
   </div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden>
+    <ul>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#range">The Range</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
 </header>
 
 <main id="top">
 
   <section class="hero">
     <div class="wrap hero-inner">
-      <div class="hero-copy">
+      <div class="hero-copy reveal">
         <p class="eyebrow">Professional Paint Tools</p>
-        <h1>Prep faster.<br>Paint cleaner.<br><span>Finish like a pro.</span></h1>
+        <h1>Prep faster. Paint cleaner.<br><em>Finish like a pro.</em></h1>
         <p class="hero-sub">ZEKO makes the drop sheets, rollers, trays and tapes that painters reach for on every job — built for coverage, grip and a clean edge.</p>
         <div class="hero-cta">
-          <a href="#shop" class="btn btn-primary">Shop all tools</a>
-          <a href="#kits" class="btn btn-ghost">See the Pro Kit</a>
+          <a href="#range" class="btn btn-primary">Explore the Range</a>
+          <a href="#story" class="btn btn-ghost">Our Story</a>
         </div>
       </div>
-      <div class="hero-media">
-        <img src="images/tool-kit.jpg" alt="ZEKO paint tool kit: scraper, tray, roller, polythene roll, extension pole and masking tape" loading="eager">
+      <div class="hero-media reveal">
+        <img src="images/craft-hero.jpg" alt="The full ZEKO range laid out: drop sheets, paint tray, roller, scraper, polythene roll and masking tape" loading="eager">
       </div>
     </div>
   </section>
 
-  <section class="trust-strip">
-    <div class="wrap trust-inner">
-      <div><strong>500 GSM</strong><span>Heavy-duty drop sheets</span></div>
-      <div><strong>32 M²</strong><span>Coverage per sheet</span></div>
-      <div><strong>Anti-slip</strong><span>Grip on every handle</span></div>
-      <div><strong>Trade-ready</strong><span>Built for daily use</span></div>
+  <section class="stat-strip">
+    <div class="wrap stat-inner">
+      <div class="reveal"><strong>500 GSM</strong><span>Heavy-duty drop sheets</span></div>
+      <div class="reveal"><strong>32 M²</strong><span>Coverage per sheet</span></div>
+      <div class="reveal"><strong>Anti-Slip</strong><span>Grip on every handle</span></div>
+      <div class="reveal"><strong>Trade-Ready</strong><span>Built for daily use</span></div>
     </div>
   </section>
 
-  <section class="shop-section" id="shop">
+  <section class="feature" id="feature-roll">
+    <div class="wrap feature-inner">
+      <div class="feature-media reveal">
+        <img src="images/feature-roll.jpg" alt="A ZEKO roller laying down a clean, even coat of deep purple paint" loading="lazy">
+      </div>
+      <div class="feature-copy reveal">
+        <p class="eyebrow">Rollers</p>
+        <h2>The Perfect Roll</h2>
+        <p>A dense, even nap holds more paint and releases it evenly, so a full wall takes fewer passes and shows no stipple. The contoured frame keeps your wrist relaxed through the whole job.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature" id="feature-edge" data-flip="true">
+    <div class="wrap feature-inner">
+      <div class="feature-media reveal">
+        <img src="images/feature-edge.jpg" alt="A ZEKO scraper held against masking tape for a crisp painted edge" loading="lazy">
+      </div>
+      <div class="feature-copy reveal">
+        <p class="eyebrow">Precision Tape &amp; Tools</p>
+        <h2>Precision Edge</h2>
+        <p>Clean-release crepe tape pulls away without lifting a flake of paint behind it. Press it down with the scraper's flat edge and every line comes out straight, first time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature" id="feature-kit">
+    <div class="wrap feature-inner">
+      <div class="feature-media reveal">
+        <img src="images/feature-kit.jpg" alt="The complete ZEKO kit: tray, roller, scraper, masking tape, polythene roll and drop sheet" loading="lazy">
+      </div>
+      <div class="feature-copy reveal">
+        <p class="eyebrow">Kits</p>
+        <h2>The Complete Set</h2>
+        <p>Everything that touches the wall, the floor and the trim — matched, tested together, and packed as one kit. Grab it once and you're ready for anything from a single room to a full repaint.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature" id="feature-room" data-flip="true">
+    <div class="wrap feature-inner">
+      <div class="feature-media reveal">
+        <img src="images/feature-room.jpg" alt="A room prepared for painting with a ZEKO drop sheet, polythene roll and tray" loading="lazy">
+      </div>
+      <div class="feature-copy reveal">
+        <p class="eyebrow">Surface Protection</p>
+        <h2>Prepared for Perfection</h2>
+        <p>Heavy-duty sheeting that stays put on floors and drapes cleanly over furniture, so a five-minute prep job means zero cleanup surprises when the paint goes on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="range" id="range">
     <div class="wrap">
-      <div class="section-head">
-        <h2>Shop ZEKO Tools</h2>
-        <p>Every tool from the collection, ready to add to your cart.</p>
+      <div class="section-head reveal">
+        <p class="eyebrow">The Range</p>
+        <h2>Nine tools. One finish.</h2>
+        <p>Every product in the ZEKO line-up, built to work together.</p>
       </div>
 
-      <div class="filters" role="tablist" aria-label="Filter products by category">
+      <div class="filters reveal" role="tablist" aria-label="Filter products by category">
         <button class="filter-chip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
         <button class="filter-chip" data-filter="protection" role="tab" aria-selected="false">Surface Protection</button>
         <button class="filter-chip" data-filter="tools" role="tab" aria-selected="false">Rollers &amp; Tools</button>
@@ -80,65 +142,103 @@
     </div>
   </section>
 
-  <section class="about" id="about">
-    <div class="wrap about-inner">
-      <h2>Built for the people who paint for a living</h2>
-      <p>ZEKO started with one idea: painters shouldn't have to choose between tools that are cheap and tools that last. Every roller, tray and roll of poly sheeting is tested on real job sites before it ships — so the only thing you have to think about is the finish.</p>
-      <p class="about-note">This site is a demo storefront created to present the ZEKO product line. Add-to-cart and checkout are fully interactive but do not process real payments or orders.</p>
+  <section class="craft" id="story">
+    <div class="wrap craft-inner">
+      <div class="craft-media reveal">
+        <img src="images/craft-hero.jpg" alt="The full ZEKO product range arranged together on a lavender surface" loading="lazy">
+      </div>
+      <div class="craft-copy reveal">
+        <p class="eyebrow">Built to Last</p>
+        <h2>Every detail earns its place</h2>
+        <p>Nothing on a ZEKO tool is there by accident. The grip compound, the tray ribs, the tape's release liner — each part is chosen for what happens to it on a real job site, not a shelf.</p>
+        <ul class="craft-points">
+          <li><span class="dot"></span><div><strong>Reinforced tray ribs</strong> — <span>load off your roller evenly, every pass</span></div></li>
+          <li><span class="dot"></span><div><strong>Anti-slip grip compound</strong> — <span>stays secure through a full day's work</span></div></li>
+          <li><span class="dot"></span><div><strong>Tear-resistant sheeting</strong> — <span>drapes and folds without splitting</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials" id="reviews">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">What Painters Say</p>
+        <h2>Trusted on site</h2>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card reveal">
+          <span class="quote-mark">&ldquo;</span>
+          <p class="quote">The tray ribs actually make a difference — no more roller skid on the first load. Small thing, but it saves time on every wall.</p>
+          <div class="testimonial-person">
+            <span class="avatar">R</span>
+            <div><strong>Rosa M.</strong><span>Residential Painter</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <span class="quote-mark">&ldquo;</span>
+          <p class="quote">Switched my whole crew to the ZEKO drop sheets. They don't slide around like the cheap ones, and one sheet actually covers a full room.</p>
+          <div class="testimonial-person">
+            <span class="avatar">D</span>
+            <div><strong>Devan K.</strong><span>Site Foreman</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <span class="quote-mark">&ldquo;</span>
+          <p class="quote">The tape pulls off clean even after two days under paint. That alone is worth switching brands for — no more touch-up work on the edges.</p>
+          <div class="testimonial-person">
+            <span class="avatar">A</span>
+            <div><strong>Ana P.</strong><span>Interior Contractor</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="brand-story" id="about">
+    <div class="wrap brand-story-inner">
+      <p class="eyebrow reveal">About ZEKO</p>
+      <h2 class="reveal">Built for the people who paint for a living</h2>
+      <p class="reveal">ZEKO started with one idea: painters shouldn't have to choose between tools that are cheap and tools that last. Every roller, tray and roll of poly sheeting is tested on real job sites before it ships — so the only thing you have to think about is the finish.</p>
+      <p class="reveal">This site is a demonstration brand and storefront design, built to showcase product photography and web design work — not a real retailer.</p>
+    </div>
+  </section>
+
+  <section class="final-cta" id="final-cta">
+    <div class="wrap final-cta-inner">
+      <div class="reveal">
+        <h2>See the full ZEKO line-up</h2>
+        <p>Nine tools, built to work as one system.</p>
+      </div>
+      <div class="final-cta-actions reveal">
+        <a href="#range" class="btn btn-primary">Explore the Range</a>
+        <a href="#about" class="btn btn-ghost">Learn Our Story</a>
+      </div>
     </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
-  <div class="wrap footer-inner">
-    <div class="footer-brand">
-      <span class="logo-mark">Z</span>
-      <span class="logo-text">ZEKO<small>Professional Paint Tools</small></span>
+  <div class="wrap">
+    <div class="footer-top">
+      <a class="logo" href="#top">
+        <span class="logo-mark">Z</span>
+        <span class="logo-text">ZEKO</span>
+      </a>
+      <ul class="footer-links">
+        <li><a href="#story">Story</a></li>
+        <li><a href="#range">The Range</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
     </div>
-    <p>&copy; <span id="year"></span> ZEKO Tools. Demo storefront — no real transactions are processed.</p>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> ZEKO Tools</span>
+      <span>Demonstration brand site — created for portfolio and design purposes.</span>
+    </div>
   </div>
 </footer>
-
-<!-- Cart drawer -->
-<div class="drawer-overlay" id="drawer-overlay" hidden></div>
-<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping cart" hidden>
-  <div class="cart-header">
-    <h2>Your Cart</h2>
-    <button class="icon-btn" id="cart-close" aria-label="Close cart">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-  <div class="cart-items" id="cart-items"></div>
-  <div class="cart-empty" id="cart-empty">
-    <p>Your cart is empty.</p>
-    <a href="#shop" class="btn btn-ghost" id="cart-empty-shop">Browse tools</a>
-  </div>
-  <div class="cart-footer" id="cart-footer" hidden>
-    <div class="cart-subtotal">
-      <span>Subtotal</span>
-      <strong id="cart-subtotal-amount">₹0</strong>
-    </div>
-    <p class="cart-note">Shipping and taxes calculated at checkout.</p>
-    <button class="btn btn-primary btn-block" id="checkout-btn">Checkout</button>
-  </div>
-</aside>
-
-<!-- Toast -->
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<!-- Demo checkout modal -->
-<div class="modal-overlay" id="modal-overlay" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button class="icon-btn modal-close" id="modal-close" aria-label="Close">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-    <div class="modal-icon">✓</div>
-    <h3 id="modal-title">This is a demo store</h3>
-    <p>Thanks for trying the ZEKO Tools demo! Checkout is simulated — no payment is taken and no order is placed. In a real store this step would hand off to your payment provider.</p>
-    <button class="btn btn-primary" id="modal-ok">Got it</button>
-  </div>
-</div>
 
 <script src="app.js"></script>
 </body>
