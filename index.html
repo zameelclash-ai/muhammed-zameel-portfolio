@@ -1,40 +1,46 @@
-<title>Muhammed Zameel — Marketing & Development</title>
+<title>Muhammed Zameel — Performance Marketer & Developer</title>
 
 <style>
   :root {
     --bg-primary: #ffffff;
-    --bg-secondary: #f5f5f5;
-    --bg-tertiary: #efefef;
-    --text-primary: #000000;
-    --text-secondary: #555555;
-    --text-tertiary: #888888;
-    --border: #e5e5e5;
-    --accent: #0ea5a5;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #f0f2f5;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a5568;
+    --text-tertiary: #718096;
+    --accent: #00b4a0;
+    --accent-hover: #009d8f;
+    --gradient-1: linear-gradient(135deg, #00b4a0 0%, #009d8f 100%);
+    --gradient-2: linear-gradient(135deg, #ec4899 0%, #c026d3 100%);
+    --gradient-3: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --gradient-4: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    --gradient-5: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    --gradient-6: linear-gradient(135deg, #ff5a44 0%, #1d3fae 100%);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg-primary: #000000;
-      --bg-secondary: #111111;
-      --bg-tertiary: #1a1a1a;
-      --text-primary: #ffffff;
-      --text-secondary: #cccccc;
-      --text-tertiary: #888888;
-      --border: #2a2a2a;
+      --bg-primary: #0f1419;
+      --bg-secondary: #1a2332;
+      --bg-tertiary: #242f3d;
+      --text-primary: #f8f9fa;
+      --text-secondary: #cbd5e1;
+      --text-tertiary: #94a3b8;
       --accent: #1dd1d1;
+      --accent-hover: #0ea5a5;
       color-scheme: dark;
     }
   }
 
   :root[data-theme="dark"] {
-    --bg-primary: #000000;
-    --bg-secondary: #111111;
-    --bg-tertiary: #1a1a1a;
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
-    --text-tertiary: #888888;
-    --border: #2a2a2a;
+    --bg-primary: #0f1419;
+    --bg-secondary: #1a2332;
+    --bg-tertiary: #242f3d;
+    --text-primary: #f8f9fa;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
     --accent: #1dd1d1;
+    --accent-hover: #0ea5a5;
     color-scheme: dark;
   }
 
@@ -43,266 +49,254 @@
   body {
     background: var(--bg-primary);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, -apple-system, sans-serif;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 
+  /* Navbar */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 16px 20px;
+    z-index: 1000;
+  }
+
+  nav:dark-mode,
+  @media (prefers-color-scheme: dark) {
+    nav { background: rgba(15,20,25,0.95); border-bottom-color: rgba(255,255,255,0.1); }
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--accent);
+  }
+
   /* Hero */
   .hero {
-    padding: 100px 20px 80px;
+    padding: 120px 20px 80px;
     text-align: center;
+    background: linear-gradient(180deg, rgba(0,180,160,0.05) 0%, transparent 100%);
   }
 
   .hero h1 {
-    font-size: clamp(44px, 8vw, 64px);
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-size: clamp(42px, 8vw, 68px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
     margin-bottom: 16px;
-    line-height: 1.1;
+    background: linear-gradient(135deg, var(--accent) 0%, #008b7f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .hero-subtitle {
-    font-size: 21px;
+    font-size: 24px;
     color: var(--text-secondary);
     font-weight: 500;
     margin-bottom: 32px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .hero-meta {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 24px;
     flex-wrap: wrap;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-tertiary);
   }
 
-  /* Section */
+  .hero-meta span::before { content: "• "; margin-right: 8px; }
+  .hero-meta span:first-child::before { content: ""; }
+
+  /* Sections */
   section {
-    padding: 80px 20px;
-    border-top: 1px solid var(--border);
+    padding: 100px 20px;
   }
 
   section h2 {
-    font-size: clamp(36px, 6vw, 48px);
+    font-size: clamp(32px, 6vw, 48px);
     font-weight: 700;
     letter-spacing: -0.01em;
-    margin-bottom: 48px;
-    line-height: 1.2;
+    margin-bottom: 56px;
+    text-align: center;
   }
 
-  /* Two Column Layout */
-  .section-content {
+  /* Grid Section */
+  .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 48px;
     align-items: center;
   }
 
-  .section-text h3 {
-    font-size: 28px;
-    font-weight: 600;
+  .grid-2.reverse { direction: rtl; }
+  .grid-2.reverse > * { direction: ltr; }
+
+  .section-content h3 {
+    font-size: 32px;
+    font-weight: 700;
     margin-bottom: 20px;
-    line-height: 1.3;
+    color: var(--text-primary);
   }
 
-  .section-text p {
+  .section-content p {
     font-size: 16px;
     color: var(--text-secondary);
     margin-bottom: 24px;
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
-  .section-visual {
-    background: var(--bg-secondary);
-    border-radius: 12px;
+  .visual-box {
+    background: var(--gradient-1);
+    border-radius: 16px;
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 120px;
-    position: relative;
+    font-size: 100px;
+    box-shadow: 0 20px 60px rgba(0,180,160,0.2);
   }
 
-  .section-visual.gradient-1 {
-    background: linear-gradient(135deg, #0ea5a5 0%, #0d8b8b 100%);
-    color: white;
-  }
+  .visual-box.g2 { background: var(--gradient-2); box-shadow: 0 20px 60px rgba(236,72,153,0.2); }
+  .visual-box.g3 { background: var(--gradient-3); box-shadow: 0 20px 60px rgba(245,158,11,0.2); }
+  .visual-box.g4 { background: var(--gradient-4); box-shadow: 0 20px 60px rgba(6,182,212,0.2); }
+  .visual-box.g5 { background: var(--gradient-5); box-shadow: 0 20px 60px rgba(155,89,182,0.2); }
+  .visual-box.g6 { background: var(--gradient-6); box-shadow: 0 20px 60px rgba(255,90,68,0.2); }
 
-  .section-visual.gradient-2 {
-    background: linear-gradient(135deg, #ec4899 0%, #c026d3 100%);
-    color: white;
-  }
-
-  .section-visual.gradient-3 {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    color: white;
-  }
-
-  .section-visual.gradient-4 {
-    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-    color: white;
-  }
-
-  .section-visual.gradient-5 {
-    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
-    color: white;
-  }
-
-  .section-visual.gradient-6 {
-    background: linear-gradient(135deg, #ff5a44 0%, #1d3fae 100%);
-    color: white;
-  }
-
-  /* Stats Grid */
-  .stats-grid {
+  /* Stats */
+  .stats-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 32px;
     margin: 32px 0;
   }
 
-  .stat-block {
+  .stat {
     display: flex;
     flex-direction: column;
   }
 
   .stat-value {
     font-size: 32px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--accent);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
 
   .stat-label {
-    font-size: 13px;
-    color: var(--text-tertiary);
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
   }
 
   /* Tech Stack */
-  .tech-list {
+  .tech-stack {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     margin-top: 24px;
   }
 
   .tech-badge {
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 8px 14px;
+    border-radius: 6px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
+    transition: all 0.3s ease;
   }
 
-  /* Specs Section */
-  .specs-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 48px;
+  .tech-badge:hover {
+    background: var(--accent);
+    color: white;
   }
 
-  .spec-item {
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .spec-item:last-child {
-    border-bottom: none;
-  }
-
-  .spec-label {
-    font-size: 13px;
-    color: var(--text-tertiary);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 6px;
-  }
-
-  .spec-value {
-    font-size: 16px;
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
-
-  /* About/Skills */
+  /* Skills Grid */
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    gap: 36px;
   }
 
-  .skill-box h4 {
+  .skill-item h4 {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--accent);
     margin-bottom: 12px;
   }
 
-  .skill-box p {
+  .skill-item p {
     font-size: 15px;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.7;
   }
 
-  /* Tools */
+  /* Tools Grid */
   .tools-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
   }
 
-  .tool-item {
-    background: var(--bg-secondary);
-    padding: 20px;
-    border-radius: 8px;
+  .tool {
+    background: var(--bg-tertiary);
+    padding: 18px;
+    border-radius: 10px;
     text-align: center;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--text-primary);
-    border: 1px solid var(--border);
+    border: 1px solid transparent;
     transition: all 0.3s ease;
   }
 
-  .tool-item:hover {
+  .tool:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    background: var(--accent);
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,180,160,0.15);
   }
 
-  /* Contact */
-  .contact-section {
+  /* Contact Section */
+  .contact {
     text-align: center;
-    padding: 100px 20px 80px;
+    padding: 120px 20px;
+    background: linear-gradient(135deg, rgba(0,180,160,0.08) 0%, rgba(0,180,160,0.04) 100%);
   }
 
-  .contact-section h2 {
+  .contact h2 {
     margin-bottom: 32px;
   }
 
-  .contact-section p {
+  .contact p {
     font-size: 18px;
     color: var(--text-secondary);
     max-width: 600px;
     margin: 0 auto 40px;
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
   .contact-links {
     display: flex;
     justify-content: center;
-    gap: 24px;
+    gap: 20px;
     flex-wrap: wrap;
     margin-bottom: 48px;
   }
@@ -317,76 +311,52 @@
 
   .contact-link:hover {
     opacity: 0.7;
+    text-decoration: underline;
   }
 
-  .cta-button {
+  .cta-btn {
     display: inline-block;
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent) 0%, #008b7f 100%);
     color: white;
-    padding: 14px 36px;
+    padding: 16px 40px;
     border-radius: 8px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 15px;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,180,160,0.3);
   }
 
-  .cta-button:hover {
-    opacity: 0.85;
-    transform: translateY(-2px);
+  .cta-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 45px rgba(0,180,160,0.4);
   }
 
   @media (max-width: 768px) {
-    .section-content {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-
-    .section-visual {
-      order: -1;
-    }
-
-    .stats-grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .skills-grid {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    .tools-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .specs-section {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    .hero {
-      padding: 60px 20px 40px;
-    }
-
-    section {
-      padding: 60px 20px;
-    }
+    .grid-2 { grid-template-columns: 1fr; gap: 32px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-row { grid-template-columns: 1fr; }
+    .hero { padding: 80px 20px 60px; }
+    section { padding: 80px 20px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   }
 </style>
 
+<!-- Navbar -->
+<nav>
+  <div class="container">
+    <div class="logo">MZ</div>
+  </div>
+</nav>
+
 <!-- Hero -->
-<div class="hero">
+<section class="hero">
   <div class="container">
     <h1>Muhammed Zameel</h1>
     <p class="hero-subtitle">Performance Marketer & Full-Stack Developer</p>
@@ -396,62 +366,62 @@
       <span>Available Now</span>
     </div>
   </div>
-</div>
+</section>
 
-<!-- About Section -->
-<section>
+<!-- About -->
+<section style="background: var(--bg-secondary);">
   <div class="container">
-    <h2>About</h2>
-    <div class="section-content">
-      <div class="section-text">
-        <h3>Performance Marketer Driven by Data & Creativity</h3>
-        <p>I'm a results-driven Digital Marketer, Social Media Strategist, and Content Producer with a foundation in Computer Applications. I specialize in multi-channel performance marketing, B2B lead generation, and high-converting video production.</p>
-        <p>My expertise spans end-to-end campaign architecture, analytical reporting, and market expansion. I combine creative storytelling with data-driven optimization to deliver measurable business results.</p>
+    <h2>About Me</h2>
+    <div class="grid-2">
+      <div class="section-content">
+        <h3>Data-Driven Marketer & Creative Builder</h3>
+        <p>I'm a results-oriented Digital Marketer, Social Media Strategist, and Content Producer. I specialize in multi-channel performance marketing, B2B lead generation, and high-converting video production.</p>
+        <p>My expertise spans end-to-end campaign architecture, analytical reporting, and market expansion. I blend creative storytelling with data-driven optimization.</p>
       </div>
       <div class="skills-grid">
-        <div class="skill-box">
+        <div class="skill-item">
           <h4>Marketing & Paid Media</h4>
-          <p>Meta Ads Manager, Google Ads, LinkedIn Campaign Manager, Lead Generation, ROI Optimization</p>
+          <p>Meta Ads, Google Ads, LinkedIn, Lead Generation, ROI Optimization, B2B Funnels</p>
         </div>
-        <div class="skill-box">
+        <div class="skill-item">
           <h4>Analytics & Strategy</h4>
-          <p>Google Analytics 4, Data Visualization, Multi-Channel Campaigns, Brand Strategy</p>
+          <p>GA4, Data Visualization, Multi-Channel, Brand Strategy, Market Analysis</p>
         </div>
-        <div class="skill-box">
+        <div class="skill-item">
           <h4>Creative & Production</h4>
-          <p>Video Editing (DaVinci Resolve, CapCut), Videography, Directing, Photo Editing</p>
+          <p>Video Editing, Directing, Videography, Photo Editing, Scriptwriting</p>
         </div>
-        <div class="skill-box">
+        <div class="skill-item">
           <h4>Technical</h4>
-          <p>Web Design, WordPress, Shopify, Elementor, SEO, HTML/CSS, JavaScript</p>
+          <p>Web Design, WordPress, Shopify, Elementor, SEO, Automation</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Tools Section -->
+<!-- Tools -->
 <section>
   <div class="container">
     <h2>Tools & Technologies</h2>
     <div class="tools-grid">
-      <div class="tool-item">Meta Ads Manager</div>
-      <div class="tool-item">Google Ads</div>
-      <div class="tool-item">Google Analytics 4</div>
-      <div class="tool-item">DaVinci Resolve</div>
-      <div class="tool-item">CapCut</div>
-      <div class="tool-item">Canva</div>
-      <div class="tool-item">WordPress</div>
-      <div class="tool-item">Shopify</div>
-      <div class="tool-item">Elementor</div>
-      <div class="tool-item">HTML/CSS</div>
-      <div class="tool-item">JavaScript</div>
-      <div class="tool-item">React Native</div>
+      <div class="tool">Meta Ads Manager</div>
+      <div class="tool">Google Ads</div>
+      <div class="tool">Google Analytics 4</div>
+      <div class="tool">DaVinci Resolve</div>
+      <div class="tool">CapCut</div>
+      <div class="tool">Canva</div>
+      <div class="tool">WordPress</div>
+      <div class="tool">Shopify</div>
+      <div class="tool">Elementor</div>
+      <div class="tool">HTML/CSS</div>
+      <div class="tool">JavaScript</div>
+      <div class="tool">React Native</div>
     </div>
   </div>
 </section>
 
-<!-- Marketing Projects -->
+<!-- Marketing Section Header -->
 <section style="background: var(--bg-secondary);">
   <div class="container">
     <h2>Marketing Case Studies</h2>
@@ -461,101 +431,86 @@
 <!-- Chaya Restaurant -->
 <section>
   <div class="container">
-    <div class="section-content">
-      <div class="section-text">
+    <div class="grid-2">
+      <div class="section-content">
         <h3>Chaya Restaurant</h3>
-        <p>Designed and executed targeted video and social media campaigns for a local restaurant, driving high engagement and significantly increasing foot traffic through creative storytelling and strategic community management.</p>
-        <div class="stats-grid">
-          <div class="stat-block">
+        <p>Designed and executed targeted video and social media campaigns. Drove high engagement and significantly increased foot traffic through creative storytelling and strategic community management.</p>
+        <div class="stats-row">
+          <div class="stat">
             <span class="stat-value">High</span>
             <span class="stat-label">Engagement Rate</span>
           </div>
-          <div class="stat-block">
+          <div class="stat">
             <span class="stat-value">↑ 40%</span>
             <span class="stat-label">Footfall Growth</span>
           </div>
         </div>
-        <div class="tech-list">
+        <div class="tech-stack">
           <span class="tech-badge">Video Production</span>
           <span class="tech-badge">Social Strategy</span>
           <span class="tech-badge">Content Creation</span>
-          <span class="tech-badge">Community Mgmt</span>
         </div>
       </div>
-      <div class="section-visual gradient-1">🍽️</div>
+      <div class="visual-box">🍽️</div>
     </div>
   </div>
 </section>
 
-<!-- Mandhi Zouk Analytics -->
-<section>
+<!-- Mandhi Zouk -->
+<section style="background: var(--bg-secondary);">
   <div class="container">
-    <div class="section-content">
-      <div class="section-visual gradient-2">📊</div>
-      <div class="section-text">
+    <div class="grid-2 reverse">
+      <div class="visual-box g2">📊</div>
+      <div class="section-content">
         <h3>Mandhi Zouk Analytics</h3>
-        <p>Multi-channel performance marketing campaign with comprehensive analytical reporting. Achieved significant reach and engagement through optimized ad strategies, precise audience targeting, and continuous ROI optimization across platforms.</p>
-        <div class="stats-grid">
-          <div class="stat-block">
+        <p>Multi-channel performance marketing campaign with comprehensive analytical reporting. Achieved significant reach and engagement through optimized ad strategies and precision targeting.</p>
+        <div class="stats-row">
+          <div class="stat">
             <span class="stat-value">236K</span>
             <span class="stat-label">Total Reach</span>
           </div>
-          <div class="stat-block">
+          <div class="stat">
             <span class="stat-value">₹1,260</span>
             <span class="stat-label">Campaign Spend</span>
           </div>
         </div>
-        <div class="tech-list">
+        <div class="tech-stack">
           <span class="tech-badge">Campaign Mgmt</span>
           <span class="tech-badge">Analytics</span>
           <span class="tech-badge">ROI Optimization</span>
-          <span class="tech-badge">Data Viz</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Tech Projects Header -->
-<section style="background: var(--bg-secondary);">
+<!-- Development Section Header -->
+<section>
   <div class="container">
     <h2>Development Projects</h2>
   </div>
 </section>
 
 <!-- Smart Gold -->
-<section>
+<section style="background: var(--bg-secondary);">
   <div class="container">
-    <div class="section-content">
-      <div class="section-text">
+    <div class="grid-2">
+      <div class="section-content">
         <h3>Smart Gold</h3>
-        <p>Real-time gold rate tracking Android application with live price updates every 30 seconds, advanced charting, custom alerts, and comprehensive portfolio tracking across multiple purity levels (24K, 22K, 21K, 18K).</p>
-        <div class="stats-grid">
-          <div class="stat-block">
-            <span class="stat-value">2K+</span>
-            <span class="stat-label">Installs</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">4.6★</span>
-            <span class="stat-label">Rating</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">92%</span>
-            <span class="stat-label">DAU Retention</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">&lt;1s</span>
-            <span class="stat-label">Update Latency</span>
-          </div>
+        <p>Real-time gold rate tracking Android app with live price updates every 30 seconds, advanced charting, custom alerts, and portfolio tracking across multiple purity levels.</p>
+        <div class="stats-row">
+          <div class="stat"><span class="stat-value">2K+</span><span class="stat-label">Installs</span></div>
+          <div class="stat"><span class="stat-value">4.6★</span><span class="stat-label">Rating</span></div>
+          <div class="stat"><span class="stat-value">92%</span><span class="stat-label">DAU Retention</span></div>
+          <div class="stat"><span class="stat-value">&lt;1s</span><span class="stat-label">Latency</span></div>
         </div>
-        <div class="tech-list">
+        <div class="tech-stack">
           <span class="tech-badge">Kotlin</span>
-          <span class="tech-badge">Jetpack</span>
           <span class="tech-badge">Firebase</span>
           <span class="tech-badge">WebSocket</span>
         </div>
       </div>
-      <div class="section-visual gradient-1">💰</div>
+      <div class="visual-box g1">💰</div>
     </div>
   </div>
 </section>
@@ -563,30 +518,18 @@
 <!-- AuditoriumHub -->
 <section>
   <div class="container">
-    <div class="section-content">
-      <div class="section-visual gradient-2">🎭</div>
-      <div class="section-text">
+    <div class="grid-2 reverse">
+      <div class="visual-box g2">🎭</div>
+      <div class="section-content">
         <h3>AuditoriumHub</h3>
-        <p>Two-sided marketplace connecting event organizers with auditoriums across Kerala. Features real-time availability, integrated payment processing, venue management, and additional services like catering coordination.</p>
-        <div class="stats-grid">
-          <div class="stat-block">
-            <span class="stat-value">1.2K+</span>
-            <span class="stat-label">Venues</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">5K+</span>
-            <span class="stat-label">Users</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">200+</span>
-            <span class="stat-label">Bookings/Month</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">₹50L+</span>
-            <span class="stat-label">Transactions</span>
-          </div>
+        <p>Two-sided marketplace connecting event organizers with auditoriums across Kerala. Features real-time availability, integrated payments, and venue management.</p>
+        <div class="stats-row">
+          <div class="stat"><span class="stat-value">1.2K+</span><span class="stat-label">Venues</span></div>
+          <div class="stat"><span class="stat-value">5K+</span><span class="stat-label">Users</span></div>
+          <div class="stat"><span class="stat-value">200+</span><span class="stat-label">Bookings/Month</span></div>
+          <div class="stat"><span class="stat-value">₹50L+</span><span class="stat-label">Transactions</span></div>
         </div>
-        <div class="tech-list">
+        <div class="tech-stack">
           <span class="tech-badge">React Native</span>
           <span class="tech-badge">Node.js</span>
           <span class="tech-badge">MongoDB</span>
@@ -598,38 +541,25 @@
 </section>
 
 <!-- Shopify Pet Store -->
-<section>
+<section style="background: var(--bg-secondary);">
   <div class="container">
-    <div class="section-content">
-      <div class="section-text">
+    <div class="grid-2">
+      <div class="section-content">
         <h3>Shopify Pet Store</h3>
-        <p>High-converting e-commerce platform for premium pet gadgets targeting the US market. Optimized for conversions through strategic SEO, email automation, social proof mechanisms, and influencer partnership integrations.</p>
-        <div class="stats-grid">
-          <div class="stat-block">
-            <span class="stat-value">$30K+</span>
-            <span class="stat-label">Monthly Sales</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">3.2%</span>
-            <span class="stat-label">Conversion Rate</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">150+</span>
-            <span class="stat-label">Products</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">6mo</span>
-            <span class="stat-label">Profitable</span>
-          </div>
+        <p>High-converting e-commerce platform for premium pet gadgets. Optimized for conversions through strategic SEO, email automation, and influencer integrations.</p>
+        <div class="stats-row">
+          <div class="stat"><span class="stat-value">$30K+</span><span class="stat-label">Monthly Sales</span></div>
+          <div class="stat"><span class="stat-value">3.2%</span><span class="stat-label">Conversion</span></div>
+          <div class="stat"><span class="stat-value">150+</span><span class="stat-label">Products</span></div>
+          <div class="stat"><span class="stat-value">6mo</span><span class="stat-label">Profitable</span></div>
         </div>
-        <div class="tech-list">
+        <div class="tech-stack">
           <span class="tech-badge">Shopify</span>
           <span class="tech-badge">Liquid</span>
           <span class="tech-badge">Google Ads</span>
-          <span class="tech-badge">Email Marketing</span>
         </div>
       </div>
-      <div class="section-visual gradient-3">🐾</div>
+      <div class="visual-box g3">🐾</div>
     </div>
   </div>
 </section>
@@ -637,33 +567,20 @@
 <!-- Optimex Optical -->
 <section>
   <div class="container">
-    <div class="section-content">
-      <div class="section-visual gradient-4">👓</div>
-      <div class="section-text">
+    <div class="grid-2 reverse">
+      <div class="visual-box g4">👓</div>
+      <div class="section-content">
         <h3>Optimex Optical</h3>
-        <p>Modern, responsive website for premium eyewear retailer in Thrissur. Features comprehensive product catalog, online eye test booking system, Google Maps integration, and fully optimized mobile checkout experience.</p>
-        <div class="stats-grid">
-          <div class="stat-block">
-            <span class="stat-value">5K+</span>
-            <span class="stat-label">Monthly Visitors</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">12%</span>
-            <span class="stat-label">Booking Rate</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">30%↑</span>
-            <span class="stat-label">Foot Traffic</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">Live</span>
-            <span class="stat-label">Status</span>
-          </div>
+        <p>Modern website for premium eyewear retailer. Features product catalog, online eye test booking, Google Maps integration, and optimized mobile checkout.</p>
+        <div class="stats-row">
+          <div class="stat"><span class="stat-value">5K+</span><span class="stat-label">Monthly Visitors</span></div>
+          <div class="stat"><span class="stat-value">12%</span><span class="stat-label">Booking Rate</span></div>
+          <div class="stat"><span class="stat-value">30%↑</span><span class="stat-label">Foot Traffic</span></div>
+          <div class="stat"><span class="stat-value">Live</span><span class="stat-label">Status</span></div>
         </div>
-        <div class="tech-list">
+        <div class="tech-stack">
           <span class="tech-badge">HTML/CSS</span>
           <span class="tech-badge">JavaScript</span>
-          <span class="tech-badge">Maps API</span>
           <span class="tech-badge">Netlify</span>
         </div>
       </div>
@@ -672,38 +589,25 @@
 </section>
 
 <!-- ZEKO -->
-<section>
+<section style="background: var(--bg-secondary);">
   <div class="container">
-    <div class="section-content">
-      <div class="section-text">
+    <div class="grid-2">
+      <div class="section-content">
         <h3>ZEKO</h3>
-        <p>Premium painting and construction tools brand showcase. Elegant product catalog with professional branding and optimized user experience across all devices. Focus on visual hierarchy and conversion-optimized CTAs.</p>
-        <div class="stats-grid">
-          <div class="stat-block">
-            <span class="stat-value">4</span>
-            <span class="stat-label">Categories</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">100%</span>
-            <span class="stat-label">Mobile Responsive</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">Premium</span>
-            <span class="stat-label">Brand Design</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">Optimized</span>
-            <span class="stat-label">CTAs</span>
-          </div>
+        <p>Premium painting and construction tools brand showcase. Elegant product catalog with professional branding and optimized user experience across all devices.</p>
+        <div class="stats-row">
+          <div class="stat"><span class="stat-value">4</span><span class="stat-label">Categories</span></div>
+          <div class="stat"><span class="stat-value">100%</span><span class="stat-label">Mobile Responsive</span></div>
+          <div class="stat"><span class="stat-value">Premium</span><span class="stat-label">Design</span></div>
+          <div class="stat"><span class="stat-value">Optimized</span><span class="stat-label">CTAs</span></div>
         </div>
-        <div class="tech-list">
+        <div class="tech-stack">
           <span class="tech-badge">HTML5</span>
           <span class="tech-badge">CSS3</span>
           <span class="tech-badge">JavaScript</span>
-          <span class="tech-badge">Responsive Design</span>
         </div>
       </div>
-      <div class="section-visual gradient-5">🎨</div>
+      <div class="visual-box g5">🎨</div>
     </div>
   </div>
 </section>
@@ -711,34 +615,21 @@
 <!-- Daily Carousel Engine -->
 <section>
   <div class="container">
-    <div class="section-content">
-      <div class="section-visual gradient-6">📱</div>
-      <div class="section-text">
+    <div class="grid-2 reverse">
+      <div class="visual-box g6">📱</div>
+      <div class="section-content">
         <h3>Daily Carousel Engine</h3>
-        <p>Automated content pipeline that researches topics, writes copy, designs branded Instagram carousels, and schedules posts daily. Built to maintain consistent social media presence without manual intervention.</p>
-        <div class="stats-grid">
-          <div class="stat-block">
-            <span class="stat-value">Daily</span>
-            <span class="stat-label">Automation</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">1080×1350</span>
-            <span class="stat-label">Format</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">8:00 AM</span>
-            <span class="stat-label">Post Time</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-value">Live</span>
-            <span class="stat-label">Status</span>
-          </div>
+        <p>Automated content pipeline that researches topics, writes copy, designs branded Instagram carousels, and schedules posts daily. Maintains consistent social presence.</p>
+        <div class="stats-row">
+          <div class="stat"><span class="stat-value">Daily</span><span class="stat-label">Automation</span></div>
+          <div class="stat"><span class="stat-value">1080×1350</span><span class="stat-label">Format</span></div>
+          <div class="stat"><span class="stat-value">8:00 AM</span><span class="stat-label">Post Time</span></div>
+          <div class="stat"><span class="stat-value">Live</span><span class="stat-label">Status</span></div>
         </div>
-        <div class="tech-list">
+        <div class="tech-stack">
           <span class="tech-badge">Claude Artifact</span>
           <span class="tech-badge">Automation</span>
           <span class="tech-badge">Design System</span>
-          <span class="tech-badge">Social Media</span>
         </div>
       </div>
     </div>
@@ -746,16 +637,16 @@
 </section>
 
 <!-- Contact -->
-<section class="contact-section">
+<section class="contact">
   <div class="container">
     <h2>Let's Create Together</h2>
-    <p>I specialize in performance marketing, digital strategy, content production, and full-stack web development. Let's collaborate on your next project.</p>
+    <p>I specialize in performance marketing, digital strategy, content production, and full-stack development. Let's collaborate on your next project.</p>
     <div class="contact-links">
       <a href="tel:+918129129479" class="contact-link">+91 8129129479</a>
       <a href="mailto:zameelclash@gmail.com" class="contact-link">zameelclash@gmail.com</a>
       <a href="https://instagram.com/MHDZMLLL" class="contact-link" target="_blank">Instagram</a>
       <a href="https://linkedin.com/in/muhammed-zameel-37020427a" class="contact-link" target="_blank">LinkedIn</a>
     </div>
-    <a href="mailto:zameelclash@gmail.com?subject=Let's%20work%20together" class="cta-button">Start a Project</a>
+    <a href="mailto:zameelclash@gmail.com?subject=Let's%20work%20together" class="cta-btn">Start a Project</a>
   </div>
 </section>
