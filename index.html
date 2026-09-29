@@ -1,255 +1,479 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammed Zameel - Frontend Developer Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">💻 Zameel</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+<title>Muhammed Zameel — Full-Stack Developer</title>
+
+<style>
+  /* Design system: Modern, high-contrast layout. Deep navy/charcoal text on warm white, teal accent for CTAs, sophisticated grays for structure. Bold sans for display, readable system stack for body. */
+
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f7f5;
+    --bg-tertiary: #efefed;
+    --text-primary: #0f0f0f;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --border: #e5e5e5;
+    --accent: #0ea5a5;
+    --accent-hover: #0d8b8b;
+    --gold: #d4a574;
+    --gold-light: #e8d4c4;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-primary: #0d0d0d;
+      --bg-secondary: #1a1a1a;
+      --bg-tertiary: #262626;
+      --text-primary: #ffffff;
+      --text-secondary: #c0c0c0;
+      --text-tertiary: #808080;
+      --border: #333333;
+      --accent: #1dd1d1;
+      --accent-hover: #0ea5a5;
+      --gold: #d4a574;
+      --gold-light: #4a3b2a;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg-primary: #0d0d0d;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #262626;
+    --text-primary: #ffffff;
+    --text-secondary: #c0c0c0;
+    --text-tertiary: #808080;
+    --border: #333333;
+    --accent: #1dd1d1;
+    --accent-hover: #0ea5a5;
+    --gold: #d4a574;
+    --gold-light: #4a3b2a;
+    color-scheme: dark;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header {
+    padding: 60px 20px 40px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    text-wrap: balance;
+  }
+
+  header p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--text-tertiary);
+  }
+
+  .header-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 40px 0;
+  }
+
+  /* Projects Grid */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 40px 20px;
+  }
+
+  .project-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 12px 24px rgba(14, 165, 165, 0.08);
+    transform: translateY(-4px);
+  }
+
+  .project-hero {
+    height: 240px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-hero.gold {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  }
+
+  .project-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent);
+    pointer-events: none;
+  }
+
+  .project-content {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .project-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .project-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    flex: 1;
+    line-height: 1.7;
+  }
+
+  .project-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat {
+    font-size: 13px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .tech-stack {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tech-badge {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  footer h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  footer p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(14, 165, 165, 0.2);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    header {
+      padding: 40px 20px 24px;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    .header-meta {
+      gap: 16px;
+      font-size: 13px;
+    }
+
+    .projects {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 24px 20px;
+    }
+
+    .project-content {
+      padding: 20px;
+    }
+
+    .project-stats {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<header>
+  <div class="container">
+    <h1>Muhammed Zameel</h1>
+    <p>Full-Stack Developer, Mobile Engineer & Entrepreneur</p>
+    <div class="header-meta">
+      <span>Kerala, India</span>
+      <span>Full-stack development</span>
+      <span>5+ years experience</span>
+    </div>
+  </div>
+</header>
+
+<div class="header-divider"></div>
+
+<div class="container">
+  <div class="projects">
+    <!-- Smart Gold -->
+    <div class="project-card">
+      <div class="project-hero gold">💰</div>
+      <div class="project-content">
+        <span class="project-tag">Mobile App</span>
+        <h2 class="project-title">Smart Gold</h2>
+        <p class="project-description">Real-time gold rate tracking Android app with live price updates every 30 seconds, historical charts, custom alerts, and portfolio tracking for 24K, 22K, 21K, 18K purity.</p>
+
+        <div class="project-stats">
+          <div class="stat">
+            <span class="stat-value">2K+</span>
+            <span class="stat-label">Installs</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">4.6★</span>
+            <span class="stat-label">Rating</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">92%</span>
+            <span class="stat-label">DAU Retention</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">&lt;1s</span>
+            <span class="stat-label">Update Latency</span>
+          </div>
         </div>
-    </nav>
 
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Hi, I'm Muhammed Zameel</h1>
-                <p class="tagline">Frontend Developer | E-commerce Specialist | Web Designer</p>
-                <p class="tagline-sub">Building beautiful, responsive web experiences for modern brands</p>
-                <a href="#projects" class="cta-button">View My Work</a>
-            </div>
+        <div class="tech-stack">
+          <span class="tech-badge">Kotlin</span>
+          <span class="tech-badge">Jetpack</span>
+          <span class="tech-badge">Firebase</span>
+          <span class="tech-badge">WebSocket</span>
+          <span class="tech-badge">REST APIs</span>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <p>I'm a passionate frontend developer specialized in creating stunning e-commerce platforms and product showcase websites. With expertise in modern web technologies, I help brands like ZEKO bring their vision to life through engaging, user-friendly digital experiences.</p>
-                <p>I focus on responsive design, smooth user interactions, and conversion-optimized layouts that turn visitors into customers.</p>
-            </div>
+    <!-- AuditoriumHub -->
+    <div class="project-card">
+      <div class="project-hero" style="background: linear-gradient(135deg, #ec4899 0%, #c026d3 100%);">🎭</div>
+      <div class="project-content">
+        <span class="project-tag">Marketplace</span>
+        <h2 class="project-title">AuditoriumHub</h2>
+        <p class="project-description">Airbnb-style two-sided marketplace for booking auditoriums across Kerala. Connects event organizers with venues, catering, and management services with real-time availability and integrated payments.</p>
+
+        <div class="project-stats">
+          <div class="stat">
+            <span class="stat-value">1.2K+</span>
+            <span class="stat-label">Venues</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">5K+</span>
+            <span class="stat-label">Users</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">200+</span>
+            <span class="stat-label">Bookings/Month</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">₹50L+</span>
+            <span class="stat-label">Transactions</span>
+          </div>
         </div>
-    </section>
 
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2>Featured Projects</h2>
-            <p class="section-subtitle">Recent frontend & e-commerce work</p>
-
-            <div class="projects-showcase">
-                <!-- ZEKO Project -->
-                <div class="project-showcase">
-                    <div class="project-showcase-image" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); display: flex; align-items: center; justify-content: center; font-size: 120px;">🎨</div>
-                    <div class="project-showcase-content">
-                        <div class="project-meta">
-                            <span class="project-status">E-Commerce Platform</span>
-                            <span class="project-date">2026</span>
-                        </div>
-                        <h3>ZEKO - Premium Painting & Construction Solutions</h3>
-                        <p class="project-description">A fully responsive e-commerce product showcase website for ZEKO, a leading painting and construction tools brand. The site features an elegant product catalog, professional branding, and optimized user experience for both mobile and desktop users.</p>
-
-                        <div class="project-highlights">
-                            <h4>Project Highlights:</h4>
-                            <ul>
-                                <li>✨ Responsive design - Works seamlessly on all devices</li>
-                                <li>🛍️ Product showcase - 4 featured product categories</li>
-                                <li>🎯 Conversion optimized - Clear CTAs and user flow</li>
-                                <li>💜 Brand-aligned design - Purple color scheme matching ZEKO identity</li>
-                                <li>📱 Mobile-first approach - Optimized for on-the-go shoppers</li>
-                                <li>⚡ Fast performance - Smooth animations and interactions</li>
-                            </ul>
-                        </div>
-
-                        <div class="tech-stack">
-                            <h4>Technologies Used:</h4>
-                            <div class="tech-tags">
-                                <span class="tech-tag">HTML5</span>
-                                <span class="tech-tag">CSS3</span>
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Responsive Design</span>
-                                <span class="tech-tag">Git</span>
-                            </div>
-                        </div>
-
-                        <div class="project-results">
-                            <h4>Project Results:</h4>
-                            <p>Delivered a complete e-commerce front-end that effectively showcases ZEKO's product range with a professional, modern aesthetic. The website features smooth user interactions, clear product information architecture, and optimized calls-to-action for customer engagement.</p>
-                        </div>
-
-                        <div class="project-links">
-                            <a href="http://localhost:3000" class="project-link" target="_blank">🌐 Live Demo</a>
-                            <a href="#" class="project-link">💻 View Code</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dulcet Churros Project -->
-                <div class="project-showcase">
-                    <div class="project-showcase-image" style="background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%); display: flex; align-items: center; justify-content: center; font-size: 120px;">🍦</div>
-                    <div class="project-showcase-content">
-                        <div class="project-meta">
-                            <span class="project-status">E-Commerce Site</span>
-                            <span class="project-date">2026</span>
-                        </div>
-                        <h3>Dulcet Churros - Premium Frozen Treats</h3>
-                        <p class="project-description">A vibrant e-commerce platform for a premium frozen dessert brand. Designed to showcase products with appetizing visuals and streamlined checkout experience for dessert enthusiasts.</p>
-
-                        <div class="project-highlights">
-                            <h4>Project Highlights:</h4>
-                            <ul>
-                                <li>🎨 Eye-catching gradient design - Warm, inviting color palette</li>
-                                <li>🛒 Product catalog - Multiple dessert categories and flavors</li>
-                                <li>📦 Order management - Smooth shopping cart and checkout flow</li>
-                                <li>🎯 Conversion focused - Strategic CTAs for sales optimization</li>
-                                <li>📱 Mobile responsive - Optimized for all devices</li>
-                                <li>⚡ Fast loading - Performance-optimized assets</li>
-                            </ul>
-                        </div>
-
-                        <div class="tech-stack">
-                            <h4>Technologies Used:</h4>
-                            <div class="tech-tags">
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">HTML5</span>
-                                <span class="tech-tag">CSS3</span>
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Netlify</span>
-                            </div>
-                        </div>
-
-                        <div class="project-results">
-                            <h4>Project Results:</h4>
-                            <p>Created a fully functional e-commerce site with responsive design, product showcase capabilities, and a seamless user experience. The site effectively presents the brand's premium positioning while maintaining high performance standards.</p>
-                        </div>
-
-                        <div class="project-links">
-                            <a href="https://dulcet-churros-f094de.netlify.app" class="project-link" target="_blank">🌐 Live Demo</a>
-                            <a href="#" class="project-link">💻 View Code</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Claude Artifact - Daily Carousel Engine -->
-                <div class="project-showcase">
-                    <div class="project-showcase-image" style="background: linear-gradient(135deg, #FF5A44 0%, #1D3FAE 100%); display: flex; align-items: center; justify-content: center; font-size: 120px;">📱</div>
-                    <div class="project-showcase-content">
-                        <div class="project-meta">
-                            <span class="project-status">Automation Tool</span>
-                            <span class="project-date">2026</span>
-                        </div>
-                        <h3>Daily Carousel Engine - Social Content Automation</h3>
-                        <p class="project-description">An end-to-end automation pipeline that researches topics, writes copy, designs branded Instagram carousels, and schedules posts automatically. Built for Optimex Opticals to maintain consistent daily content without manual design work.</p>
-
-                        <div class="project-highlights">
-                            <h4>Project Highlights:</h4>
-                            <ul>
-                                <li>🤖 Fully automated - Zero manual design work required</li>
-                                <li>🎨 Brand consistency - Maintains client color scheme and identity</li>
-                                <li>📅 Daily scheduling - Posts at optimal engagement times (8:00 AM IST)</li>
-                                <li>📊 Performance analytics - Tracks engagement metrics across locations</li>
-                                <li>🔄 Automated workflow - Research → Write → Design → Schedule</li>
-                                <li>📱 Instagram optimized - 1080×1350 carousel format</li>
-                            </ul>
-                        </div>
-
-                        <div class="tech-stack">
-                            <h4>Technologies Used:</h4>
-                            <div class="tech-tags">
-                                <span class="tech-tag">Claude Artifact</span>
-                                <span class="tech-tag">Automation</span>
-                                <span class="tech-tag">Design System</span>
-                                <span class="tech-tag">Content Pipeline</span>
-                                <span class="tech-tag">Social Media</span>
-                            </div>
-                        </div>
-
-                        <div class="project-results">
-                            <h4>Project Results:</h4>
-                            <p>Successfully automated the entire content creation pipeline for daily Instagram carousels. The system eliminates manual design work while maintaining brand consistency, allowing the client to maintain an engaged social media presence with zero daily effort.</p>
-                        </div>
-
-                        <div class="project-links">
-                            <a href="https://claude.ai/artifact/HeK8BRrY7SQLK5pfmwwst8" class="project-link" target="_blank">🌐 View Artifact</a>
-                            <a href="#" class="project-link">📋 Case Study</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="tech-stack">
+          <span class="tech-badge">React Native</span>
+          <span class="tech-badge">Node.js</span>
+          <span class="tech-badge">MongoDB</span>
+          <span class="tech-badge">Stripe</span>
+          <span class="tech-badge">Socket.io</span>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2>Skills & Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Frontend</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">React</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Design</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Responsive Design</span>
-                        <span class="skill-tag">UI/UX</span>
-                        <span class="skill-tag">Figma</span>
-                        <span class="skill-tag">Canva</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>E-Commerce</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Product Showcase</span>
-                        <span class="skill-tag">User Experience</span>
-                        <span class="skill-tag">Conversion Optimization</span>
-                        <span class="skill-tag">Shopping Carts</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Tools</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">DevTools</span>
-                        <span class="skill-tag">Node.js</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Shopify Store -->
+    <div class="project-card">
+      <div class="project-hero" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">🐾</div>
+      <div class="project-content">
+        <span class="project-tag">E-Commerce</span>
+        <h2 class="project-title">Shopify Pet Store</h2>
+        <p class="project-description">High-converting dropshipping store for premium pet gadgets targeting the US market. Optimized for conversions with SEO, email automation, social proof, and influencer partnerships.</p>
+
+        <div class="project-stats">
+          <div class="stat">
+            <span class="stat-value">$30K+</span>
+            <span class="stat-label">Monthly Sales</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">3.2%</span>
+            <span class="stat-label">Conversion</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">150+</span>
+            <span class="stat-label">Products</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">6mo</span>
+            <span class="stat-label">Profitable</span>
+          </div>
         </div>
-    </section>
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Let's Work Together</h2>
-            <p>Have a project in mind? I'd love to hear about it!</p>
-            <div class="contact-links">
-                <a href="mailto:zameel@email.com" class="contact-link">📧 Email Me</a>
-                <a href="#" class="contact-link">💼 LinkedIn</a>
-                <a href="#" class="contact-link">🐙 GitHub</a>
-            </div>
+        <div class="tech-stack">
+          <span class="tech-badge">Shopify</span>
+          <span class="tech-badge">Liquid</span>
+          <span class="tech-badge">Google Ads</span>
+          <span class="tech-badge">Email Marketing</span>
+          <span class="tech-badge">Analytics</span>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Muhammed Zameel. All rights reserved.</p>
+    <!-- Optimex Optical -->
+    <div class="project-card">
+      <div class="project-hero" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">👓</div>
+      <div class="project-content">
+        <span class="project-tag">Business Website</span>
+        <h2 class="project-title">Optimex Optical</h2>
+        <p class="project-description">Modern, responsive website for premium eyewear retailer in Thrissur. Features product catalog, online eye test booking, location integration, and mobile-optimized checkout experience.</p>
+
+        <div class="project-stats">
+          <div class="stat">
+            <span class="stat-value">5K+</span>
+            <span class="stat-label">Monthly Visitors</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">12%</span>
+            <span class="stat-label">Booking Rate</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">30%↑</span>
+            <span class="stat-label">Foot Traffic</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">Live</span>
+            <span class="stat-label">Status</span>
+          </div>
         </div>
-    </footer>
 
-    <script src="script.js"></script>
-</body>
-</html>
+        <div class="tech-stack">
+          <span class="tech-badge">HTML/CSS</span>
+          <span class="tech-badge">JavaScript</span>
+          <span class="tech-badge">Maps API</span>
+          <span class="tech-badge">Netlify</span>
+          <span class="tech-badge">SEO Optimized</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <h3>Ready to build something amazing?</h3>
+    <p>I specialize in full-stack development, mobile apps, e-commerce platforms, and scalable marketplace solutions. Let's turn your ideas into reality.</p>
+    <a href="mailto:zameel@email.com" class="cta-button">Get In Touch</a>
+  </div>
+</footer>
