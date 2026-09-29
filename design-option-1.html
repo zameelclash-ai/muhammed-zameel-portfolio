@@ -1,0 +1,300 @@
+<title>OPTION 1: Dark Premium Design</title>
+
+<style>
+  :root {
+    --bg-dark: #0a0e27;
+    --bg-card: #1a1f3a;
+    --text-light: #ffffff;
+    --text-gray: #b0b0b0;
+    --accent: #00d9ff;
+    --accent-2: #ff006e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg-dark);
+    color: var(--text-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  /* Hero with Image */
+  .hero {
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-text h1 {
+    font-size: 64px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #00d9ff, #ff006e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-text p {
+    font-size: 20px;
+    color: var(--text-gray);
+    margin-bottom: 40px;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(135deg, #00d9ff, #ff006e);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 200px;
+    box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
+  }
+
+  /* Projects */
+  .projects {
+    padding: 100px 0;
+  }
+
+  .section-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 60px;
+    text-align: center;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-bottom: 80px;
+  }
+
+  .project-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 217, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
+    transform: translateY(-10px);
+  }
+
+  .project-image {
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(135deg, #1a1f3a, #2a2f4a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+  }
+
+  .project-content {
+    padding: 30px;
+  }
+
+  .project-content h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--accent);
+  }
+
+  .project-company {
+    font-size: 13px;
+    color: var(--accent-2);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+
+  .project-desc {
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .project-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-gray);
+    margin-top: 5px;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .cta-button {
+    background: linear-gradient(135deg, #00d9ff, #ff006e);
+    color: white;
+    padding: 16px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 217, 255, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .project-grid { grid-template-columns: 1fr; }
+    .hero-text h1 { font-size: 40px; }
+  }
+</style>
+
+<nav style="padding: 20px; border-bottom: 1px solid rgba(0,217,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+  <div style="font-size: 24px; font-weight: 700; color: #00d9ff;">MZ</div>
+  <div style="display: flex; gap: 30px; color: var(--text-gray);">
+    <a href="#" style="color: inherit; text-decoration: none;">About</a>
+    <a href="#" style="color: inherit; text-decoration: none;">Projects</a>
+    <a href="#" style="color: inherit; text-decoration: none;">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Muhammed Zameel</h1>
+        <p>Performance Marketer & Full-Stack Developer</p>
+        <p style="font-size: 16px;">Thrissur, Kerala • UAE • Remote</p>
+        <button class="cta-button">View My Work</button>
+      </div>
+      <div class="hero-image">👨‍💼</div>
+    </div>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="container">
+    <h2 class="section-title">Featured Projects</h2>
+
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="project-image">🍽️</div>
+        <div class="project-content">
+          <div class="project-company">Victox Freelance Agency • Calicut</div>
+          <h3>Chaya Restaurant</h3>
+          <p class="project-desc">Video & social media campaigns driving high engagement and foot traffic growth through creative storytelling.</p>
+          <div class="project-stats">
+            <div class="stat">
+              <div class="stat-value">High</div>
+              <div class="stat-label">Engagement</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">↑40%</div>
+              <div class="stat-label">Footfall</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-image">📊</div>
+        <div class="project-content">
+          <div class="project-company">Victox Freelance Agency • Calicut</div>
+          <h3>Mandhi Zouk Analytics</h3>
+          <p class="project-desc">Multi-channel performance marketing with comprehensive analytics reporting and ROI optimization.</p>
+          <div class="project-stats">
+            <div class="stat">
+              <div class="stat-value">236K</div>
+              <div class="stat-label">Total Reach</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">₹1,260</div>
+              <div class="stat-label">Spend</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-image">🎨</div>
+        <div class="project-content">
+          <div class="project-company">UAE Business</div>
+          <h3>ZEKO</h3>
+          <p class="project-desc">Premium painting & construction tools brand showcase with elegant product catalog and responsive design.</p>
+          <div class="project-stats">
+            <div class="stat">
+              <div class="stat-value">4</div>
+              <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">100%</div>
+              <div class="stat-label">Responsive</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-image">💰</div>
+        <div class="project-content">
+          <div class="project-company">Mobile Application</div>
+          <h3>Smart Gold</h3>
+          <p class="project-desc">Real-time gold rate tracking app with live updates, charts, alerts, and portfolio management.</p>
+          <div class="project-stats">
+            <div class="stat">
+              <div class="stat-value">2K+</div>
+              <div class="stat-label">Installs</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">4.6★</div>
+              <div class="stat-label">Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2 class="section-title">Ready to Work Together?</h2>
+      <button class="cta-button">Get In Touch</button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,386 @@
+<title>OPTION 3: Bold Colorful Modern</title>
+
+<style>
+  :root {
+    --primary: #fafbfc;
+    --accent-1: #ff6b35;
+    --accent-2: #004e89;
+    --accent-3: #f77f00;
+    --text-dark: #1a2332;
+    --text-light: #5a6c7d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--primary);
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  /* Navigation */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 60px;
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ff6b35, #f77f00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  nav a {
+    margin-left: 40px;
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  nav a:hover { color: var(--accent-1); }
+
+  /* Hero Section */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 120px;
+  }
+
+  .hero-text h1 {
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+  }
+
+  .hero-text .highlight {
+    color: var(--accent-1);
+  }
+
+  .hero-text p {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+
+  .cta-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff6b35, #f77f00);
+    color: white;
+    padding: 14px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+    margin-top: 20px;
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+  }
+
+  .hero-visual {
+    position: relative;
+    height: 500px;
+  }
+
+  .hero-box {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ff6b35, #f77f00);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 150px;
+    box-shadow: 0 30px 60px rgba(255, 107, 53, 0.2);
+  }
+
+  /* Divider */
+  .divider {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ff6b35, transparent);
+    margin: 80px 0;
+  }
+
+  /* Projects Section */
+  .projects {
+    margin-bottom: 100px;
+  }
+
+  .section-title {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 60px;
+    text-align: center;
+  }
+
+  .project-showcase {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-bottom: 80px;
+  }
+
+  .project {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid #f0f0f0;
+    transition: all 0.3s;
+  }
+
+  .project:hover {
+    border-color: var(--accent-1);
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+  }
+
+  .project-visual {
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+  }
+
+  .project-visual.orange { background: linear-gradient(135deg, #ff6b35, #f77f00); color: white; }
+  .project-visual.blue { background: linear-gradient(135deg, #004e89, #0066cc); color: white; }
+  .project-visual.pink { background: linear-gradient(135deg, #ff006e, #ff4d94); color: white; }
+  .project-visual.teal { background: linear-gradient(135deg, #00b4a0, #009d8f); color: white; }
+
+  .project-info {
+    padding: 30px;
+  }
+
+  .project-tag {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-1);
+    margin-bottom: 12px;
+  }
+
+  .project-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+  }
+
+  .project-company {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  .project-description {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .project-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .metric {
+    text-align: center;
+    padding-top: 15px;
+    border-top: 2px solid #f0f0f0;
+  }
+
+  .metric-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent-1);
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-top: 5px;
+    font-weight: 600;
+  }
+
+  /* Footer */
+  .footer {
+    background: linear-gradient(135deg, #004e89, #0066cc);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+    border-radius: 20px;
+    margin-top: 100px;
+  }
+
+  .footer h2 {
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 30px;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+  }
+
+  .footer-links a:hover { opacity: 0.8; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .project-showcase { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="container">
+  <nav>
+    <div class="logo">MZ</div>
+    <div>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Muhammed <span class="highlight">Zameel</span></h1>
+      <p>I'm a Performance Marketer & Full-Stack Developer focused on creating impactful digital experiences and high-converting campaigns.</p>
+      <p style="font-size: 14px; color: var(--text-light);">📍 Thrissur, Kerala • 🌍 Available Globally</p>
+      <a href="#" class="cta-primary">View My Work</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-box">👨‍💻</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="projects">
+    <h2 class="section-title">Latest Projects</h2>
+
+    <div class="project-showcase">
+      <div class="project">
+        <div class="project-visual orange">🍽️</div>
+        <div class="project-info">
+          <div class="project-tag">Social Media • Video</div>
+          <h3 class="project-title">Chaya Restaurant</h3>
+          <div class="project-company">Victox Freelance Agency • Calicut</div>
+          <p class="project-description">Executed targeted video and social campaigns driving high engagement and 40% increase in foot traffic.</p>
+          <div class="project-metrics">
+            <div class="metric">
+              <div class="metric-value">40%↑</div>
+              <div class="metric-label">Footfall</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">High</div>
+              <div class="metric-label">Engagement</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-visual blue">📊</div>
+        <div class="project-info">
+          <div class="project-tag">Performance Marketing</div>
+          <h3 class="project-title">Mandhi Zouk</h3>
+          <div class="project-company">Victox Freelance Agency • Calicut</div>
+          <p class="project-description">Multi-channel campaign with comprehensive analytics achieving 236K reach with precision targeting.</p>
+          <div class="project-metrics">
+            <div class="metric">
+              <div class="metric-value">236K</div>
+              <div class="metric-label">Reach</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">₹1.2K</div>
+              <div class="metric-label">Spend</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-visual pink">🎨</div>
+        <div class="project-info">
+          <div class="project-tag">Web Design</div>
+          <h3 class="project-title">ZEKO</h3>
+          <div class="project-company">UAE Business</div>
+          <p class="project-description">Premium brand showcase with elegant product catalog and 100% mobile responsive design across 4 categories.</p>
+          <div class="project-metrics">
+            <div class="metric">
+              <div class="metric-value">4</div>
+              <div class="metric-label">Categories</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">100%</div>
+              <div class="metric-label">Responsive</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-visual teal">💰</div>
+        <div class="project-info">
+          <div class="project-tag">Mobile App</div>
+          <h3 class="project-title">Smart Gold</h3>
+          <div class="project-company">Android Application</div>
+          <p class="project-description">Real-time gold tracking app with live updates every 30 seconds, advanced charts, and portfolio management.</p>
+          <div class="project-metrics">
+            <div class="metric">
+              <div class="metric-value">2K+</div>
+              <div class="metric-label">Installs</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">4.6★</div>
+              <div class="metric-label">Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    <h2>Let's Build Something Together</h2>
+    <p style="font-size: 16px; margin-bottom: 30px; opacity: 0.9;">I'm always interested in discussing new projects and opportunities.</p>
+    <div class="footer-links">
+      <a href="tel:+918129129479">+91 8129129479</a>
+      <a href="mailto:zameelclash@gmail.com">zameelclash@gmail.com</a>
+      <a href="https://instagram.com/MHDZMLLL" target="_blank">Instagram</a>
+      <a href="https://linkedin.com/in/muhammed-zameel-37020427a" target="_blank">LinkedIn</a>
+    </div>
+    <a href="mailto:zameelclash@gmail.com" class="cta-primary">Start a Project</a>
+  </section>
+</div>

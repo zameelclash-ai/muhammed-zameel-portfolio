@@ -1,0 +1,342 @@
+<title>OPTION 2: Clean Minimal Professional</title>
+
+<style>
+  :root {
+    --primary: #ffffff;
+    --secondary: #f8f9fa;
+    --text-dark: #1a1a1a;
+    --text-light: #666666;
+    --accent: #0066cc;
+    --border: #e5e5e5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--primary);
+    color: var(--text-dark);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  header {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  nav a {
+    margin-left: 30px;
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 120px 0;
+  }
+
+  .hero-text h1 {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .hero-text p {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 30px;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #e0e7ff, #dbeafe);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 150px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .btn:hover {
+    background: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+  }
+
+  /* Projects Section */
+  .projects {
+    padding: 100px 0;
+  }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-head h2 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .project-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-bottom: 100px;
+    padding-bottom: 100px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-item:last-child { border-bottom: none; }
+
+  .project-item.reverse {
+    grid-template-columns: 1fr 1fr;
+    direction: rtl;
+  }
+
+  .project-item.reverse > * { direction: ltr; }
+
+  .project-image {
+    width: 100%;
+    height: 350px;
+    background: linear-gradient(135deg, #fecaca, #fed7aa);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+  }
+
+  .project-info h3 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .project-company {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .project-info p {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .project-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .meta-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .meta-label {
+    font-size: 12px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--secondary);
+    padding: 60px 0;
+    text-align: center;
+    margin-top: 100px;
+  }
+
+  .footer h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .contact-info a {
+    text-decoration: none;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .project-item { grid-template-columns: 1fr; }
+    .hero-text h1 { font-size: 40px; }
+  }
+</style>
+
+<header>
+  <div class="container" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+    <div class="logo">MZ</div>
+    <nav style="display: flex;">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container" style="grid-template-columns: 1fr 1fr; gap: 60px; display: grid; align-items: center;">
+    <div class="hero-text">
+      <h1>Hi, I'm Muhammed Zameel</h1>
+      <p>Performance Marketer & Full-Stack Developer from Thrissur, Kerala</p>
+      <p style="color: var(--text-light); font-size: 14px; margin-bottom: 30px;">Based in Kerala • Available for freelance & full-time</p>
+      <a href="#" class="btn">Let's Work Together</a>
+    </div>
+    <div class="hero-image">👨‍💻</div>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="container">
+    <div class="section-head">
+      <h2>Selected Work</h2>
+      <p style="color: var(--text-light); font-size: 18px;">Campaigns, platforms, and products I've built</p>
+    </div>
+
+    <div class="project-item">
+      <div class="project-image">🍽️</div>
+      <div class="project-info">
+        <div class="project-company">Victox Freelance Agency • Calicut</div>
+        <h3>Chaya Restaurant</h3>
+        <p>Executed targeted video and social media campaigns for a local restaurant, driving high engagement and significantly increasing foot traffic through strategic storytelling.</p>
+        <div class="project-meta">
+          <div class="meta-item">
+            <div class="meta-value">40%↑</div>
+            <div class="meta-label">Footfall Growth</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">High</div>
+            <div class="meta-label">Engagement Rate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item reverse">
+      <div class="project-image">📊</div>
+      <div class="project-info">
+        <div class="project-company">Victox Freelance Agency • Calicut</div>
+        <h3>Mandhi Zouk Analytics</h3>
+        <p>Multi-channel performance marketing campaign with comprehensive analytics reporting. Achieved 236K reach through optimized ad strategies and precision audience targeting.</p>
+        <div class="project-meta">
+          <div class="meta-item">
+            <div class="meta-value">236K</div>
+            <div class="meta-label">Total Reach</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">₹1,260</div>
+            <div class="meta-label">Campaign Spend</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <div class="project-image">🎨</div>
+      <div class="project-info">
+        <div class="project-company">UAE Business</div>
+        <h3>ZEKO</h3>
+        <p>Premium painting and construction tools brand showcase. Designed an elegant product catalog website with professional branding and optimized user experience for all devices.</p>
+        <div class="project-meta">
+          <div class="meta-item">
+            <div class="meta-value">4</div>
+            <div class="meta-label">Product Categories</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">100%</div>
+            <div class="meta-label">Mobile Responsive</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item reverse">
+      <div class="project-image">💰</div>
+      <div class="project-info">
+        <div class="project-company">Mobile Application</div>
+        <h3>Smart Gold</h3>
+        <p>Real-time gold rate tracking Android app with live price updates every 30 seconds, advanced charting, custom alerts, and portfolio tracking across multiple purity levels.</p>
+        <div class="project-meta">
+          <div class="meta-item">
+            <div class="meta-value">2K+</div>
+            <div class="meta-label">Installs</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">4.6★</div>
+            <div class="meta-label">Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="footer">
+  <div class="container">
+    <h2>Let's create something great</h2>
+    <div class="contact-info">
+      <a href="tel:+918129129479">+91 8129129479</a>
+      <a href="mailto:zameelclash@gmail.com">zameelclash@gmail.com</a>
+      <a href="https://instagram.com/MHDZMLLL" target="_blank">Instagram</a>
+      <a href="https://linkedin.com/in/muhammed-zameel-37020427a" target="_blank">LinkedIn</a>
+    </div>
+    <a href="mailto:zameelclash@gmail.com" class="btn">Start a Project</a>
+  </div>
+</section>
