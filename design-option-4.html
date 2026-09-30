@@ -452,6 +452,7 @@
 
 <div class="sp" id="sp" aria-hidden="true"></div>
 <div class="cur" id="cur" aria-hidden="true"></div>
+<div class="seq-track" id="seqTrack">
 <section class="seq" id="seq" aria-label="Intro">
   <canvas id="seqCanvas"></canvas>
   <div class="seq-ov" id="seqOv">
@@ -462,6 +463,7 @@
   <span class="seq-ld mono" id="seqLd">Loading…</span>
   <i class="seq-bar" id="seqBar"></i>
 </section>
+</div>
 <div class="wrap">
   <header class="nav">
     <b>MZ.</b>
@@ -715,18 +717,32 @@
     imgs[i] = im;
   })(i);
   size(); window.addEventListener('resize', size);
-  if (!window.gsap || !window.ScrollTrigger) { ld.classList.add('done'); return; }
-  gsap.registerPlugin(ScrollTrigger);
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { ld.classList.add('done'); return; }
-  gsap.to(state, {
-    f: N - 1, ease: 'none',
-    scrollTrigger: {
-      trigger: box, start: 'top top', end: function () { return '+=' + Math.round(N * window.innerHeight * 0.5); },
-      scrub: 0.6, pin: true, anticipatePin: 1, invalidateOnRefresh: true,
-      onUpdate: function (self) { draw(); bar.style.width = (self.progress * 100) + '%'; ov.classList.toggle('hide', self.progress > 0.05); }
-    }
-  });
-  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+  var LEN = function () { return Math.round(N * window.innerHeight * 0.5); };
+  function ui(p) { bar.style.width = (p * 100) + '%'; ov.classList.toggle('hide', p > 0.05); }
+  if (window.gsap && window.ScrollTrigger) {
+    // GSAP path: pin the hero and scrub frames with the scroll position
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to(state, {
+      f: N - 1, ease: 'none',
+      scrollTrigger: {
+        trigger: box, start: 'top top', end: function () { return '+=' + LEN(); },
+        scrub: 0.6, pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+        onUpdate: function (self) { draw(); ui(self.progress); }
+      }
+    });
+    window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+  } else {
+    // Fallback if the CDN script is blocked: same effect with CSS sticky
+    var track = document.getElementById('seqTrack'); box.style.position = 'sticky'; box.style.top = '0';
+    var fit = function () { track.style.height = (window.innerHeight + LEN()) + 'px'; };
+    var tick = function () {
+      var r = track.getBoundingClientRect(), p = Math.max(0, Math.min(1, -r.top / LEN()));
+      state.f = S0 + (N - 1 - S0) * p; draw(); ui(p);
+    };
+    fit(); tick(); window.addEventListener('resize', function () { fit(); tick(); });
+    window.addEventListener('scroll', tick, { passive: true });
+  }
+  ld.classList.toggle('done', loaded === N);
 })();
 </script>
 <script>
