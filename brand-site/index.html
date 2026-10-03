@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand Name — Tagline goes here</title>
+<meta name="description" content="Replace with a one-sentence description of the brand.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#top">Brand<span>.</span></a>
+  <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  <nav id="menu">
+    <a href="#about">About</a>
+    <a href="#services">What we do</a>
+    <a href="#work">Work</a>
+    <a href="#contact" class="btn small">Get in touch</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <p class="eyebrow">Your brand, your story</p>
+    <h1>A bold one-line promise<br>that defines the brand.</h1>
+    <p class="lead">A short supporting sentence explaining who you help and how. Keep it clear and human.</p>
+    <div class="cta">
+      <a href="#contact" class="btn">Start a conversation</a>
+      <a href="#work" class="btn ghost">See our work</a>
+    </div>
+  </section>
+
+  <section id="about" class="section split reveal">
+    <div>
+      <h2>About</h2>
+      <p>Tell the brand story here: why it exists, what it believes, and what makes it different. Two or three honest sentences work better than a wall of text.</p>
+    </div>
+    <ul class="stats">
+      <li><strong>10+</strong><span>Years of experience</span></li>
+      <li><strong>250</strong><span>Happy clients</span></li>
+      <li><strong>24h</strong><span>Reply time</span></li>
+    </ul>
+  </section>
+
+  <section id="services" class="section reveal">
+    <h2>What we do</h2>
+    <div class="grid">
+      <article class="card"><h3>Service one</h3><p>Describe the first offering in a sentence or two.</p></article>
+      <article class="card"><h3>Service two</h3><p>Describe the second offering in a sentence or two.</p></article>
+      <article class="card"><h3>Service three</h3><p>Describe the third offering in a sentence or two.</p></article>
+    </div>
+  </section>
+
+  <section id="work" class="section reveal">
+    <h2>Selected work</h2>
+    <div class="grid work">
+      <div class="tile t1"><span>Project one</span></div>
+      <div class="tile t2"><span>Project two</span></div>
+      <div class="tile t3"><span>Project three</span></div>
+    </div>
+  </section>
+
+  <section class="section quote reveal">
+    <blockquote>“A short, genuine customer testimonial goes here.”<cite>— Client Name, Company</cite></blockquote>
+  </section>
+
+  <section id="contact" class="section contact reveal">
+    <h2>Let’s talk</h2>
+    <p>Tell us about your project and we’ll get back within a day.</p>
+    <form id="form" action="mailto:hello@example.com" method="post" enctype="text/plain">
+      <input name="name" placeholder="Your name" required>
+      <input name="email" type="email" placeholder="Email" required>
+      <textarea name="message" rows="4" placeholder="How can we help?" required></textarea>
+      <button class="btn" type="submit">Send message</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> Brand Name. All rights reserved.</span>
+  <span><a href="#">Instagram</a> · <a href="#">LinkedIn</a> · <a href="mailto:hello@example.com">hello@example.com</a></span>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
