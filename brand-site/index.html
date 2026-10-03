@@ -46,8 +46,9 @@
       <div class="globe-box">
         <div id="globe" role="img" aria-label="3D globe with flight routes from Thrissur to Dubai, Maldives, Bangkok, Delhi, Jeddah and Singapore"></div>
         <div id="globe-labels" aria-hidden="true"></div>
-        <p class="globe-note">Drag to spin · tap a destination</p>
-        <div class="globe-chips" id="globe-chips" role="group" aria-label="Choose a destination"></div>
+        <p class="globe-note">Drag to spin · tap any country for a package enquiry</p>
+        <div class="globe-chips" id="globe-chips" role="group" aria-label="Popular destinations"></div>
+        <label class="globe-pick"><span>Or choose a country</span><select id="globe-country"><option value="">Select a country…</option></select></label>
         <div class="globe-info" id="globe-info" aria-live="polite"></div>
       </div>
     </div>
@@ -156,6 +157,7 @@
 <div class="lightbox" id="lightbox" hidden><button id="lb-close" aria-label="Close">×</button><img id="lb-img" alt=""></div>
 
 <script src="three.min.js"></script>
+<script src="countries.js"></script>
 <script src="globe.js"></script>
 <script src="script.js"></script>
 </body>

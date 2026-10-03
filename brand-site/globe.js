@@ -1,11 +1,10 @@
-// 3D globe: flight routes from Thrissur to the places Fly Guide books trips to.
-// Tap a destination to turn the globe to it and see the matching package.
+// Interactive 3D globe with every country. Tap a country to turn to it and send a package enquiry.
 (function(){
   var box=document.getElementById('globe');
-  if(!box||typeof THREE==='undefined'){if(box)box.classList.add('no-webgl');return}
+  if(!box||typeof THREE==='undefined'||!window.COUNTRIES){if(box)box.classList.add('no-webgl');return}
   var renderer;
   try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(e){box.classList.add('no-webgl');return}
-  var NAVY=0x1a2b6d,ORANGE=0xe8531f,GREY=0xf2b9a3;
+  var NAVY=0x1a2b6d,ORANGE=0xe8531f,WA='919656424089';
   var scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,1,0.1,50);
   camera.position.z=3.55;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
@@ -13,94 +12,106 @@
   var globe=new THREE.Group();scene.add(globe);
   function ll(lat,lon,r){lat*=Math.PI/180;lon*=Math.PI/180;return new THREE.Vector3(r*Math.cos(lat)*Math.sin(lon),r*Math.sin(lat),r*Math.cos(lat)*Math.cos(lon))}
 
-  globe.add(new THREE.Mesh(new THREE.SphereGeometry(1,64,48),new THREE.MeshBasicMaterial({color:0xe3edff})));
-  // rough continent blobs: [lat, lon, half-height, half-width]
-  var LAND=[[2,22,34,24],[50,15,11,26],[48,90,24,58],[21,79,12,9],[13,105,13,9],[24,46,10,12],[46,-100,22,36],[-14,-60,28,17],[-25,134,12,20],[64,-42,10,18],[60,50,8,30]];
-  var pts=[],N=5200,ga=Math.PI*(3-Math.sqrt(5));
-  for(var i=0;i<N;i++){
-    var y=1-2*(i+.5)/N,rr=Math.sqrt(1-y*y),t=ga*i,x=Math.cos(t)*rr,z=Math.sin(t)*rr;
-    var la=Math.asin(y)*180/Math.PI,lo=Math.atan2(x,z)*180/Math.PI,land=false;
-    for(var k=0;k<LAND.length&&!land;k++){var e=LAND[k],dl=Math.abs(lo-e[1]);if(dl>180)dl=360-dl;if(Math.pow((la-e[0])/e[2],2)+Math.pow(dl/e[3],2)<1)land=true}
-    if(land)pts.push(x*1.004,y*1.004,z*1.004);
+  // ---- countries ----
+  var C=window.COUNTRIES.slice();
+  C.push({n:'Maldives',p:[[72.6,7.1,73.9,7.1,73.9,-0.7,72.6,-0.7,72.6,7.1]]}); // too small for the 1:50m data set
+  C.sort(function(a,b){return a.n<b.n?-1:1});
+  C.forEach(function(c){var b=[181,91,-181,-91];c.p.forEach(function(r){for(var i=0;i<r.length;i+=2){if(r[i]<b[0])b[0]=r[i];if(r[i]>b[2])b[2]=r[i];if(r[i+1]<b[1])b[1]=r[i+1];if(r[i+1]>b[3])b[3]=r[i+1]}});c.b=b});
+  // packages we run, by country name in the data set
+  var PK={
+   'United Arab Emirates':[{id:2,t:'Dubai Highlights'}],
+   'Maldives':[{id:1,t:'Maldives Escape'}],
+   'Thailand':[{id:3,t:'Pattaya Paradise'}],
+   'India':[{id:5,t:'Delhi · Agra · Varanasi'},{id:4,t:'Kashmir Valleys'}],
+   'Saudi Arabia':[{id:6,t:'Umrah Pilgrimage'}]
+  };
+  var byName={};C.forEach(function(c,i){byName[c.n]=i});
+
+  function inRing(r,x,y){var ins=false;for(var i=0,j=r.length-2;i<r.length;j=i,i+=2){var xi=r[i],yi=r[i+1],xj=r[j],yj=r[j+1];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)ins=!ins}return ins}
+  function countryAt(lon,lat){
+    for(var i=0;i<C.length;i++){var c=C[i],b=c.b;if(lon<b[0]||lon>b[2]||lat<b[1]||lat>b[3])continue;for(var k=0;k<c.p.length;k++)if(inRing(c.p[k],lon,lat))return i}
+    var best=-1,bd=2.2; // forgive a near miss on small islands
+    for(var j=0;j<C.length;j++)C[j].p.forEach(function(r){for(var m=0;m<r.length;m+=2){var d=Math.hypot((r[m]-lon)*Math.cos(lat*Math.PI/180),r[m+1]-lat);if(d<bd){bd=d;best=j}}});
+    return best;
   }
-  var dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
-  globe.add(new THREE.Points(dg,new THREE.PointsMaterial({color:0x7f9be0,size:0.021})));
-  var lm=new THREE.LineBasicMaterial({color:0xc9d7f3,transparent:true,opacity:.8});
-  function ring(pf){globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pf),lm))}
-  for(var la1=-60;la1<=60;la1+=30){var a=[];for(var lo1=0;lo1<=360;lo1+=6)a.push(ll(la1,lo1,1.002));ring(a)}
-  for(var lo2=0;lo2<180;lo2+=30){var b=[];for(var la2=-90;la2<=90;la2+=6)b.push(ll(la2,lo2,1.002));ring(b)}
+
+  // ---- texture ----
+  var TW=2048,TH=1024,cv=document.createElement('canvas');cv.width=TW;cv.height=TH;var cx=cv.getContext('2d');
+  var tex=new THREE.CanvasTexture(cv);tex.anisotropy=4;
+  function X(lon){return (lon+180)/360*TW}function Y(lat){return (90-lat)/180*TH}
+  function paint(sel){
+    cx.fillStyle='#d8e6ff';cx.fillRect(0,0,TW,TH);
+    cx.lineWidth=1;cx.lineJoin='round';
+    C.forEach(function(c,i){
+      var h=(c.n.length*37+c.n.charCodeAt(0)*13)%5;
+      cx.fillStyle=i===sel?'#e8531f':PK[c.n]?'#ffd2bd':['#f6f9ff','#eaf1ff','#f1f6fd','#e4eefc','#f3f7ff'][h];
+      cx.strokeStyle=i===sel?'#b8380c':'#9db3e3';
+      c.p.forEach(function(r){cx.beginPath();for(var k=0;k<r.length;k+=2){var x=X(r[k]),y=Y(r[k+1]);k?cx.lineTo(x,y):cx.moveTo(x,y)}cx.closePath();cx.fill();cx.stroke()});
+      if(c.n==='Maldives'){cx.strokeStyle=cx.fillStyle;cx.lineWidth=6;cx.stroke();cx.lineWidth=1}
+    });
+    tex.needsUpdate=true;
+  }
+  paint(-1);
+  var earth=new THREE.Mesh(new THREE.SphereGeometry(1,96,64),new THREE.MeshBasicMaterial({map:tex}));
+  earth.rotation.y=-Math.PI/2; // line the texture up with the lat/lon helper below
+  globe.add(earth);
   var halo=new THREE.Mesh(new THREE.SphereGeometry(1.06,48,32),new THREE.MeshBasicMaterial({color:0xbcd0ff,transparent:true,opacity:.18,side:THREE.BackSide}));
   scene.add(halo);
 
-  var home={n:'Thrissur',lat:10.52,lon:76.21};
-  // pkg = id of the matching package card on the page
-  var dest=[
-   {n:'Dubai',lat:25.2,lon:55.3,pkg:2,t:'Dubai Highlights',d:'About 4 hours by air. UAE visa help, hotel, city tour and desert safari.'},
-   {n:'Maldives',lat:4.17,lon:73.51,pkg:1,t:'Maldives Escape',d:'About 1.5 hours by air. Resort stay, transfers and island activities.'},
-   {n:'Pattaya',lat:12.93,lon:100.88,pkg:3,t:'Pattaya Paradise',d:'About 4 hours by air to Bangkok, then a road transfer. Beach, coral island and city.'},
-   {n:'Delhi',lat:28.6,lon:77.2,pkg:5,t:'Delhi · Agra · Varanasi',d:'About 3 hours by air. Group tour with Taj Mahal and the Ganga aarti.'},
-   {n:'Kashmir',lat:34.08,lon:74.8,pkg:4,t:'Kashmir Valleys',d:'Fly to Srinagar via Delhi. Dal Lake, Gulmarg and Pahalgam.'},
-   {n:'Jeddah',lat:21.5,lon:39.2,pkg:6,t:'Umrah Pilgrimage',d:'About 5.5 hours by air. Visa, flights, hotels and guided ziyarat.'}
-  ];
-  var A=ll(home.lat,home.lon,1);
-  function dot(p,c,s){var m=new THREE.Mesh(new THREE.SphereGeometry(s,16,12),new THREE.MeshBasicMaterial({color:c,transparent:true}));m.position.copy(p);globe.add(m);return m}
-  dot(ll(home.lat,home.lon,1.01),NAVY,0.034);
+  // ---- home + routes ----
+  var home={n:'Thrissur',lat:10.52,lon:76.21},A=ll(home.lat,home.lon,1);
+  var routes=[{lat:25.2,lon:55.3},{lat:4.17,lon:73.51},{lat:12.93,lon:100.88},{lat:28.6,lon:77.2},{lat:34.08,lon:74.8},{lat:21.5,lon:39.2}];
+  var hm=new THREE.Mesh(new THREE.SphereGeometry(0.034,16,12),new THREE.MeshBasicMaterial({color:NAVY}));hm.position.copy(ll(home.lat,home.lon,1.01));globe.add(hm);
   var pulse=new THREE.Mesh(new THREE.RingGeometry(0.04,0.05,32),new THREE.MeshBasicMaterial({color:NAVY,transparent:true,opacity:.6,side:THREE.DoubleSide}));
   pulse.position.copy(ll(home.lat,home.lon,1.012));pulse.lookAt(new THREE.Vector3(0,0,0));globe.add(pulse);
-
-  dest.forEach(function(d,i){
-    var B=ll(d.lat,d.lon,1);d.mk=dot(ll(d.lat,d.lon,1.008),ORANGE,0.024);d.pos=ll(d.lat,d.lon,1.01);
-    var mid=A.clone().add(B).normalize().multiplyScalar(1+0.12+A.distanceTo(B)*0.32);
+  routes.forEach(function(d,i){
+    var B=ll(d.lat,d.lon,1),mid=A.clone().add(B).normalize().multiplyScalar(1.12+A.distanceTo(B)*0.32);
     d.c=new THREE.QuadraticBezierCurve3(A.clone().multiplyScalar(1.01),mid,B.clone().multiplyScalar(1.01));
-    d.lm=new THREE.LineBasicMaterial({color:ORANGE,transparent:true,opacity:.75});
-    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(d.c.getPoints(64)),d.lm));
-    d.pl=new THREE.Mesh(new THREE.ConeGeometry(0.03,0.1,3),new THREE.MeshBasicMaterial({color:NAVY,transparent:true}));
-    globe.add(d.pl);d.o=i/dest.length;d.s=0.07+0.02*(i%3);
+    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(d.c.getPoints(64)),new THREE.LineBasicMaterial({color:ORANGE,transparent:true,opacity:.7})));
+    d.pl=new THREE.Mesh(new THREE.ConeGeometry(0.026,0.09,3),new THREE.MeshBasicMaterial({color:NAVY}));globe.add(d.pl);d.o=i/routes.length;d.s=0.07+0.02*(i%3);
   });
 
-  // HTML labels, chips, info card
-  var labels=document.getElementById('globe-labels'),chips=document.getElementById('globe-chips'),info=document.getElementById('globe-info');
-  function mkLabel(txt,cls){var el=document.createElement('span');el.className='g-label '+cls;el.textContent=txt;labels.appendChild(el);return el}
-  var homeLabel=mkLabel(home.n,'home');
-  dest.forEach(function(d){d.lbl=mkLabel(d.n,'')});
-  var sel=-1;
-  function showInfo(){
-    if(sel<0){info.innerHTML='<strong>Flying from Thrissur</strong>Tap a destination to see the trip we plan for it.';return}
-    var d=dest[sel];info.innerHTML='<strong>'+d.t+'</strong>'+d.d+'<a href="#pkg-'+d.pkg+'">See this package →</a>';
+  // ---- UI ----
+  var labels=document.getElementById('globe-labels'),chips=document.getElementById('globe-chips'),info=document.getElementById('globe-info'),pick=document.getElementById('globe-country');
+  function mk(txt,cls){var e=document.createElement('span');e.className='g-label '+cls;e.textContent=txt;labels.appendChild(e);return e}
+  var homeLbl=mk(home.n,'home'),selLbl=mk('','on');selLbl.style.opacity=0;
+  var selPos=null,sel=-1;
+  C.forEach(function(c,i){var o=document.createElement('option');o.value=i;o.textContent=c.n;pick.appendChild(o)});
+  ['Dubai|United Arab Emirates','Maldives|Maldives','Thailand|Thailand','India|India','Umrah (Saudi)|Saudi Arabia'].forEach(function(s){
+    var p=s.split('|'),b=document.createElement('button');b.type='button';b.textContent=p[0];b.dataset.c=p[1];b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){var i=byName[p[1]];var c=C[i],lo=(c.b[0]+c.b[2])/2,la=(c.b[1]+c.b[3])/2;if(p[1]==='India'){lo=78;la=22}choose(i,lo,la)});chips.appendChild(b)});
+  function wa(t){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(t)}
+  function render(){
+    [].forEach.call(chips.children,function(b){b.setAttribute('aria-pressed',sel>=0&&C[sel].n===b.dataset.c)});
+    pick.value=sel>=0?sel:'';
+    if(sel<0){info.innerHTML='<strong>Where to next?</strong>Tap any country on the globe, or choose one from the list, to ask us for a package.';return}
+    var c=C[sel],p=PK[c.n],h='<strong>'+c.n+'</strong>';
+    if(p){h+='We have a package for this trip:<ul>'+p.map(function(x){return '<li><a href="#pkg-'+x.id+'">'+x.t+'</a></li>'}).join('')+'</ul>'}
+    else h+='Planning a trip to '+c.n+'? We arrange flights, visa, hotels and tours.';
+    h+='<div class="row"><a class="btn btn-wa" target="_blank" rel="noopener" href="'+wa('Hello Fly Guide, I would like a package and quote for '+c.n+'.')+'">Enquire on WhatsApp</a></div>';
+    info.innerHTML=h;
   }
-  function select(i){
-    sel=(sel===i)?-1:i;
-    [].forEach.call(chips.children,function(b,j){b.setAttribute('aria-pressed',j===sel)});
-    dest.forEach(function(d,j){var on=sel<0||j===sel;d.lm.opacity=on?(j===sel?1:.75):.15;d.mk.material.opacity=on?1:.3;d.pl.material.opacity=on?1:.2;d.mk.scale.setScalar(j===sel?1.7:1);d.lbl.classList.toggle('on',j===sel)});
-    if(sel>=0){targetY=-dest[sel].lon*Math.PI/180;targetX=Math.max(-.7,Math.min(.7,dest[sel].lat*Math.PI/180*.8));auto=false}
-    showInfo();
+  function choose(i,lon,lat){
+    if(i===sel){sel=-1;selPos=null;selLbl.style.opacity=0;targetY=null;paint(-1);render();return}
+    sel=i;paint(i);selPos=ll(lat,lon,1.01);selLbl.textContent=C[i].n;
+    targetY=-lon*Math.PI/180;targetX=Math.max(-.8,Math.min(.8,lat*Math.PI/180*.85));render();
   }
-  dest.forEach(function(d,i){var b=document.createElement('button');b.type='button';b.textContent=d.n;b.setAttribute('aria-pressed','false');b.addEventListener('click',function(){select(i)});chips.appendChild(b)});
-  showInfo();
+  pick.addEventListener('change',function(){if(pick.value===''){if(sel>=0)choose(sel,0,0);return}var i=+pick.value,c=C[i],lo=(c.b[0]+c.b[2])/2,la=(c.b[1]+c.b[3])/2;if(c.n==='United States of America'){lo=-98;la=39}if(c.n==='Russia'){lo=95;la=60}if(c.n==='France'){lo=2;la=46.5}choose(i,lo,la)});
+  render();
 
+  // ---- loop ----
   var up=new THREE.Vector3(0,1,0),reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var rotY=-home.lon*Math.PI/180,rotX=0.28,targetY=null,targetX=null,auto=!reduce,drag=false,lx=0,ly=0,visible=true,t0=performance.now(),W=320;
-  var tmp=new THREE.Vector3(),camDir=camera.position.clone().normalize();
+  var rotY=-home.lon*Math.PI/180,rotX=0.28,targetY=null,targetX=0,drag=false,lx=0,ly=0,moved=0,visible=true,t0=performance.now(),W=320;
+  var tmp=new THREE.Vector3(),camDir=camera.position.clone().normalize(),ray=new THREE.Raycaster(),ndc=new THREE.Vector2();
   function size(){W=box.clientWidth||320;renderer.setSize(W,W,false);camera.aspect=1;camera.updateProjectionMatrix()}
-  function place(el,p){
-    tmp.copy(p);globe.localToWorld(tmp);
-    var front=tmp.clone().normalize().dot(camDir)>0.28;
-    tmp.project(camera);
-    el.style.left=((tmp.x+1)/2*W)+'px';el.style.top=((1-tmp.y)/2*W)+'px';el.style.opacity=front?1:0;
-  }
+  function place(el,p){tmp.copy(p);globe.localToWorld(tmp);var front=tmp.clone().normalize().dot(camDir)>0.28;tmp.project(camera);el.style.left=((tmp.x+1)/2*W)+'px';el.style.top=((1-tmp.y)/2*W)+'px';el.style.opacity=front?1:0}
   function frame(now){
     var t=(now-t0)/1000;
-    if(targetY!==null&&!drag){
-      var dy=targetY-rotY;dy=Math.atan2(Math.sin(dy),Math.cos(dy));
-      rotY+=dy*0.08;rotX+=(targetX-rotX)*0.08;
-      if(Math.abs(dy)<0.002&&Math.abs(targetX-rotX)<0.002)targetY=null;
-    }else if(auto&&!drag){rotY+=0.0022}
+    if(targetY!==null&&!drag){var dy=targetY-rotY;dy=Math.atan2(Math.sin(dy),Math.cos(dy));rotY+=dy*0.08;rotX+=(targetX-rotX)*0.08;if(Math.abs(dy)<0.002&&Math.abs(targetX-rotX)<0.002)targetY=null}
+    else if(!reduce&&!drag&&sel<0){rotY+=0.0022}
     globe.rotation.y=rotY;globe.rotation.x=rotX;halo.rotation.copy(globe.rotation);globe.updateMatrixWorld(true);
-    dest.forEach(function(d){
-      var u=(t*d.s+d.o)%1;d.pl.position.copy(d.c.getPoint(u));d.pl.quaternion.setFromUnitVectors(up,d.c.getTangent(u));
-      place(d.lbl,d.pos);
-    });
-    place(homeLabel,ll(home.lat,home.lon,1.01));
+    routes.forEach(function(d){var u=(t*d.s+d.o)%1;d.pl.position.copy(d.c.getPoint(u));d.pl.quaternion.setFromUnitVectors(up,d.c.getTangent(u))});
+    place(homeLbl,hm.position);if(selPos){place(selLbl,selPos)}
     var k=(t%2)/2;pulse.scale.setScalar(1+k*2.2);pulse.material.opacity=.6*(1-k);
     renderer.render(scene,camera);
   }
@@ -109,7 +120,15 @@
   if('IntersectionObserver' in window)new IntersectionObserver(function(e){visible=e[0].isIntersecting}).observe(box);
   frame(t0);requestAnimationFrame(loop);
 
-  box.addEventListener('pointerdown',function(e){drag=true;targetY=null;lx=e.clientX;ly=e.clientY;box.setPointerCapture(e.pointerId)});
-  box.addEventListener('pointermove',function(e){if(!drag)return;rotY+=(e.clientX-lx)*0.008;rotX=Math.max(-0.9,Math.min(0.9,rotX+(e.clientY-ly)*0.006));lx=e.clientX;ly=e.clientY});
-  ['pointerup','pointercancel'].forEach(function(n){box.addEventListener(n,function(){drag=false})});
+  function tap(e){
+    var r=renderer.domElement.getBoundingClientRect();
+    ndc.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);
+    ray.setFromCamera(ndc,camera);var h=ray.intersectObject(earth)[0];if(!h||!h.uv)return;
+    var lon=h.uv.x*360-180,lat=h.uv.y*180-90,i=countryAt(lon,lat);
+    if(i>=0)choose(i,lon,lat);
+  }
+  box.addEventListener('pointerdown',function(e){drag=true;moved=0;lx=e.clientX;ly=e.clientY;box.setPointerCapture(e.pointerId)});
+  box.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-lx,dy=e.clientY-ly;moved+=Math.abs(dx)+Math.abs(dy);if(moved>6)targetY=null;rotY+=dx*0.008;rotX=Math.max(-0.9,Math.min(0.9,rotX+dy*0.006));lx=e.clientX;ly=e.clientY});
+  box.addEventListener('pointerup',function(e){var was=moved<=6;drag=false;if(was)tap(e)});
+  box.addEventListener('pointercancel',function(){drag=false});
 })();

@@ -164,3 +164,11 @@ input,select,textarea{width:100%;font:inherit;font-size:1rem;color:var(--ink);ba
 .globe-info{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-height:78px;display:flex;flex-direction:column;gap:4px;font-size:.92rem;color:var(--muted)}
 .globe-info strong{font:700 1rem var(--display);color:var(--navy)}
 .globe-info a{font-weight:700;color:var(--accent);text-decoration:none}
+
+.globe-pick{display:flex;flex-direction:column;gap:4px;font-size:.8rem;font-weight:600;color:var(--muted)}
+.globe-pick select{min-height:44px}
+.globe-info .row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:6px}
+.globe-info .btn{min-height:40px;padding:0 18px;font-size:.88rem;color:#fff}
+.globe-info .btn-wa{width:auto}
+.globe-info ul{margin:2px 0 0;padding-left:18px}
+#globe{cursor:grab}
