@@ -1,7 +1,10 @@
-# Flyguide Travel & Tours site
+# Fly Guide Travel & Tours website
 
-Static showcase site (HTML/CSS/JS, no build step). Open `index.html` or run `python3 -m http.server` here.
+Static site (HTML/CSS/JS, no build step). Open `index.html`, or run `python3 -m http.server` in this folder.
 
-Brand colours: `--accent` and `--navy` in `styles.css` (taken from the logo). Contact form currently opens the visitor email app; swap `action` for a form service if wanted.
+- `index.html` page content · `styles.css` light theme (colours at the top)
+- `globe.js` 3D globe in the header (uses the bundled `three.min.js`)
+- `script.js` photo lists, reviews, WhatsApp links
+- `photos/` store and customer images; add new ones and list them in `CUSTOMERS` / `STORE` in `script.js`
 
-Photos: drop images in `photos/` and list them in `PHOTOS` in `script.js`. Reviews: add real ones to `REVIEWS` (sections stay hidden while empty). Enquiry form and destination tiles open WhatsApp.
+Before launch: the six holiday packages are demo itineraries (no prices), and the three reviews in `REVIEWS` are samples. Replace them with real ones and set `SAMPLE=false` in `script.js` to hide the sample notice.
