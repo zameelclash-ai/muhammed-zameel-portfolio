@@ -14,6 +14,7 @@
   <nav id="menu">
     <a href="#about">About</a>
     <a href="#services">Services</a>
+    <a href="#destinations">Destinations</a>
     <a href="#why">Why us</a>
     <a href="#contact" class="btn small">Enquire now</a>
   </nav>
@@ -60,6 +61,29 @@
     </div>
   </section>
 
+  <section id="destinations" class="section reveal">
+    <h2>Popular destinations</h2>
+    <p class="sub">Tap a destination to ask for a quote on WhatsApp.</p>
+    <div class="grid dest">
+      <a class="tile d1" data-wa="Maldives"><span>Maldives<small>Island holidays</small></span></a>
+      <a class="tile d2" data-wa="Dubai"><span>Dubai<small>City &amp; desert</small></span></a>
+      <a class="tile d3" data-wa="Singapore &amp; Malaysia"><span>Singapore &amp; Malaysia<small>Family trips</small></span></a>
+      <a class="tile d4" data-wa="Umra / Pilgrimage"><span>Umra<small>Pilgrimage packages</small></span></a>
+      <a class="tile d5" data-wa="Kashmir"><span>Kashmir<small>Domestic holidays</small></span></a>
+      <a class="tile d6" data-wa="Thailand"><span>Thailand<small>Beach &amp; city</small></span></a>
+    </div>
+  </section>
+
+  <section id="gallery" class="section reveal" hidden>
+    <h2>Happy customers</h2>
+    <div class="grid photos" id="gallery-grid"></div>
+  </section>
+
+  <section id="reviews" class="section reveal" hidden>
+    <h2>What customers say</h2>
+    <div class="grid" id="reviews-grid"></div>
+  </section>
+
   <section id="why" class="section reveal">
     <h2>Why travellers choose us</h2>
     <div class="grid">
@@ -75,13 +99,14 @@
     <p class="info">📍 Flyguide Travel &amp; Tours, Pazhayanur, Thrissur – 680588<br>
     📞 <a href="tel:+919656424089">+91 96 56 424089</a> · 💬 <a href="https://wa.me/919656424089">WhatsApp</a> · ✉️ <a href="mailto:flyguidetours@gmail.com">flyguidetours@gmail.com</a><br>
     📷 <a href="https://www.instagram.com/flyguidetravels/">@flyguidetravels</a></p>
-    <form id="form" action="mailto:flyguidetours@gmail.com" method="post" enctype="text/plain">
+    <form id="form">
       <input name="name" placeholder="Your name" required>
       <input name="phone" type="tel" placeholder="Phone / WhatsApp" required>
       <select name="service"><option>Flight tickets</option><option>Visa</option><option>Holiday packages</option><option>Umra / Pilgrimage</option><option>Passport service</option><option>VFS appointments</option><option>Travel insurance</option><option>Train / Bus tickets</option><option>Attestation</option><option>GCC medical</option><option>Hotels</option><option>Other</option></select>
       <textarea name="message" rows="4" placeholder="Tell us about your trip" required></textarea>
-      <button class="btn" type="submit">Send enquiry</button>
+      <button class="btn" type="submit">Send on WhatsApp</button>
     </form>
+    <iframe class="map" title="Fly Guide Travel &amp; Tours location" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Pazhayanur%2C+Thrissur+680588&amp;output=embed"></iframe>
   </section>
 </main>
 
@@ -89,6 +114,7 @@
   <span>© <span id="year"></span> Flyguide Travel &amp; Tours. All rights reserved.</span>
   <span><a href="https://www.instagram.com/flyguidetravels/">Instagram</a> · Pazhayanur, Thrissur</span>
 </footer>
+<a class="wa-float" href="https://wa.me/919656424089" aria-label="Chat on WhatsApp">💬 WhatsApp</a>
 <script src="script.js"></script>
 </body>
 </html>
