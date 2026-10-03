@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navodaya Hospital – Book an Appointment</title>
+<meta name="description" content="Navodaya Hospital – trusted multi-speciality care. Book a doctor appointment online through WhatsApp.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span>🚑 Emergency 24×7: <a href="tel:+910000000000" data-phone>+91 00000 00000</a></span>
+    <span class="hide-sm">OPD: Mon–Sat 8:00 AM – 8:00 PM</span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="wrap nav">
+    <a href="#home" class="logo"><span class="logo-mark">✚</span> Navodaya <small>Hospital</small></a>
+    <button class="menu-btn" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav id="menu">
+      <a href="#departments">Departments</a>
+      <a href="#doctors">Doctors</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#book" class="btn btn-sm">Book Appointment</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Compassionate care, trusted doctors</p>
+      <h1>Your health, our priority at <span>Navodaya Hospital</span></h1>
+      <p class="lead">Expert doctors across specialities, modern diagnostics and round-the-clock emergency care. Book your visit in under a minute on WhatsApp.</p>
+      <div class="hero-cta">
+        <a href="#book" class="btn">Book Appointment</a>
+        <a href="#doctors" class="btn btn-ghost">Find a Doctor</a>
+      </div>
+      <ul class="stats">
+        <li><b>25+</b><span>Years of service</span></li>
+        <li><b>40+</b><span>Specialist doctors</span></li>
+        <li><b>24×7</b><span>Emergency & ICU</span></li>
+      </ul>
+    </div>
+    <div class="hero-card">
+      <h3>Need help right now?</h3>
+      <a class="btn btn-wa" href="#" data-wa-link>💬 Chat on WhatsApp</a>
+      <a class="btn btn-ghost" href="tel:+910000000000" data-phone-link>📞 Call Emergency</a>
+      <p class="muted">Ambulance, ICU and casualty available all day, every day.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="departments">
+  <div class="wrap">
+    <h2>Our Departments</h2>
+    <p class="sub">Comprehensive speciality care under one roof.</p>
+    <div class="grid cards" id="dept-grid"></div>
+  </div>
+</section>
+
+<section class="section alt" id="doctors">
+  <div class="wrap">
+    <h2>Our Doctors</h2>
+    <p class="sub">Experienced specialists you can trust.</p>
+    <div class="filters" id="dept-filters"></div>
+    <div class="grid doctors" id="doc-grid"></div>
+  </div>
+</section>
+
+<section class="section" id="book">
+  <div class="wrap book-grid">
+    <div>
+      <h2>Book an Appointment</h2>
+      <p class="sub">Fill in the details and we'll open WhatsApp with your request ready to send. Our team will confirm your slot on WhatsApp.</p>
+      <ul class="ticks">
+        <li>No registration or payment needed</li>
+        <li>Confirmation from our reception team</li>
+        <li>Reschedule or cancel anytime on the same chat</li>
+      </ul>
+    </div>
+    <form id="booking-form" class="form" novalidate>
+      <label>Patient name
+        <input name="name" type="text" required autocomplete="name" placeholder="Full name">
+      </label>
+      <label>Mobile number
+        <input name="phone" type="tel" required inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number" pattern="[0-9+ ]{10,15}">
+      </label>
+      <div class="row">
+        <label>Department
+          <select name="department" id="f-dept" required></select>
+        </label>
+        <label>Doctor
+          <select name="doctor" id="f-doc" required></select>
+        </label>
+      </div>
+      <div class="row">
+        <label>Preferred date
+          <input name="date" id="f-date" type="date" required>
+        </label>
+        <label>Preferred time
+          <select name="time" id="f-time" required></select>
+        </label>
+      </div>
+      <label>Visit type
+        <select name="type">
+          <option>New patient</option>
+          <option>Follow-up</option>
+          <option>Health check-up</option>
+        </select>
+      </label>
+      <label>Reason / symptoms <span class="muted">(optional)</span>
+        <textarea name="notes" rows="3" placeholder="Briefly describe the problem"></textarea>
+      </label>
+      <p class="error" id="form-error" role="alert" hidden></p>
+      <button class="btn btn-wa btn-block" type="submit">💬 Send Booking on WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<section class="section alt" id="services">
+  <div class="wrap">
+    <h2>Services & Facilities</h2>
+    <div class="grid services" id="svc-grid"></div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap about">
+    <div>
+      <h2>About Navodaya Hospital</h2>
+      <p>Navodaya Hospital has served the community with ethical, affordable and compassionate healthcare. Our multidisciplinary team, modern equipment and patient-first approach make us a trusted choice for families.</p>
+      <ul class="ticks">
+        <li>Experienced consultants in every speciality</li>
+        <li>NABL-standard laboratory and digital imaging</li>
+        <li>Clean, safe and comfortable patient rooms</li>
+        <li>Insurance and cashless support at the help desk</li>
+      </ul>
+    </div>
+    <div class="quote">
+      <p>“Our promise is simple — treat every patient like family.”</p>
+      <span>— Navodaya Hospital Management</span>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="contact">
+  <div class="wrap contact">
+    <div>
+      <h2>Contact & Location</h2>
+      <p><b>Address</b><br><span data-address>Navodaya Hospital, Main Road, Your City, State – 000000</span></p>
+      <p><b>Phone</b><br><a href="tel:+910000000000" data-phone>+91 00000 00000</a></p>
+      <p><b>Email</b><br><a href="mailto:info@example.com" data-email>info@example.com</a></p>
+      <p><b>Timings</b><br>OPD: Mon–Sat 8:00 AM – 8:00 PM<br>Emergency: 24×7</p>
+      <a class="btn btn-wa" href="#" data-wa-link>💬 WhatsApp Us</a>
+    </div>
+    <div class="map" id="map"></div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>© <span id="yr"></span> Navodaya Hospital. All rights reserved.</span>
+    <span class="muted">In an emergency, call the number above or visit casualty immediately.</span>
+  </div>
+</footer>
+
+<a class="wa-float" href="#" data-wa-link aria-label="Chat on WhatsApp">💬</a>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
