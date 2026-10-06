@@ -59,3 +59,23 @@ input.bad,select.bad{border-color:var(--acc)}.error{color:var(--acc);margin:0;fo
  nav{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;flex-direction:column;align-items:stretch;padding:14px 18px 18px;border-bottom:1px solid var(--bd);gap:14px}
  nav.open{display:flex}.row{grid-template-columns:1fr}
 }
+
+/* ===== Animations ===== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes zoomBg{from{transform:scale(1)}to{transform:scale(1.08)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,170,89,.55)}70%{box-shadow:0 0 0 16px rgba(31,170,89,0)}100%{box-shadow:0 0 0 0 rgba(31,170,89,0)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero:before{animation:zoomBg 18s ease-in-out infinite alternate}
+.hero-grid>div:first-child>*{opacity:0;animation:fadeUp .8s ease forwards}
+.hero-grid>div:first-child>*:nth-child(1){animation-delay:.1s}.hero-grid>div:first-child>*:nth-child(2){animation-delay:.25s}
+.hero-grid>div:first-child>*:nth-child(3){animation-delay:.4s}.hero-grid>div:first-child>*:nth-child(4){animation-delay:.55s}
+.hero-grid>div:first-child>*:nth-child(5){animation-delay:.7s}
+.hero-card{opacity:0;animation:fadeUp .9s ease .5s forwards,floaty 5s ease-in-out 1.6s infinite}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+.wa-float{animation:pulse 2s infinite}
+.btn{transition:background .2s,transform .2s,box-shadow .2s}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.header{transition:box-shadow .3s}.header.scrolled{box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.card .ic{display:inline-block;transition:transform .3s}.card:hover .ic{transform:scale(1.2) rotate(-6deg)}
+nav a:not(.btn){position:relative}nav a:not(.btn):after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--p);transition:width .25s}nav a:not(.btn):hover:after{width:100%}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.reveal,.hero-grid>div:first-child>*,.hero-card{opacity:1!important;transform:none!important}}

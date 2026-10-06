@@ -110,3 +110,33 @@
     window.open(waBase + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
   });
 })();
+
+// ===== Animations: scroll reveal, count-up, header shadow =====
+(function () {
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var header = document.querySelector(".header");
+  window.addEventListener("scroll", function () { header.classList.toggle("scrolled", window.scrollY > 10); }, { passive: true });
+
+  var targets = document.querySelectorAll(".section h2, .section .sub, .section .eyebrow, .card, .form, .quote, .mv > div, .map, .ticks li, .filters, .rating");
+  targets.forEach(function (el, i) { el.classList.add("reveal"); el.style.setProperty("--d", ((i % 6) * 0.08) + "s"); });
+
+  function countUp(el) {
+    var m = el.textContent.match(/^(\d+)(.*)$/); if (!m) return;
+    var end = +m[1], suffix = m[2], t0 = null;
+    (function step(t) {
+      t0 = t0 || t; var p = Math.min((t - t0) / 1400, 1);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+  var counted = false;
+  if (!("IntersectionObserver" in window) || reduce) { targets.forEach(function (e) { e.classList.add("in"); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  targets.forEach(function (el) { io.observe(el); });
+  var stats = document.querySelector(".stats");
+  new IntersectionObserver(function (es, o) {
+    if (es[0].isIntersecting && !counted) { counted = true; stats.querySelectorAll("b").forEach(countUp); o.disconnect(); }
+  }, { threshold: 0.5 }).observe(stats);
+})();
