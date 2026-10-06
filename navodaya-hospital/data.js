@@ -39,5 +39,20 @@ window.HOSPITAL = {
     { icon: "🛏️", name: "In-patient Rooms" },
     { icon: "🔪", name: "Operation Theatres" },
     { icon: "📋", name: "Health Check-up Packages" }
-  ]
+  ],
+  why: [
+    { icon: "👨‍⚕️", title: "Experienced Doctors", text: "Senior consultants across all major specialities." },
+    { icon: "🚑", title: "24×7 Emergency", text: "Casualty, ICU and ambulance ready day and night." },
+    { icon: "💰", title: "Affordable Care", text: "Transparent pricing with insurance and cashless help." },
+    { icon: "🔬", title: "Modern Diagnostics", text: "In-house lab, X-ray, ultrasound and more." },
+    { icon: "🤝", title: "Patient-First Approach", text: "Respectful, caring staff who listen and explain." },
+    { icon: "📍", title: "Close to Home", text: "Quality treatment in Pazhayannur, no long travel." }
+  ],
+  // SAMPLE testimonials – REPLACE with real patient reviews (with permission) before going live.
+  reviews: [
+    { name: "Patient name", place: "Pazhayannur", rating: 5, text: "Replace this with a real review from one of your patients." },
+    { name: "Patient name", place: "Thrissur", rating: 5, text: "Replace this with a real review from one of your patients." },
+    { name: "Patient name", place: "Wadakkanchery", rating: 4, text: "Replace this with a real review from one of your patients." }
+  ],
+  heroImage: "hospital-building.jpg"
 };

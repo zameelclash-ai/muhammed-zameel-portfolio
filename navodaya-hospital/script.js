@@ -32,6 +32,15 @@
     return '<div class="card"><div class="ic">' + s.icon + '</div><h3>' + esc(s.name) + '</h3></div>';
   }).join("");
 
+  // Why choose us & reviews
+  $("#why-grid").innerHTML = H.why.map(function (w) {
+    return '<div class="card"><div class="ic">' + w.icon + '</div><h3>' + esc(w.title) + '</h3><p>' + esc(w.text) + '</p></div>';
+  }).join("");
+  $("#rev-grid").innerHTML = H.reviews.map(function (r) {
+    return '<figure class="card review"><div class="stars">' + "★".repeat(r.rating) + "☆".repeat(5 - r.rating) + '</div><blockquote>“' + esc(r.text) + '”</blockquote><figcaption><b>' + esc(r.name) + '</b><span>' + esc(r.place) + '</span></figcaption></figure>';
+  }).join("");
+  if (H.heroImage) document.querySelector(".hero").style.setProperty("--hero-img", "url('" + H.heroImage + "')");
+
   // Booking form selects
   var fDept = $("#f-dept"), fDoc = $("#f-doc"), fDate = $("#f-date"), fTime = $("#f-time");
   function fillDocs() {
