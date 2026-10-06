@@ -7,26 +7,6 @@
   // Inline SVG icons
   document.querySelectorAll("[data-i]").forEach(function (el) { el.outerHTML = icon(el.dataset.i); });
 
-  // 3D beating heart: stacked layers give depth, mouse/touch tilts it
-  (function () {
-    var host = $("#heart3d"), html = "";
-    for (var i = 0; i < 14; i++) {
-      var l = i / 13, c = Math.round(120 + 110 * l);
-      html += '<svg viewBox="0 0 100 100" style="transform:translateZ(' + (i * 3 - 20) + 'px)"><path fill="rgb(' + c + ',' + Math.round(20 + 30 * l) + ',' + Math.round(40 + 25 * l) + ')" d="M50 88C50 88 10 62 10 34C10 20 20 12 32 12C40 12 46 16 50 22C54 16 60 12 68 12C80 12 90 20 90 34C90 62 50 88 50 88Z"/></svg>';
-    }
-    html += '<svg viewBox="0 0 100 100" style="transform:translateZ(26px)"><path fill="url(#hg)" d="M50 88C50 88 10 62 10 34C10 20 20 12 32 12C40 12 46 16 50 22C54 16 60 12 68 12C80 12 90 20 90 34C90 62 50 88 50 88Z"/><path fill="rgba(255,255,255,.35)" d="M24 24c4-6 12-7 17-2-8-1-14 2-17 8z"/><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7a85"/><stop offset="1" stop-color="#d9304a"/></linearGradient></defs></svg>';
-    host.innerHTML = html;
-    var stage = $("#stage");
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      stage.addEventListener("pointermove", function (e) {
-        var r = stage.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-        stage.style.setProperty("--ry", (x * 40) + "deg"); stage.style.setProperty("--rx", (-y * 30) + "deg");
-      });
-      stage.addEventListener("pointerleave", function () { stage.style.setProperty("--ry", "0deg"); stage.style.setProperty("--rx", "0deg"); });
-    }
-  })();
-
   // Contact details from config
   var waBase = "https://wa.me/" + H.whatsapp;
   document.querySelectorAll("[data-wa-link]").forEach(function (a) {
