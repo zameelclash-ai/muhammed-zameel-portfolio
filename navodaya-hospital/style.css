@@ -129,3 +129,25 @@ a.card{color:inherit}
 @keyframes ecg{to{stroke-dashoffset:-420}}
 .hero-card{animation:fadeUp .9s ease .5s forwards}
 @media(max-width:800px){.stage{height:200px}.heart3d{width:130px;height:130px}.ring{width:130px;height:130px;margin:-65px 0 0 -65px}}
+
+/* Reduced-motion: keep the 3D heart visible with a gentle beat only */
+@media(prefers-reduced-motion:reduce){
+  .stage{opacity:1!important;transform:none!important}
+  .heart3d svg{animation:beat 1.6s ease-in-out infinite!important}
+  .ecg path{animation:ecg 4s linear infinite!important}
+}
+
+/* Bigger heart, smoother ECG, show heart first on phones */
+.stage{height:300px}
+.heart3d{width:210px;height:210px}
+.ring{width:210px;height:210px;margin:-105px 0 0 -105px}
+.heart3d svg{filter:drop-shadow(0 6px 10px rgba(0,0,0,.18))}
+.ecg path{stroke-dasharray:35 65;stroke-dashoffset:0;animation:ecg2 2.2s linear infinite}
+@keyframes ecg2{to{stroke-dashoffset:-100}}
+@media(prefers-reduced-motion:reduce){.ecg path{animation:ecg2 4s linear infinite!important}}
+@media(max-width:800px){
+  .hero{padding:36px 0 48px}
+  .hero-side{order:-1}
+  .stage{height:210px}
+  .heart3d{width:140px;height:140px}.ring{width:140px;height:140px;margin:-70px 0 0 -70px}
+}
