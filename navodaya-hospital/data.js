@@ -3,9 +3,9 @@ window.HOSPITAL = {
   name: "Navodaya Hospital",
   // WhatsApp number with country code, digits only (e.g. 919876543210). REPLACE THIS.
   whatsapp: "910000000000",
-  phone: "+91 00000 00000",
-  email: "info@example.com",
-  address: "Navodaya Hospital, Main Road, Your City, State – 000000",
+  phone: "+91 89433 11555",
+  email: "contact@kspdc.com",
+  address: "Pazhayannur, Kerala 680587",
   // Google Maps embed URL (optional). Leave "" to hide the map.
   mapEmbed: "",
   timeSlots: ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM","07:00 PM"],
