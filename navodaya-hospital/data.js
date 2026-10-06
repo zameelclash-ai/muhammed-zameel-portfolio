@@ -10,14 +10,14 @@ window.HOSPITAL = {
   mapEmbed: "",
   timeSlots: ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM","07:00 PM"],
   departments: [
-    { id: "general",  name: "General Medicine", icon: "🩺", text: "Fever, infections, diabetes, BP and everyday illness." },
-    { id: "cardio",   name: "Cardiology",       icon: "❤️", text: "Heart check-ups, ECG, Echo and cardiac care." },
-    { id: "ortho",    name: "Orthopaedics",     icon: "🦴", text: "Bone, joint, sports injury and fracture care." },
-    { id: "gynae",    name: "Obstetrics & Gynaecology", icon: "🤰", text: "Antenatal care, delivery and women's health." },
-    { id: "paeds",    name: "Paediatrics",      icon: "🧒", text: "Newborn, child care and vaccinations." },
-    { id: "neuro",    name: "Neurology",        icon: "🧠", text: "Headache, stroke, epilepsy and nerve disorders." },
-    { id: "ent",      name: "ENT",              icon: "👂", text: "Ear, nose and throat diagnosis and surgery." },
-    { id: "derma",    name: "Dermatology",      icon: "🧴", text: "Skin, hair and allergy treatment." }
+    { id: "general",  name: "General Medicine", icon: "steth", text: "Fever, infections, diabetes, BP and everyday illness." },
+    { id: "cardio",   name: "Cardiology",       icon: "heart", text: "Heart check-ups, ECG, Echo and cardiac care." },
+    { id: "ortho",    name: "Orthopaedics",     icon: "bone", text: "Bone, joint, sports injury and fracture care." },
+    { id: "gynae",    name: "Obstetrics & Gynaecology", icon: "woman", text: "Antenatal care, delivery and women's health." },
+    { id: "paeds",    name: "Paediatrics",      icon: "child", text: "Newborn, child care and vaccinations." },
+    { id: "neuro",    name: "Neurology",        icon: "brain", text: "Headache, stroke, epilepsy and nerve disorders." },
+    { id: "ent",      name: "ENT",              icon: "ear", text: "Ear, nose and throat diagnosis and surgery." },
+    { id: "derma",    name: "Dermatology",      icon: "drop", text: "Skin, hair and allergy treatment." }
   ],
   // Placeholder doctors – replace with real names, photos and timings.
   doctors: [
@@ -31,22 +31,22 @@ window.HOSPITAL = {
     { name: "Dr. L. George",  dept: "derma",   qual: "MD (Dermatology)",      exp: "9 yrs",  days: "Tue, Fri" }
   ],
   services: [
-    { icon: "🚑", name: "24×7 Emergency & Ambulance" },
-    { icon: "🏥", name: "ICU & Critical Care" },
-    { icon: "🧪", name: "Laboratory" },
-    { icon: "🩻", name: "X-Ray, Ultrasound & CT" },
-    { icon: "💊", name: "24-hour Pharmacy" },
-    { icon: "🛏️", name: "In-patient Rooms" },
-    { icon: "🔪", name: "Operation Theatres" },
-    { icon: "📋", name: "Health Check-up Packages" }
+    { icon: "ambulance", name: "24×7 Emergency & Ambulance" },
+    { icon: "icu", name: "ICU & Critical Care" },
+    { icon: "flask", name: "Laboratory" },
+    { icon: "xray", name: "X-Ray, Ultrasound & CT" },
+    { icon: "pill", name: "24-hour Pharmacy" },
+    { icon: "bed", name: "In-patient Rooms" },
+    { icon: "surgery", name: "Operation Theatres" },
+    { icon: "clipboard", name: "Health Check-up Packages" }
   ],
   why: [
-    { icon: "👨‍⚕️", title: "Experienced Doctors", text: "Senior consultants across all major specialities." },
-    { icon: "🚑", title: "24×7 Emergency", text: "Casualty, ICU and ambulance ready day and night." },
-    { icon: "💰", title: "Affordable Care", text: "Transparent pricing with insurance and cashless help." },
-    { icon: "🔬", title: "Modern Diagnostics", text: "In-house lab, X-ray, ultrasound and more." },
-    { icon: "🤝", title: "Patient-First Approach", text: "Respectful, caring staff who listen and explain." },
-    { icon: "📍", title: "Close to Home", text: "Quality treatment in Pazhayannur, no long travel." }
+    { icon: "doctor", title: "Experienced Doctors", text: "Senior consultants across all major specialities." },
+    { icon: "ambulance", title: "24×7 Emergency", text: "Casualty, ICU and ambulance ready day and night." },
+    { icon: "rupee", title: "Affordable Care", text: "Transparent pricing with insurance and cashless help." },
+    { icon: "microscope", title: "Modern Diagnostics", text: "In-house lab, X-ray, ultrasound and more." },
+    { icon: "users", title: "Patient-First Approach", text: "Respectful, caring staff who listen and explain." },
+    { icon: "pin", title: "Close to Home", text: "Quality treatment in Pazhayannur, no long travel." }
   ],
   // SAMPLE testimonials – REPLACE with real patient reviews (with permission) before going live.
   reviews: [

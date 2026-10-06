@@ -98,3 +98,34 @@ nav a:not(.btn){position:relative}nav a:not(.btn):after{content:"";position:abso
 a.card{color:inherit}
 .quote,.quote p,.quote span{color:#fff}
 .map{color:#3f545b}
+
+/* ===== SVG icons ===== */
+.svg-i{width:1.15em;height:1.15em;vertical-align:-.2em;flex:none}
+.btn .svg-i{margin-right:6px}
+.topbar .svg-i{margin-right:4px}
+.logo-mark .svg-i{width:18px;height:18px;margin:0;stroke:#fff}
+.card .ic{width:52px;height:52px;border-radius:14px;background:var(--pl);color:var(--p);display:grid;place-items:center;font-size:inherit;transition:transform .3s,background .3s,color .3s}
+.card .ic .svg-i{width:28px;height:28px;margin:0}
+.card:hover .ic{background:var(--p);color:#fff}
+.avatar{color:var(--p)}.avatar .svg-i{width:46px;height:46px}
+.wa-float .svg-i{width:30px;height:30px;color:#fff;margin:0}
+.btn-wa .svg-i,.btn-ghost .svg-i{width:1.2em;height:1.2em}
+
+/* ===== 3D hero heart ===== */
+.hero-side{display:grid;gap:18px}
+.stage{--rx:0deg;--ry:0deg;position:relative;height:260px;perspective:900px;display:grid;place-items:center;opacity:0;animation:fadeUp .9s ease .3s forwards}
+.heart3d{position:relative;width:170px;height:170px;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .15s ease-out;animation:sway 6s ease-in-out infinite}
+.heart3d svg{position:absolute;inset:0;width:100%;height:100%;animation:beat 1.2s ease-in-out infinite;filter:drop-shadow(0 8px 14px rgba(0,0,0,.25))}
+@keyframes sway{0%,100%{rotate:y -14deg}50%{rotate:y 14deg}}
+@keyframes beat{0%,40%,100%{scale:1}10%{scale:1.1}20%{scale:.97}30%{scale:1.07}}
+.ring{position:absolute;left:50%;top:50%;width:170px;height:170px;margin:-85px 0 0 -85px;border-radius:50%;border:2px solid rgba(255,255,255,.55);animation:ripple 2.4s ease-out infinite;opacity:0}
+.ring.r2{animation-delay:.8s}.ring.r3{animation-delay:1.6s}
+@keyframes ripple{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+.chip3d{position:absolute;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.95);color:var(--p);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.25);animation:floaty 4s ease-in-out infinite}
+.chip3d .svg-i{width:24px;height:24px;margin:0}
+.chip3d.c1{left:8%;top:14%}.chip3d.c2{right:8%;top:22%;animation-delay:.8s}.chip3d.c3{right:20%;bottom:10%;animation-delay:1.6s;color:var(--acc)}
+.ecg{position:absolute;left:0;right:0;bottom:-6px;width:100%;height:46px;overflow:visible}
+.ecg path{fill:none;stroke:#8fe3ee;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:420;stroke-dashoffset:420;animation:ecg 2.4s linear infinite;filter:drop-shadow(0 0 4px #8fe3ee)}
+@keyframes ecg{to{stroke-dashoffset:-420}}
+.hero-card{animation:fadeUp .9s ease .5s forwards}
+@media(max-width:800px){.stage{height:200px}.heart3d{width:130px;height:130px}.ring{width:130px;height:130px;margin:-65px 0 0 -65px}}
