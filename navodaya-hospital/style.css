@@ -79,3 +79,22 @@ input.bad,select.bad{border-color:var(--acc)}.error{color:var(--acc);margin:0;fo
 .card .ic{display:inline-block;transition:transform .3s}.card:hover .ic{transform:scale(1.2) rotate(-6deg)}
 nav a:not(.btn){position:relative}nav a:not(.btn):after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--p);transition:width .25s}nav a:not(.btn):hover:after{width:100%}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.reveal,.hero-grid>div:first-child>*,.hero-card{opacity:1!important;transform:none!important}}
+
+/* ===== Contrast fixes ===== */
+.hero-card .btn-ghost{color:var(--pd)!important;border-color:var(--p)}
+.hero-card .btn-ghost:hover{background:var(--pl)}
+.hero-card h3,.hero-card .muted{color:var(--tx)}
+.hero .eyebrow{color:#ffd0d3}
+.hero h1{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.hero .lead,.hero .stats span{text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.muted{color:#4d6168}
+.footer .muted{color:#d3e9ec}
+.chip{color:var(--tx)}.chip.on{color:#fff}
+.btn,.btn:hover,.btn-sm{color:#fff!important}
+.btn-ghost{color:var(--pd)!important}.btn-ghost:hover{color:var(--pd)!important}
+.hero .btn-ghost,.hero .btn-ghost:hover{color:#fff!important}
+.hero-card .btn-ghost,.hero-card .btn-ghost:hover{color:var(--pd)!important}
+.card h3{color:var(--tx)}.card p{color:#4d6168}
+a.card{color:inherit}
+.quote,.quote p,.quote span{color:#fff}
+.map{color:#3f545b}
