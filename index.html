@@ -445,16 +445,28 @@
   .stack .stat { grid-column: auto; }
   @media (max-width: 860px) { .cal, .chart, .stack { grid-column: span 12; } .stack { grid-template-rows: none; grid-template-columns: 1fr 1fr; } .stat { grid-column: auto; } }
 
-  /* 3D hero object */
-  .hero-head { position: relative; }
-  .h3d { position: absolute; right: 0; top: 0; bottom: 0; width: min(32%, 360px); z-index: 1; cursor: grab; touch-action: pan-y; }
-  .h3d canvas { width: 100%; height: 100%; display: block; }
-  @media (max-width: 760px) { .h3d { position: relative; width: 100%; height: 240px; margin-top: -8px; } }
-
   /* 3D card tilt (fine pointers only) */
   @media (hover: hover) and (pointer: fine) {
     .tilt { transform-style: preserve-3d; will-change: transform; }
   }
+
+  /* nav scrollspy, press feedback, tag pop-in */
+  .nav nav .pill.on { background: var(--fg); color: var(--bg); }
+  .pill, .item, .card, .dock a, .totop { -webkit-tap-highlight-color: transparent; }
+  .pill:active, .dock a:active, .totop:active { transform: scale(.94); }
+  .item:active { transform: scale(.985); }
+  @keyframes pop { from { opacity: 0; translate: 0 12px; scale: .9; } to { opacity: 1; translate: 0 0; scale: 1; } }
+  html.rv-on .rv.in .pills span, html.rv-on .rv.in .tools span, html.rv-on .rv.in .tag, html.rv-on .rv.in .tags span { animation: pop .5s cubic-bezier(.2,.9,.3,1.2) both; animation-delay: calc(var(--i, 0) * 45ms + .3s); }
+  /* quick-contact dock (phones) and back-to-top (desktop) */
+  .dock { position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); translate: -50% 140%; z-index: 44; display: none; gap: 4px; padding: 6px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(0,0,0,.28); transition: translate .45s cubic-bezier(.2,.9,.3,1); }
+  .dock.show { translate: -50% 0; }
+  .dock a { display: grid; justify-items: center; gap: 2px; min-width: 62px; padding: 8px 10px; border-radius: 999px; color: var(--fg); text-decoration: none; font-size: 11px; font-weight: 600; transition: background .2s, transform .15s; }
+  .dock a:first-child { background: var(--lime); color: var(--lime-ink); }
+  .totop { position: fixed; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 44; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--surface); color: var(--fg); border: 1px solid var(--line); box-shadow: 0 8px 22px rgba(0,0,0,.25); opacity: 0; translate: 0 20px; pointer-events: none; transition: opacity .3s, translate .3s, background .2s; }
+  .totop.show { opacity: 1; translate: 0 0; pointer-events: auto; }
+  .totop:hover { background: var(--lime); color: var(--lime-ink); }
+  @media (max-width: 760px) { .dock { display: flex; } .totop { display: none; } .pal { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); right: 12px; } body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); } }
+  @media (prefers-reduced-motion: reduce) { .dock, .totop { transition: none; } html.rv-on .rv.in .pills span, html.rv-on .rv.in .tools span, html.rv-on .rv.in .tag, html.rv-on .rv.in .tags span { animation: none; } }
 </style>
 
 <div class="sp" id="sp" aria-hidden="true"></div>
@@ -470,10 +482,7 @@
     </nav>
   </header>
 
-  <div class="hero-head">
-    <h1 class="title">Portfolio<br><span>Zameel.</span></h1>
-    <div class="h3d" id="h3d" aria-hidden="true"><canvas></canvas></div>
-  </div>
+  <h1 class="title">Portfolio<br><span>Zameel.</span></h1>
   <div class="cue" id="cue" aria-hidden="true"><i></i>Scroll to explore</div>
 
   <section class="bento">
@@ -673,8 +682,8 @@
     <div class="mono">Let's talk</div>
     <h2>Have a brand<br>to grow?</h2>
     <div class="links">
-      <div><small>Phone</small><span>+91 81291 29479</span></div>
-      <div><small>Email</small><span>zameelclash@gmail.com</span></div>
+      <div><small>Phone</small><a href="tel:+918129129479">+91 81291 29479</a></div>
+      <div><small>Email</small><a href="mailto:zameelclash@gmail.com">zameelclash@gmail.com</a></div>
       <div><small>Instagram</small><a href="https://instagram.com/MHDZMLLL" target="_blank" rel="noopener">@MHDZMLLL</a></div>
       <div><small>LinkedIn</small><a href="https://linkedin.com/in/muhammed-zameel-37020427a" target="_blank" rel="noopener">muhammed-zameel</a></div>
     </div>
@@ -686,82 +695,13 @@
 <div class="lb" id="lb" role="dialog" aria-label="Image preview"><img alt=""></div>
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="Project overview"><div class="pv" id="pv"></div></div>
 
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
-<script type="module">
-/* Hero 3D: a stack of rising bars (growth) with an orbiting ring and a code-cube.
-   Reads colours from the page tokens so palettes and themes recolour it. */
-const box = document.getElementById('h3d');
-try {
-  const THREE = await import('three');
-  const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
-  const { RoundedBoxGeometry } = await import('three/addons/geometries/RoundedBoxGeometry.js');
-  const cv = box.querySelector('canvas');
-  const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-  renderer.toneMapping = THREE.NoToneMapping;
-  const scene = new THREE.Scene();
-  const pm = new THREE.PMREMGenerator(renderer);
-  scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
-  const cam = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-  cam.position.set(0, 1.2, 9.5); cam.lookAt(0, 1.2, 0);
-  const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(3, 5, 4); scene.add(key);
-
-  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || '#d9f56b';
-  const mats = [];
-  const mk = () => { const m = new THREE.MeshPhysicalMaterial({ roughness: .28, metalness: .05, clearcoat: 1, clearcoatRoughness: .18 }); mats.push(m); return m; };
-  const group = new THREE.Group(); scene.add(group);
-  const H = [0.7, 1.0, 1.4, 1.9, 2.5, 3.2], bars = [];
-  H.forEach((h, i) => {
-    const g = new RoundedBoxGeometry(0.58, h, 0.58, 4, 0.1);
-    const m = new THREE.Mesh(g, mk()); m.material.envMapIntensity = .55; m.userData = { h, i, last: i === H.length - 1 };
-    m.position.set((i - 2.5) * 0.82, h / 2 - 0.9, 0); m.scale.y = 0.001; group.add(m); bars.push(m);
-  });
-  const ring = new THREE.Mesh(new THREE.TorusGeometry(2.2, 0.04, 16, 120), mk()); ring.userData.ring = true;
-  ring.rotation.x = Math.PI / 2.4; ring.position.y = 1.2; group.add(ring);
-  const cube = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.42, 0.42), new THREE.MeshBasicMaterial({ wireframe: true })); group.add(cube);
-  const paint = () => {
-    const lime = new THREE.Color(css('--lime')), blue = new THREE.Color(css('--blue'));
-    bars.forEach(b => { const c = b.userData.last ? blue : lime; b.material.color.copy(c); b.material.emissive.copy(c).multiplyScalar(.4); });
-    ring.material.color.copy(lime); cube.material.color.copy(lime);
-  };
-  paint();
-  new MutationObserver(() => setTimeout(paint, 30)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-palette', 'data-theme'] });
-  matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => setTimeout(paint, 30));
-
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let w = 0, h = 0;
-  const size = () => { w = box.clientWidth; h = box.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); cam.aspect = w / h; cam.position.z = w / h < 1 ? 13 : 10.8; cam.updateProjectionMatrix(); };
-  new ResizeObserver(() => { size(); if (reduce) frame(0); }).observe(box); size();
-
-  let px = 0, py = 0, tx = 0, ty = 0, drag = 0, spin = 0, last = null, visible = true, t0 = performance.now();
-  const ease = x => 1 - Math.pow(1 - x, 3);
-  addEventListener('pointermove', e => { const r = box.getBoundingClientRect(); tx = ((e.clientX - r.left) / Math.max(r.width, 1) - .5) * 2; ty = ((e.clientY - r.top) / Math.max(r.height, 1) - .5) * 2; tx = Math.max(-1.5, Math.min(1.5, tx)); ty = Math.max(-1.5, Math.min(1.5, ty)); }, { passive: true });
-  box.addEventListener('pointerdown', e => { last = e.clientX; box.style.cursor = 'grabbing'; box.setPointerCapture(e.pointerId); });
-  box.addEventListener('pointermove', e => { if (last !== null) { spin += (e.clientX - last) * 0.012; last = e.clientX; } });
-  const up = () => { last = null; box.style.cursor = ''; };
-  box.addEventListener('pointerup', up); box.addEventListener('pointercancel', up);
-
-  function frame(now) {
-    const t = reduce ? 9 : (now - t0) / 1000;
-    px += (tx - px) * 0.07; py += (ty - py) * 0.07;
-    const sy = Math.min(scrollY / innerHeight, 1.6);
-    bars.forEach(b => { const k = ease(Math.max(0, Math.min(1, (t - 0.15 - b.userData.i * 0.12) / 0.9))); b.scale.y = Math.max(0.001, k * (1 + (reduce ? 0 : Math.sin(t * 1.2 + b.userData.i) * 0.025))); b.position.y = (b.userData.h * b.scale.y) / 2 - 0.9; });
-    group.rotation.y = -0.55 + px * 0.35 + sy * 1.1 + spin;
-    group.rotation.x = py * 0.12 + 0.08;
-    group.position.y = reduce ? 0 : Math.sin(t * 0.9) * 0.06 - sy * 0.3;
-    ring.rotation.z = t * 0.5; cube.position.set(Math.cos(t * 0.8) * 2.2, 1.2 + Math.sin(t * 1.3) * 0.3, Math.sin(t * 0.8) * 2.2);
-    cube.rotation.x = t; cube.rotation.y = t * 0.7;
-    renderer.render(scene, cam);
-  }
-  if (reduce) frame(0);
-  else {
-    const loop = now => { if (visible && !document.hidden) frame(now); requestAnimationFrame(loop); };
-    new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { rootMargin: '100px' }).observe(box);
-    requestAnimationFrame(loop);
-  }
-  box.dataset.ready = '1';
-} catch (e) { box.hidden = true; }
-</script>
+<nav class="dock" id="dock" aria-label="Quick contact">
+  <a href="tel:+918129129479"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span>Call</span></a>
+  <a href="https://wa.me/918129129479" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg><span>WhatsApp</span></a>
+  <a href="mailto:zameelclash@gmail.com"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Email</span></a>
+  <a href="#" id="toTopM"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 6-6 6 6"/></svg><span>Top</span></a>
+</nav>
+<a href="#" class="totop" id="toTop" aria-label="Back to top"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 6-6 6 6"/></svg></a>
 <script>
 (function () {
   /* 3D tilt on cards: perspective follows the pointer, eases back on leave */
@@ -774,6 +714,33 @@ try {
     el.addEventListener('pointermove', function (e) { ex = e.clientX; ey = e.clientY; if (!on) { on = true; el.style.transition = 'transform .12s ease-out, background-color .2s, color .2s, border-color .2s'; } if (!raf) raf = requestAnimationFrame(apply); }, { passive: true });
     el.addEventListener('pointerleave', function () { on = false; if (raf) cancelAnimationFrame(raf); raf = 0; el.style.transition = 'transform .5s cubic-bezier(.2,.8,.2,1), background-color .2s, color .2s, border-color .2s'; el.style.transform = ''; setTimeout(function () { if (!on) el.style.transition = ''; }, 520); });
   });
+})();
+</script>
+<script>
+(function () {
+  /* UX layer: scrollspy, dock / back-to-top, magnetic pills, tag stagger */
+  var root = document.documentElement, dock = document.getElementById('dock'), top = document.getElementById('toTop'), topM = document.getElementById('toTopM');
+  function up(e) { e.preventDefault(); scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+  top.addEventListener('click', up); topM.addEventListener('click', up);
+  dock.addEventListener('click', function () { if (navigator.vibrate) try { navigator.vibrate(8); } catch (e) {} });
+  var links = [].slice.call(document.querySelectorAll('.nav nav a[href^="#"]')), targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var contact = document.getElementById('contact'), ticking = false;
+  function upd() {
+    ticking = false; var y = scrollY, vh = innerHeight, cur = -1;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top < vh * 0.4) cur = i; });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === cur); });
+    top.classList.toggle('show', y > 800);
+    var cr = contact ? contact.getBoundingClientRect() : null, atContact = cr && cr.top < vh * 0.55;
+    dock.classList.toggle('show', y > 420 && !atContact);
+  }
+  addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
+  [].slice.call(document.querySelectorAll('.pills, .tools, .meta, .tags')).forEach(function (g) { [].slice.call(g.children).forEach(function (c, i) { c.style.setProperty('--i', i); }); });
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    [].slice.call(document.querySelectorAll('.nav nav .pill, .pn .pill, .contact .links a')).forEach(function (el) {
+      el.addEventListener('pointermove', function (e) { var r = el.getBoundingClientRect(); el.style.translate = ((e.clientX - r.left - r.width / 2) * .25).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * .35).toFixed(1) + 'px'; });
+      el.addEventListener('pointerleave', function () { el.style.translate = ''; });
+    });
+  }
 })();
 </script>
 <script>
