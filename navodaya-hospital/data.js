@@ -8,6 +8,7 @@ window.HOSPITAL = {
   address: "Pazhayannur, Kerala 680587",
   // Google Maps embed URL (optional). Leave "" to hide the map.
   mapEmbed: "",
+  directions: "https://www.google.com/maps/search/?api=1&query=Navodaya+Hospital+Pazhayannur+Kerala+680587",
   timeSlots: ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM","07:00 PM"],
   departments: [
     { id: "general",  name: "General Medicine", icon: "steth", text: "Fever, infections, diabetes, BP and everyday illness." },
@@ -40,19 +41,30 @@ window.HOSPITAL = {
     { icon: "surgery", name: "Operation Theatres" },
     { icon: "clipboard", name: "Health Check-up Packages" }
   ],
+  // Set to false once doctors, services and timings below are your real details.
+  sampleContent: true,
+  // Opening hours shown on the page, e.g. "OPD: Mon-Sat 9:00 AM - 5:00 PM". Leave "" to hide.
+  hours: "",
+  steps: [
+    { icon: "clipboard", title: "Choose", text: "Pick a department, doctor, date and time." },
+    { icon: "chat", title: "Send on WhatsApp", text: "Your request opens in WhatsApp, ready to send." },
+    { icon: "users", title: "Get confirmed", text: "Our reception team confirms your slot in the same chat." }
+  ],
   why: [
-    { icon: "doctor", title: "Experienced Doctors", text: "Senior consultants across all major specialities." },
-    { icon: "ambulance", title: "24×7 Emergency", text: "Casualty, ICU and ambulance ready day and night." },
-    { icon: "rupee", title: "Affordable Care", text: "Transparent pricing with insurance and cashless help." },
-    { icon: "microscope", title: "Modern Diagnostics", text: "In-house lab, X-ray, ultrasound and more." },
-    { icon: "users", title: "Patient-First Approach", text: "Respectful, caring staff who listen and explain." },
-    { icon: "pin", title: "Close to Home", text: "Quality treatment in Pazhayannur, no long travel." }
+    { icon: "chat", title: "Simple booking", text: "Book on WhatsApp, with no forms to sign up for." },
+    { icon: "doctor", title: "Choose your doctor", text: "Pick the department, doctor and time that suit you." },
+    { icon: "pin", title: "Close to home", text: "Care in Pazhayannur, so no long travel." },
+    { icon: "phone", title: "Easy to reach", text: "Call or message us any time, and we reply to confirm." }
   ],
-  // SAMPLE testimonials – REPLACE with real patient reviews (with permission) before going live.
-  reviews: [
-    { name: "Patient name", place: "Pazhayannur", rating: 5, text: "Replace this with a real review from one of your patients." },
-    { name: "Patient name", place: "Thrissur", rating: 5, text: "Replace this with a real review from one of your patients." },
-    { name: "Patient name", place: "Wadakkanchery", rating: 4, text: "Replace this with a real review from one of your patients." }
+  faqs: [
+    { q: "How do I book an appointment?", a: "Choose a department, doctor, date and time in the booking form. WhatsApp opens with your request ready to send." },
+    { q: "Do I need to create an account?", a: "No. You only share your name and mobile number in the WhatsApp message." },
+    { q: "How will I know my slot is confirmed?", a: "Our reception team replies on WhatsApp to confirm the date and time, or to suggest another slot." },
+    { q: "Can I change or cancel my booking?", a: "Yes. Message us in the same WhatsApp chat, or call us." },
+    { q: "What if it is an emergency?", a: "Please call us or go to casualty straight away. Online booking is for planned visits." }
   ],
+  // Add REAL patient reviews here (with permission). The reviews section stays hidden while this is empty.
+  // Example: { name: "Name", place: "Place", rating: 5, text: "Review text" }
+  reviews: [],
   heroImage: "hospital-building.jpg"
 };
