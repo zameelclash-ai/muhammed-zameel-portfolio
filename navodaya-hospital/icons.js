@@ -24,6 +24,7 @@
     pin: '<path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
     phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
     chat: '<path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8 19.5z"/><path d="M9 9c0 3 3 6 6 6l1.5-1.5-2.5-1.5-1 1c-1-.5-2-1.5-2.5-2.5l1-1L10 6.5z"/>',
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5" stroke-width="2.6"/>',
     plus: '<path d="M12 5v14M5 12h14" stroke-width="3"/>',
     cross: '<path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z"/>'
   };

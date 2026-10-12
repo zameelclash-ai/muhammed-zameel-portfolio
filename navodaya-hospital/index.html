@@ -18,6 +18,7 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 <div class="sample-bar" id="sample-bar" hidden>Preview: doctors, services and timings below are sample content. Replace them in <code>data.js</code> before going live.</div>
 
 <div class="topbar">
@@ -47,10 +48,11 @@
 
 <main id="main">
 <section class="hero" id="home">
+  <span class="orb o1" aria-hidden="true"></span><span class="orb o2" aria-hidden="true"></span>
   <div class="wrap hero-grid">
     <div>
       <p class="eyebrow hero-in" style="--d:.05s">Pazhayannur, Kerala</p>
-      <h1 class="hero-in" style="--d:.15s">Trusted hospital care in Pazhayannur. <span>Book your doctor on WhatsApp.</span></h1>
+      <h1 class="hero-in" style="--d:.15s">Trusted hospital care in Pazhayannur. <span class="accent">Book your doctor on WhatsApp.</span></h1>
       <p class="lead hero-in" style="--d:.3s">Pick a department, doctor and time. We confirm your slot on WhatsApp, with no sign-up needed.</p>
       <div class="hero-cta hero-in" style="--d:.45s">
         <a href="#book" class="btn btn-lg"><i data-i="chat"></i> Book on WhatsApp</a>
@@ -65,7 +67,7 @@
     <aside class="hero-card hero-in" style="--d:.5s" aria-label="Contact">
       <h2>Prefer to talk?</h2>
       <a class="btn btn-wa btn-block" href="#" data-wa-link><i data-i="chat"></i> Chat on WhatsApp</a>
-      <a class="btn btn-ghost btn-block" href="tel:+918943311555" data-phone-link><i data-i="phone"></i> Call <span data-phone>+91 894 33 11 555</span></a>
+      <a class="btn btn-ghost btn-block" href="tel:+918943311555" data-phone-link><i data-i="phone"></i> Call&nbsp;<span data-phone>+91 894 33 11 555</span></a>
       <p class="muted">Pazhayannur, Kerala 680587</p>
     </aside>
   </div>
@@ -122,14 +124,16 @@
           <select name="doctor" id="f-doc" required></select>
         </label>
       </div>
-      <div class="row">
-        <label for="f-date">Preferred date
-          <input name="date" id="f-date" type="date" required>
-        </label>
-        <label for="f-time">Preferred time
-          <select name="time" id="f-time" required></select>
-        </label>
-      </div>
+      <fieldset class="field">
+        <legend>Preferred date</legend>
+        <div class="quick" id="date-quick"></div>
+        <input name="date" id="f-date" type="date" required aria-label="Choose date">
+      </fieldset>
+      <fieldset class="field">
+        <legend>Preferred time</legend>
+        <div class="slots" id="slots" role="radiogroup" aria-label="Time slot"></div>
+        <input type="hidden" name="time" id="f-time" required>
+      </fieldset>
       <label for="f-type">Visit type
         <select id="f-type" name="type">
           <option>New patient</option>
@@ -140,6 +144,7 @@
       <label for="f-notes">Reason or symptoms <span class="muted">(optional)</span>
         <textarea id="f-notes" name="notes" rows="3" placeholder="Briefly describe the problem"></textarea>
       </label>
+      <div class="summary" id="summary" aria-live="polite"></div>
       <p class="error" id="form-error" role="alert" hidden></p>
       <button class="btn btn-wa btn-block btn-lg" type="submit"><i data-i="chat"></i> Send booking on WhatsApp</button>
       <p class="muted small">Not an emergency service. In an emergency, call us or go to casualty.</p>
@@ -221,6 +226,8 @@
   </div>
 </footer>
 
+<button type="button" class="totop" id="totop" aria-label="Back to top"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="mbar" aria-label="Quick contact">
   <a class="mbar-call" href="tel:+918943311555" data-phone-link><i data-i="phone"></i> Call</a>
   <a class="mbar-wa" href="#" data-wa-link><i data-i="chat"></i> WhatsApp</a>

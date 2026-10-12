@@ -65,17 +65,46 @@
   }
 
   // ----- Booking form -----
+  var form = $("#booking-form"), err = $("#form-error");
   var fDept = $("#f-dept"), fDoc = $("#f-doc"), fDate = $("#f-date"), fTime = $("#f-time");
+  var slots = $("#slots");
   function fillDocs() {
     var list = H.doctors.filter(function (d) { return d.dept === fDept.value; });
     fDoc.innerHTML = '<option value="Any available doctor">Any available doctor</option>' + list.map(function (d) { return '<option>' + esc(d.name) + '</option>'; }).join("");
   }
   fDept.innerHTML = '<option value="">Select department</option>' + H.departments.map(function (d) { return '<option value="' + d.id + '">' + esc(d.name) + '</option>'; }).join("");
-  fTime.innerHTML = '<option value="">Select time</option>' + H.timeSlots.map(function (t) { return '<option>' + t + '</option>'; }).join("");
-  fDept.addEventListener("change", fillDocs); fillDocs();
+  slots.innerHTML = H.timeSlots.map(function (t) { return '<button type="button" class="slot" role="radio" aria-checked="false" data-t="' + t + '">' + t + '</button>'; }).join("");
+  slots.addEventListener("click", function (e) {
+    var b = e.target.closest(".slot"); if (!b) return;
+    slots.querySelectorAll(".slot").forEach(function (x) { var on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-checked", on); });
+    fTime.value = b.dataset.t; slots.classList.remove("bad"); updateSummary();
+  });
+  fDept.addEventListener("change", function () { fillDocs(); updateSummary(); }); fillDocs();
+  form.addEventListener("input", updateSummary);
   var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-  fDate.min = today.toISOString().slice(0, 10);
+  var iso = function (d) { var x = new Date(d); x.setMinutes(x.getMinutes() - x.getTimezoneOffset()); return x.toISOString().slice(0, 10); };
+  fDate.min = iso(today);
+  var quick = $("#date-quick");
+  [["Today", 0], ["Tomorrow", 1], ["In 2 days", 2]].forEach(function (q) {
+    var d = new Date(); d.setDate(d.getDate() + q[1]);
+    var b = document.createElement("button"); b.type = "button"; b.className = "qd"; b.textContent = q[0]; b.dataset.d = iso(d);
+    b.addEventListener("click", function () { fDate.value = b.dataset.d; markQuick(); updateSummary(); });
+    quick.appendChild(b);
+  });
+  function markQuick() { quick.querySelectorAll(".qd").forEach(function (b) { b.classList.toggle("on", b.dataset.d === fDate.value); }); }
+  fDate.addEventListener("change", function () { markQuick(); updateSummary(); });
 
+  var summary = $("#summary");
+  function updateSummary() {
+    var f = form.elements, rows = [];
+    if (f.name.value.trim()) rows.push(["Patient", f.name.value.trim()]);
+    if (f.department.value) rows.push(["Department", deptName(f.department.value)]);
+    if (f.department.value && f.doctor.value) rows.push(["Doctor", f.doctor.value]);
+    if (f.date.value) rows.push(["Date", new Date(f.date.value + "T00:00:00").toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })]);
+    if (f.time.value) rows.push(["Time", f.time.value]);
+    summary.hidden = !rows.length;
+    summary.innerHTML = '<b>Your request</b>' + rows.map(function (r) { return '<span><i>' + r[0] + '</i>' + esc(r[1]) + '</span>'; }).join("");
+  }
   var filter = "all";
   function renderDocs() {
     $("#doc-grid").innerHTML = H.doctors.filter(function (d) { return filter === "all" || d.dept === filter; }).map(function (d) {
@@ -93,7 +122,7 @@
     renderDocs();
   });
 
-  function preselect(dept, doc) { fDept.value = dept; fillDocs(); if (doc) fDoc.value = doc; }
+  function preselect(dept, doc) { fDept.value = dept; fillDocs(); if (doc) fDoc.value = doc; updateSummary(); }
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-book]");
     if (b) { preselect(b.dataset.dept, b.dataset.book); $("#book").scrollIntoView({ behavior: motion ? "smooth" : "auto" }); return; }
@@ -101,18 +130,18 @@
     if (c) preselect(c.dataset.dept);
   });
 
-  var form = $("#booking-form"), err = $("#form-error");
+
   var labels = { name: "patient name", phone: "a valid mobile number", department: "department", date: "date", time: "time" };
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var f = form.elements, bad = [];
-    Object.keys(labels).forEach(function (n) { f[n].classList.remove("bad"); f[n].removeAttribute("aria-invalid"); });
+    Object.keys(labels).forEach(function (n) { f[n].classList.remove("bad"); f[n].removeAttribute("aria-invalid"); }); slots.classList.remove("bad");
     if (!f.name.value.trim()) bad.push("name");
     if (!/^\+?[\d ]{10,15}$/.test(f.phone.value.trim())) bad.push("phone");
     ["department", "date", "time"].forEach(function (n) { if (!f[n].value) bad.push(n); });
     if (bad.length) {
-      bad.forEach(function (n) { f[n].classList.add("bad"); f[n].setAttribute("aria-invalid", "true"); });
-      err.textContent = "Please enter: " + bad.map(function (n) { return labels[n]; }).join(", ") + "."; err.hidden = false; f[bad[0]].focus(); return;
+      bad.forEach(function (n) { f[n].classList.add("bad"); f[n].setAttribute("aria-invalid", "true"); if (n === "time") slots.classList.add("bad"); });
+      err.textContent = "Please enter: " + bad.map(function (n) { return labels[n]; }).join(", ") + "."; err.hidden = false; (bad[0] === "time" ? slots.querySelector(".slot") : f[bad[0]]).focus(); return;
     }
     err.hidden = true;
     var d = new Date(f.date.value + "T00:00:00");
@@ -122,6 +151,7 @@
       "Date: " + d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" }),
       "Time: " + f.time.value, "Visit type: " + f.type.value,
       f.notes.value.trim() ? "Reason: " + f.notes.value.trim() : ""].filter(Boolean).join("\n");
+    toast("Opening WhatsApp with your request…");
     window.open(waBase + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
   });
 
@@ -142,4 +172,62 @@
   }
   observe($$(".section h2, .section .sub, .card, .step, .form, .mv > div, .map, details, .ticks, .cta-band .wrap"));
   renderDocs();
+  updateSummary();
+
+  // ----- Extra interactive touches -----
+  var toastEl = $("#toast"), tt;
+  function toast(msg) {
+    toastEl.innerHTML = '<span class="tick">' + icon("check") + '</span>' + esc(msg);
+    toastEl.classList.add("show"); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove("show"); }, 3200);
+  }
+
+  // Scroll progress, back-to-top, scrollspy, hero parallax (transform only)
+  var bar = $("#progress"), totop = $("#totop"), heroBg = $(".hero"), ticking = false;
+  var links = [].slice.call($$('#menu a[href^="#"]:not(.btn)')), spy = {};
+  links.forEach(function (a) { var t = document.getElementById(a.getAttribute("href").slice(1)); if (t) spy[a.getAttribute("href")] = t; });
+  function onScroll() {
+    var y = window.scrollY, max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = "scaleX(" + (max > 0 ? y / max : 0) + ")";
+    totop.classList.toggle("show", y > 700);
+    var cur = null;
+    links.forEach(function (a) { var t = spy[a.getAttribute("href")]; if (t && t.getBoundingClientRect().top < innerHeight * 0.4) cur = a; });
+    links.forEach(function (a) { a.classList.toggle("active", a === cur); });
+    if (motion && y < innerHeight) heroBg.style.setProperty("--py", (y * 0.18) + "px");
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  totop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: motion ? "smooth" : "auto" }); });
+  onScroll();
+
+  // Card spotlight follows the pointer
+  if (matchMedia("(hover: hover)").matches) {
+    document.addEventListener("pointermove", function (e) {
+      var c = e.target.closest && e.target.closest(".card, .step");
+      if (!c) return;
+      var r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", (e.clientX - r.left) + "px"); c.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  }
+
+  // Headline: words rise in one by one
+  if (motion) {
+    var h1 = $("h1");
+    if (h1) {
+      var i = 0;
+      (function wrap(n) {
+        [].slice.call(n.childNodes).forEach(function (c) {
+          if (c.nodeType === 3) {
+            var f = document.createDocumentFragment();
+            c.textContent.split(/(\s+)/).forEach(function (w) {
+              if (!w.trim()) { f.appendChild(document.createTextNode(w)); return; }
+              var o = document.createElement("span"); o.className = "w";
+              var inn = document.createElement("span"); inn.textContent = w; inn.style.animationDelay = (0.2 + i++ * 0.06) + "s"; o.appendChild(inn); f.appendChild(o);
+            });
+            n.replaceChild(f, c);
+          } else wrap(c);
+        });
+      })(h1);
+      h1.classList.add("split"); h1.classList.remove("hero-in");
+    }
+  }
 })();
