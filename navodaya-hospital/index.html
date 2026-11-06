@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+Malayalam:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Noto+Sans+Malayalam:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Hospital","name":"Navodaya Hospital and Research Centre",
@@ -20,6 +20,7 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <div class="topbar">
   <div class="wrap">
@@ -42,12 +43,14 @@
       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
     <nav id="menu" aria-label="Main">
-      <a href="#departments">Departments</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#updates" id="nav-updates" hidden>Updates</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
+      <div class="navpill">
+        <a href="#departments">Departments</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#updates" id="nav-updates" hidden>Updates</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
       <button type="button" class="btn btn-sm" data-open-book>Book appointment</button>
     </nav>
   </div>
@@ -55,7 +58,11 @@
 
 <main id="main">
 <section class="hero" id="home">
-  <div class="hero-photo"><img id="h-img" src="building.jpg" width="589" height="520" alt="Navodaya Hospital and Research Centre building" fetchpriority="high"></div>
+  <div class="hero-photo">
+    <img id="h-img" src="building.jpg" width="589" height="520" alt="Navodaya Hospital and Research Centre building" fetchpriority="high">
+    <div class="plus3d" id="plus3d" aria-hidden="true"><svg class="plus-fb" viewBox="0 0 100 100"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8be0d4"/><stop offset="1" stop-color="#00a796"/></linearGradient></defs><path fill="url(#pg)" d="M38 10h24a6 6 0 0 1 6 6v16h16a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6H68v16a6 6 0 0 1-6 6H38a6 6 0 0 1-6-6V68H16a6 6 0 0 1-6-6V38a6 6 0 0 1 6-6h16V16a6 6 0 0 1 6-6z"/></svg></div>
+    <a class="glass-card" href="#" data-phone-link aria-label="Call emergency and ambulance"><span class="gc-ic"><i data-i="ambulance"></i></span><span class="gc-tx"><b>24x7 emergency &amp; ambulance</b><small><span data-phone></span></small></span><span class="gc-go"><i data-i="phone"></i></span></a>
+  </div>
   <div class="wrap hero-wrap">
     <div class="hero-copy">
       <p class="kicker"><i data-i="cross"></i> <span id="h-eyebrow"></span></p>
@@ -205,9 +212,12 @@
   </div>
 </footer>
 
-<nav class="mbar" aria-label="Quick contact">
-  <a class="mbar-call" href="#" data-phone-link aria-label="Call the hospital"><i data-i="phone"></i> Call</a>
-  <button type="button" class="mbar-book" data-open-book><i data-i="clipboard"></i> Book appointment</button>
+<nav class="tabbar" aria-label="Quick tabs">
+  <a href="#home" data-nav="home"><i data-i="hospital"></i><span>Home</span></a>
+  <a href="#departments" data-nav="departments"><i data-i="steth"></i><span>Care</span></a>
+  <button type="button" class="tab-book" data-open-book aria-label="Book appointment"><i data-i="calendar"></i><span>Book</span></button>
+  <a href="#services" data-nav="services"><i data-i="icu"></i><span>Services</span></a>
+  <a href="#contact" data-nav="contact"><i data-i="phone"></i><span>Contact</span></a>
 </nav>
 
 <!-- Booking -->
@@ -243,5 +253,8 @@
 <script src="icons.js"></script>
 <script src="site.js"></script>
 <script src="booking.js"></script>
+<script src="motion.js"></script>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+<script type="module" src="plus3d.js"></script>
 </body>
 </html>

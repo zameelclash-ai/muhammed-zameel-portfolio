@@ -30,4 +30,4 @@ backend, the password is checked on the server, so use a strong one in `ADMIN_PA
 
 ## Files
 * `data.js` the starting content. `content.json` the published edits (overrides `data.js`).
-* `site.js`, `booking.js`, `admin.js`: the code. `netlify/functions`: the optional backend.
+* `site.js`, `booking.js`, `motion.js`, `plus3d.js`, `admin.js`: the code. `vendor/` holds Three.js (MIT) used for the 3D plus; `icons.js` uses Lucide icons (ISC). `netlify/functions`: the optional backend.
