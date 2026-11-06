@@ -114,9 +114,8 @@
     var wrap = $("#dept-grid");
     wrap.classList.toggle("open", !!q || wrap.dataset.open === "1");
     wrap.innerHTML = list.map(function (d) {
-      var inner = '<span class="ic">' + icon(d.icon) + '</span><span class="dn">' + esc(d.name) + '</span>' + (d.call ? '<span class="tag">Call</span>' : "");
-      return d.call ? '<a class="dept" href="' + telOf(C().phone) + '">' + inner + '</a>'
-        : '<button type="button" class="dept" data-dept="' + esc(d.id) + '">' + inner + '</button>';
+      var inner = '<span class="ic">' + icon(d.icon) + '</span><span class="dn">' + esc(d.name) + '</span>' + (d.call ? '<span class="tag">24x7</span>' : '<span class="chev">' + icon("chev") + '</span>');
+      return '<button type="button" class="dept" data-info="dept:' + esc(d.id) + '">' + inner + '</button>';
     }).join("");
     $("#dept-empty").hidden = list.length > 0;
     $("#dept-more").hidden = !!q || list.length <= 8;
@@ -129,14 +128,14 @@
   }
   function renderLists() {
     var c = C();
-    $("#svc-grid").innerHTML = c.services.map(function (s) {
-      return '<div class="svc-item"><span class="ic">' + icon(s.icon) + '</span><div><b>' + esc(s.name) + '</b><p>' + esc(s.text) + '</p></div></div>';
+    $("#svc-grid").innerHTML = c.services.map(function (s, i) {
+      return '<button type="button" class="svc-item" data-info="svc:' + i + '"><span class="ic">' + icon(s.icon) + '</span><div><b>' + esc(s.name) + '</b><p>' + esc(s.text) + '</p></div><span class="chev">' + icon("chev") + '</span></button>';
     }).join("");
     $("#why-grid").innerHTML = c.why.map(function (w, i) {
-      return '<li><span class="num">' + (i < 9 ? "0" : "") + (i + 1) + '</span><div><b>' + esc(w.title) + '</b><span>' + esc(w.text) + '</span></div></li>';
+      return '<li data-info="why:' + i + '" role="button" tabindex="0"><span class="num">' + (i < 9 ? "0" : "") + (i + 1) + '</span><div><b>' + esc(w.title) + '</b><span>' + esc(w.text) + '</span></div></li>';
     }).join("");
-    $("#people-grid").innerHTML = c.people.map(function (p) {
-      return '<div class="person"><div class="avatar' + (p.photo ? ' ph' : '') + '">' + (p.photo ? '<img src="' + esc(p.photo) + '" alt="' + esc(p.name) + '" loading="lazy">' : esc(initials(p.name))) + '</div><b>' + esc(p.name) + '</b><span>' + esc(p.role) + '</span></div>';
+    $("#people-grid").innerHTML = c.people.map(function (p, i) {
+      return '<div class="person" data-info="person:' + i + '" role="button" tabindex="0"><div class="avatar' + (p.photo ? ' ph' : '') + '">' + (p.photo ? '<img src="' + esc(p.photo) + '" alt="' + esc(p.name) + '" loading="lazy">' : esc(initials(p.name))) + '</div><b>' + esc(p.name) + '</b><span>' + esc(p.role) + '</span></div>';
     }).join("");
     $("#faq-list").innerHTML = c.faqs.map(function (f) { return '<details><summary>' + esc(f.q) + '</summary><p>' + esc(f.a) + '</p></details>'; }).join("");
     var rev = c.reviews || [];
@@ -147,8 +146,9 @@
     }).join("");
     var gal = (c.gallery || []).filter(function (g) { return g.image; });
     $("#gallery").hidden = !gal.length;
-    $("#gal-grid").innerHTML = gal.map(function (g) {
-      return '<figure><a href="' + esc(g.image) + '" target="_blank" rel="noopener"><img src="' + esc(g.image) + '" alt="' + esc(g.caption || "Hospital photo") + '" loading="lazy"></a>' + (g.caption ? '<figcaption>' + esc(g.caption) + '</figcaption>' : "") + '</figure>';
+    S.gal = gal;
+    $("#gal-grid").innerHTML = gal.map(function (g, i) {
+      return '<figure data-info="gal:' + i + '" role="button" tabindex="0" aria-label="Open photo"><img src="' + esc(g.image) + '" alt="' + esc(g.caption || "Hospital photo") + '" loading="lazy">' + (g.caption ? '<figcaption>' + esc(g.caption) + '</figcaption>' : "") + '</figure>';
     }).join("");
   }
 
@@ -158,7 +158,7 @@
     return list;
   }
   function renderNews() {
-    var list = visibleNews();
+    var list = visibleNews(); S.news = list;
     $("#ticker").hidden = !list.length;
     $("#updates").hidden = !list.length; $("#nav-updates").hidden = !list.length;
     var first = list[0];
@@ -166,10 +166,10 @@
       var t = esc(first.title || first.text);
       $("#tk-row").innerHTML = '<span class="tk-label">Update</span><span class="tk-text">' + (first.link ? '<a href="' + esc(first.link) + '" target="_blank" rel="noopener">' + t + '</a>' : t) + '</span><a class="tk-all" href="#updates">' + (list.length > 1 ? "All " + list.length + " updates" : "Details") + ' →</a>';
     }
-    $("#news-list").innerHTML = list.slice(0, 8).map(function (n) {
-      return '<article class="news-item">' + (n.date ? '<time datetime="' + esc(n.date) + '">' + esc(S.fmtDate(n.date)) + '</time>' : "") +
+    $("#news-list").innerHTML = list.slice(0, 8).map(function (n, i) {
+      return '<article class="news-item" data-info="news:' + i + '" role="button" tabindex="0">' + (n.date ? '<time datetime="' + esc(n.date) + '">' + esc(S.fmtDate(n.date)) + '</time>' : "") +
         '<h3>' + esc(n.title || "") + '</h3>' + (n.text ? '<p>' + esc(n.text) + '</p>' : "") +
-        (n.link ? '<a class="more-link" href="' + esc(n.link) + '" target="_blank" rel="noopener">Read more →</a>' : "") + '</article>';
+        (n.text || n.link ? '<span class="more-link">Read more →</span>' : "") + '</article>';
     }).join("");
   }
 

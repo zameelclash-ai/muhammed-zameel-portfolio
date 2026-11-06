@@ -81,15 +81,14 @@
     <div class="hero-art">
       <span class="ring r1" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span>
       <div class="plus3d" id="plus3d" aria-hidden="true"><svg class="plus-fb" viewBox="0 0 100 100"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8be0d4"/><stop offset="1" stop-color="#00a796"/></linearGradient></defs><path fill="url(#pg)" d="M38 10h24a6 6 0 0 1 6 6v16h16a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6H68v16a6 6 0 0 1-6 6H38a6 6 0 0 1-6-6V68H16a6 6 0 0 1-6-6V38a6 6 0 0 1 6-6h16V16a6 6 0 0 1 6-6z"/></svg></div>
-      <a class="glass-card" href="#" data-phone-link aria-label="Call emergency and ambulance"><span class="gc-ic"><i data-i="ambulance"></i></span><span class="gc-tx"><b>24x7 emergency &amp; ambulance</b><small><span data-phone></span></small></span><span class="gc-go"><i data-i="phone"></i></span></a>
     </div>
   </div>
   <div class="hero-strip">
     <ul class="wrap">
-      <li><i data-i="steth"></i><span><b id="qb-count">37</b> departments</span></li>
-      <li><i data-i="ambulance"></i><span><b>24x7</b> emergency</span></li>
-      <li><i data-i="pill"></i><span><b>24x7</b> pharmacy</span></li>
-      <li><i data-i="pin"></i><span><b>Ample</b> parking</span></li>
+      <li data-info="strip:dept" role="button" tabindex="0"><i data-i="steth"></i><span><b id="qb-count">37</b> departments</span></li>
+      <li data-info="strip:emerg" role="button" tabindex="0"><i data-i="ambulance"></i><span><b>24x7</b> emergency</span></li>
+      <li data-info="strip:pharm" role="button" tabindex="0"><i data-i="pill"></i><span><b>24x7</b> pharmacy</span></li>
+      <li data-info="strip:park" role="button" tabindex="0"><i data-i="pin"></i><span><b>Ample</b> parking</span></li>
     </ul>
   </div>
 </section>
@@ -247,6 +246,16 @@
   <div class="sheet-foot" id="wz-foot"></div>
 </dialog>
 
+<!-- Details for anything tapped -->
+<dialog id="info" aria-labelledby="in-title">
+  <div class="sheet-head">
+    <div><p class="sheet-step" id="in-kicker"></p><h2 id="in-title" tabindex="-1"></h2></div>
+    <button type="button" class="x" id="in-close" aria-label="Close">×</button>
+  </div>
+  <div class="sheet-body" id="in-body"></div>
+  <div class="sheet-foot" id="in-foot"></div>
+</dialog>
+
 <!-- Staff login -->
 <dialog id="login" aria-labelledby="lg-title">
   <form id="login-form" class="login" novalidate>
@@ -266,6 +275,7 @@
 <script src="icons.js"></script>
 <script src="site.js"></script>
 <script src="booking.js"></script>
+<script src="details.js"></script>
 <script src="motion.js"></script>
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 <script type="module" src="plus3d.js"></script>

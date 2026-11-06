@@ -94,7 +94,7 @@
         fCheck("Pin to top", b + ".pin") + fCheck("Show on the site", b + ".show"); },
       blank: function () { return { date: new Date().toISOString().slice(0, 10), title: "", text: "", link: "", pin: false, show: true }; } },
     departments: { noun: "department", title: "name", fields: function (b) {
-      return fText("Name", b + ".name") + fSelect("Icon", b + ".icon", iconOpts()) + fCheck("Emergency: show a Call button instead of Book", b + ".call"); },
+      return fText("Name", b + ".name") + fArea("Short description (shown when tapped, optional)", b + ".text", { rows: 2, ai: true }) + fSelect("Icon", b + ".icon", iconOpts()) + fCheck("Emergency: show a Call button instead of Book", b + ".call"); },
       blank: function () { return { id: uid("dept"), name: "New department", icon: "steth" }; } },
     services: { noun: "service", title: "name", fields: function (b) {
       return fText("Name", b + ".name") + fArea("Short text", b + ".text", { rows: 2, ai: true }) + fSelect("Icon", b + ".icon", iconOpts()); },
