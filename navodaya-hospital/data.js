@@ -33,7 +33,10 @@ window.HOSPITAL = {
   // { date: "2026-11-10", title: "Short headline", text: "Details", link: "", pin: false, show: true }
   news: [],
   // Photo gallery: { image: "photo.jpg", caption: "Text" }
-  gallery: [],
+  gallery: [
+    { image: "photos/gallery-1.jpg", caption: "" },
+    { image: "photos/gallery-2.jpg", caption: "" }
+  ],
   timeSlots: ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM","07:00 PM"],
 
   // Departments from the hospital brochure. call:true = emergency/critical care (call, not book online).
@@ -79,11 +82,11 @@ window.HOSPITAL = {
 
   // Leadership, from the brochure.
   people: [
-    { name: "Mr. Abdul Jaleel P M", role: "Managing Director", photo: "" },
-    { name: "Dr. Farraz Shahithulla", role: "Director and Administrator" },
-    { name: "Adv. Muhammad Rafi A.K", role: "Director and Legal Adviser" },
-    { name: "Dr. Abdul Jaleel T", role: "Director and Medical Superintendent" },
-    { name: "Mrs. Veena Sivakumar", role: "Director and Public Relation Manager" }
+    { name: "Mr. Abdul Jaleel P M", role: "Managing Director", photo: "photos/leader-1.jpg" },
+    { name: "Dr. Farraz Shahithulla", role: "Director and Administrator", photo: "photos/leader-2.jpg" },
+    { name: "Adv. Muhammad Rafi A.K", role: "Director and Legal Adviser", photo: "photos/leader-3.jpg" },
+    { name: "Dr. Abdul Jaleel T", role: "Director and Medical Superintendent", photo: "photos/leader-4.jpg" },
+    { name: "Mrs. Veena Sivakumar", role: "Director and Public Relation Manager", photo: "photos/leader-5.jpg" }
   ],
 
   services: [

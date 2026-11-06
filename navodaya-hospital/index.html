@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+Malayalam:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Hospital","name":"Navodaya Hospital and Research Centre",
@@ -29,10 +29,7 @@
 </div>
 
 <div class="ticker" id="ticker" hidden>
-  <div class="wrap">
-    <span class="tk-label">Updates</span>
-    <div class="tk-view"><div class="tk-track" id="tk-track"></div></div>
-  </div>
+  <div class="wrap" id="tk-row"></div>
 </div>
 
 <header class="header">
@@ -58,9 +55,10 @@
 
 <main id="main">
 <section class="hero" id="home">
-  <div class="wrap hero-grid">
+  <div class="hero-photo"><img id="h-img" src="building.jpg" width="589" height="520" alt="Navodaya Hospital and Research Centre building" fetchpriority="high"></div>
+  <div class="wrap hero-wrap">
     <div class="hero-copy">
-      <p class="eyebrow" id="h-eyebrow"></p>
+      <p class="kicker"><i data-i="cross"></i> <span id="h-eyebrow"></span></p>
       <h1><span id="h-title"></span> <span class="accent" id="h-accent"></span></h1>
       <p class="lead" id="h-lead"></p>
       <div class="hero-cta">
@@ -73,23 +71,12 @@
         <li><i data-i="pin"></i> Ample parking</li>
       </ul>
     </div>
-    <figure class="hero-photo"><img id="h-img" src="building.jpg" width="589" height="520" alt="Navodaya Hospital and Research Centre building" fetchpriority="high"></figure>
-  </div>
-</section>
-
-<section class="quick" aria-label="Quick actions">
-  <div class="wrap quick-grid">
-    <button type="button" class="qa" data-open-book><i data-i="clipboard"></i><span>Book</span></button>
-    <a class="qa" href="#" data-phone-link><i data-i="phone"></i><span>Call</span></a>
-    <a class="qa" href="#" data-wa-link><i data-i="chat"></i><span>WhatsApp</span></a>
-    <a class="qa" href="#" data-directions target="_blank" rel="noopener"><i data-i="pin"></i><span>Directions</span></a>
   </div>
 </section>
 
 <section class="section" id="departments">
   <div class="wrap">
-    <h2>Departments</h2>
-    <p class="sub">Tap a department to book.</p>
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> Departments</p><h2>Specialist care under one roof</h2><p class="sub">Tap a department to book an appointment.</p></header>
     <label class="searchbox"><i data-i="search"></i>
       <input type="search" id="dept-search" placeholder="Search, e.g. cardiology" aria-label="Search departments" autocomplete="off" enterkeyhint="search">
     </label>
@@ -99,25 +86,25 @@
   </div>
 </section>
 
-<section class="section alt" id="services">
+<section class="section" id="services">
   <div class="wrap">
-    <h2>Services &amp; facilities</h2>
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> Services</p><h2>Services &amp; facilities</h2><p class="sub">Everything a patient and family need, in one place.</p></header>
     <div class="svc" id="svc-grid"></div>
   </div>
 </section>
 
 <section class="section" id="updates" hidden>
   <div class="wrap">
-    <h2>Latest updates</h2>
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> News</p><h2>Latest updates</h2></header>
     <div class="news" id="news-list"></div>
   </div>
 </section>
 
 <section class="section" id="about">
   <div class="wrap">
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> About us</p><h2>About Navodaya Hospital</h2></header>
     <div class="about">
-      <div>
-        <h2>About us</h2>
+      <div class="about-text">
         <p id="a-p1"></p>
         <p id="a-p2"></p>
         <p class="note" data-company></p>
@@ -131,39 +118,39 @@
   </div>
 </section>
 
-<section class="section alt" id="why">
+<section class="section" id="why">
   <div class="wrap">
-    <h2>Why choose NHRC?</h2>
-    <ul class="checks" id="why-grid"></ul>
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> Why NHRC</p><h2>Why families choose us</h2></header>
+    <ol class="why" id="why-grid"></ol>
     <p class="infonote">Information about appointments, emergencies and patient reports is available at the NHRC Information Desk.</p>
   </div>
 </section>
 
 <section class="section" id="gallery" hidden>
   <div class="wrap">
-    <h2>Gallery</h2>
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> Gallery</p><h2>Our hospital</h2></header>
     <div class="gal" id="gal-grid"></div>
   </div>
 </section>
 
 <section class="section" id="leadership">
   <div class="wrap">
-    <h2>Our leadership</h2>
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> Leadership</p><h2>The team behind Navodaya</h2></header>
     <div class="people" id="people-grid"></div>
   </div>
 </section>
 
-<section class="section alt" id="reviews" hidden>
+<section class="section" id="reviews" hidden>
   <div class="wrap">
-    <h2>What patients say</h2>
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> Reviews</p><h2>What patients say</h2></header>
     <div class="reviews" id="rev-grid"></div>
   </div>
 </section>
 
 <section class="section" id="faq">
-  <div class="wrap faq-wrap">
-    <h2>Common questions</h2>
-    <div id="faq-list"></div>
+  <div class="wrap">
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> FAQ</p><h2>Common questions</h2></header>
+    <div class="faq-wrap" id="faq-list"></div>
   </div>
 </section>
 
@@ -176,22 +163,24 @@
 </section>
 
 <section class="section" id="contact">
-  <div class="wrap contact">
-    <div>
-      <h2>Contact &amp; location</h2>
-      <dl class="info">
-        <div><dt>Address</dt><dd data-address></dd></div>
-        <div><dt>Phone</dt><dd><a href="#" data-phone-link><span data-phone></span></a> · <a href="#" data-phone2-link><span data-phone2></span></a></dd></div>
-        <div><dt>Email</dt><dd><a href="#" data-email-link><span data-email></span></a></dd></div>
-        <div><dt>Website</dt><dd><a href="#" data-website-link target="_blank" rel="noopener"><span data-website></span></a></dd></div>
-        <div data-hours-row><dt>Timings</dt><dd data-hours></dd></div>
-      </dl>
-      <div class="btn-row">
-        <a class="btn btn-wa" href="#" data-wa-link><i data-i="chat"></i> WhatsApp us</a>
-        <a class="btn btn-ghost" href="#" data-directions target="_blank" rel="noopener"><i data-i="pin"></i> Directions</a>
+  <div class="wrap">
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> Contact</p><h2>Contact &amp; location</h2></header>
+    <div class="contact">
+      <div>
+        <dl class="info">
+          <div><dt>Address</dt><dd data-address></dd></div>
+          <div><dt>Phone</dt><dd><a href="#" data-phone-link><span data-phone></span></a> · <a href="#" data-phone2-link><span data-phone2></span></a></dd></div>
+          <div><dt>Email</dt><dd><a href="#" data-email-link><span data-email></span></a></dd></div>
+          <div><dt>Website</dt><dd><a href="#" data-website-link target="_blank" rel="noopener"><span data-website></span></a></dd></div>
+          <div data-hours-row><dt>Timings</dt><dd data-hours></dd></div>
+        </dl>
+        <div class="btn-row">
+          <a class="btn btn-wa" href="#" data-wa-link><i data-i="chat"></i> WhatsApp us</a>
+          <a class="btn btn-ghost" href="#" data-directions target="_blank" rel="noopener"><i data-i="pin"></i> Directions</a>
+        </div>
       </div>
+      <div class="map" id="map"></div>
     </div>
-    <div class="map" id="map"></div>
   </div>
 </section>
 </main>
@@ -201,27 +190,14 @@
     <div class="f-brand">
       <img src="logo-lockup.png" width="900" height="192" alt="Navodaya Hospital and Research Centre" loading="lazy">
       <p class="f-tag" data-tagline></p>
-      <p class="f-co" data-company></p>
     </div>
-    <div>
-      <h3>Contact</h3>
-      <ul class="f-list">
-        <li><i data-i="pin"></i><span data-address></span></li>
-        <li><i data-i="phone"></i><span><a href="#" data-phone-link><span data-phone></span></a>, <a href="#" data-phone2-link><span data-phone2></span></a></span></li>
-        <li><i data-i="mail"></i><a href="#" data-email-link><span data-email></span></a></li>
-        <li><i data-i="globe"></i><a href="#" data-website-link target="_blank" rel="noopener"><span data-website></span></a></li>
-      </ul>
-    </div>
-    <div>
-      <h3>Quick links</h3>
-      <ul class="f-links">
-        <li><a href="#departments">Departments</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#about">About us</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
+    <ul class="f-links" aria-label="Footer links">
+      <li><a href="#departments">Departments</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About us</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </div>
   <div class="wrap f-bottom">
     <span>© <span id="yr"></span> <span data-company></span></span>

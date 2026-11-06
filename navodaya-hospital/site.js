@@ -29,7 +29,6 @@
   };
   var motion = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: no-preference)").matches);
   S.motion = motion;
-  if (motion) document.documentElement.classList.add("motion");
 
   /* ---------- toast ---------- */
   var toastEl = $("#toast"), tt;
@@ -120,16 +119,20 @@
     $("#dept-more").textContent = wrap.dataset.open === "1" ? "Show fewer" : "Show all " + list.length + " departments";
   }
 
+  function initials(n) {
+    var w = String(n).replace(/\b(mr|mrs|ms|dr|adv|prof)\b\.?/gi, "").trim().split(/\s+/).filter(Boolean);
+    return ((w[0] || "")[0] || "") + ((w.length > 1 ? w[w.length - 1] : "")[0] || "");
+  }
   function renderLists() {
     var c = C();
     $("#svc-grid").innerHTML = c.services.map(function (s) {
       return '<div class="svc-item"><span class="ic">' + icon(s.icon) + '</span><div><b>' + esc(s.name) + '</b><p>' + esc(s.text) + '</p></div></div>';
     }).join("");
-    $("#why-grid").innerHTML = c.why.map(function (w) {
-      return '<li>' + icon("check") + '<div><b>' + esc(w.title) + '</b> <span>' + esc(w.text) + '</span></div></li>';
+    $("#why-grid").innerHTML = c.why.map(function (w, i) {
+      return '<li><span class="num">' + (i < 9 ? "0" : "") + (i + 1) + '</span><div><b>' + esc(w.title) + '</b><span>' + esc(w.text) + '</span></div></li>';
     }).join("");
     $("#people-grid").innerHTML = c.people.map(function (p) {
-      return '<div class="person"><div class="avatar">' + (p.photo ? '<img src="' + esc(p.photo) + '" alt="' + esc(p.name) + '" loading="lazy">' : icon("doctor")) + '</div><b>' + esc(p.name) + '</b><span>' + esc(p.role) + '</span></div>';
+      return '<div class="person"><div class="avatar' + (p.photo ? ' ph' : '') + '">' + (p.photo ? '<img src="' + esc(p.photo) + '" alt="' + esc(p.name) + '" loading="lazy">' : esc(initials(p.name))) + '</div><b>' + esc(p.name) + '</b><span>' + esc(p.role) + '</span></div>';
     }).join("");
     $("#faq-list").innerHTML = c.faqs.map(function (f) { return '<details><summary>' + esc(f.q) + '</summary><p>' + esc(f.a) + '</p></details>'; }).join("");
     var rev = c.reviews || [];
@@ -154,13 +157,11 @@
     var list = visibleNews();
     $("#ticker").hidden = !list.length;
     $("#updates").hidden = !list.length; $("#nav-updates").hidden = !list.length;
-    var item = function (n) {
-      var txt = esc(n.title || n.text);
-      return '<span class="tk-item">' + (n.pin ? "★ " : "") + (n.link ? '<a href="' + esc(n.link) + '" target="_blank" rel="noopener">' + txt + '</a>' : txt) + '</span>';
-    };
-    var html = list.map(item).join("");
-    $("#tk-track").innerHTML = html + (motion && list.length ? html : "");
-    $("#tk-track").classList.toggle("run", motion && list.length > 0);
+    var first = list[0];
+    if (first) {
+      var t = esc(first.title || first.text);
+      $("#tk-row").innerHTML = '<span class="tk-label">Update</span><span class="tk-text">' + (first.link ? '<a href="' + esc(first.link) + '" target="_blank" rel="noopener">' + t + '</a>' : t) + '</span><a class="tk-all" href="#updates">' + (list.length > 1 ? "All " + list.length + " updates" : "Details") + ' →</a>';
+    }
     $("#news-list").innerHTML = list.slice(0, 8).map(function (n) {
       return '<article class="news-item">' + (n.date ? '<time datetime="' + esc(n.date) + '">' + esc(S.fmtDate(n.date)) + '</time>' : "") +
         '<h3>' + esc(n.title || "") + '</h3>' + (n.text ? '<p>' + esc(n.text) + '</p>' : "") +
@@ -237,13 +238,6 @@
       ticking = false;
     };
     window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
-
-    if (motion && "IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
-      }, { threshold: 0.08 });
-      $$(".section, .cta-band").forEach(function (el) { el.classList.add("reveal"); io.observe(el); });
-    }
 
     $("#staff-link").addEventListener("click", openLogin);
     $("#edit-fab").addEventListener("click", function () { loadAdmin(); });
