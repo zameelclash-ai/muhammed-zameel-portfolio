@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Navodaya Hospital Pazhayannur – Book on WhatsApp</title>
 <meta name="description" content="Navodaya Hospital and Research Centre, Pazhayannur, Thrissur. Quality, affordable healthcare with 24x7 emergency services. Book your appointment on WhatsApp.">
 <meta name="theme-color" content="#173866">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Hospital","name":"Navodaya Hospital and Research Centre",
@@ -20,21 +20,26 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="progress" id="progress" aria-hidden="true"></div>
-<div class="sample-bar" id="sample-bar" hidden>Preview: online booking is not connected yet. Add the hospital's WhatsApp number in <code>data.js</code> (<code>whatsapp</code>) to switch it on.</div>
 
 <div class="topbar">
   <div class="wrap">
-    <span><i data-i="phone"></i> Call us: <a href="tel:+918086655666" data-phone>+91 80866 55666</a></span>
-    <span class="hide-sm" id="top-hours" hidden></span>
+    <span><i data-i="phone"></i> <a href="#" data-phone-link><span data-phone></span></a></span>
+    <span class="hide-sm" data-hours></span>
+  </div>
+</div>
+
+<div class="ticker" id="ticker" hidden>
+  <div class="wrap">
+    <span class="tk-label">Updates</span>
+    <div class="tk-view"><div class="tk-track" id="tk-track"></div></div>
   </div>
 </div>
 
 <header class="header">
   <div class="wrap nav">
     <a href="#home" class="logo" aria-label="Navodaya Hospital and Research Centre, home">
-      <img src="logo-icon.png" width="46" height="45" alt="">
-      <span class="logo-text">Navodaya Hospital<small>and Research Centre</small></span>
+      <img src="logo-icon.png" width="40" height="39" alt="">
+      <span class="logo-text"><span data-short>Navodaya Hospital</span><small>and Research Centre</small></span>
     </a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -43,121 +48,68 @@
       <a href="#departments">Departments</a>
       <a href="#services">Services</a>
       <a href="#about">About</a>
+      <a href="#updates" id="nav-updates" hidden>Updates</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
-      <a href="#book" class="btn btn-sm">Book Appointment</a>
+      <button type="button" class="btn btn-sm" data-open-book>Book appointment</button>
     </nav>
   </div>
 </header>
 
 <main id="main">
 <section class="hero" id="home">
-  <span class="orb o1" aria-hidden="true"></span><span class="orb o2" aria-hidden="true"></span>
   <div class="wrap hero-grid">
-    <div>
-      <p class="eyebrow hero-in" style="--d:.05s">Redefining Health Care · Pazhayannur</p>
-      <h1 class="hero-in" style="--d:.15s">Quality, affordable healthcare in Pazhayannur. <span class="accent">Book your visit on WhatsApp.</span></h1>
-      <p class="lead hero-in" style="--d:.3s">Choose a department, date and time. Our reception team confirms your slot on WhatsApp, with no sign-up needed.</p>
-      <div class="hero-cta hero-in" style="--d:.45s">
-        <a href="#book" class="btn btn-lg btn-wa"><i data-i="chat"></i> Book on WhatsApp</a>
-        <a href="#departments" class="link-quiet">See departments →</a>
+    <div class="hero-copy">
+      <p class="eyebrow" id="h-eyebrow"></p>
+      <h1><span id="h-title"></span> <span class="accent" id="h-accent"></span></h1>
+      <p class="lead" id="h-lead"></p>
+      <div class="hero-cta">
+        <button type="button" class="btn btn-light btn-lg" data-open-book><i data-i="clipboard"></i> Book appointment</button>
+        <a class="btn btn-line btn-lg" href="#" data-phone-link><i data-i="phone"></i> Call</a>
       </div>
-      <ul class="facts hero-in" style="--d:.6s">
+      <ul class="facts">
         <li><i data-i="ambulance"></i> 24x7 emergency &amp; ambulance</li>
         <li><i data-i="pill"></i> Pharmacy 24x7</li>
         <li><i data-i="pin"></i> Ample parking</li>
       </ul>
     </div>
-    <div class="hero-side hero-in" style="--d:.5s">
-      <figure class="hero-photo">
-        <img src="building.jpg" width="589" height="520" alt="Navodaya Hospital and Research Centre building" fetchpriority="high">
-      </figure>
-      <aside class="hero-card" aria-label="Contact">
-        <h2>Prefer to talk?</h2>
-        <div class="btn-row">
-          <a class="btn btn-wa" href="#" data-wa-link><i data-i="chat"></i> WhatsApp</a>
-          <a class="btn btn-ghost" href="tel:+918086655666" data-phone-link><i data-i="phone"></i> Call&nbsp;<span data-phone>+91 80866 55666</span></a>
-        </div>
-      </aside>
-    </div>
+    <figure class="hero-photo"><img id="h-img" src="building.jpg" width="589" height="520" alt="Navodaya Hospital and Research Centre building" fetchpriority="high"></figure>
+  </div>
+</section>
+
+<section class="quick" aria-label="Quick actions">
+  <div class="wrap quick-grid">
+    <button type="button" class="qa" data-open-book><i data-i="clipboard"></i><span>Book</span></button>
+    <a class="qa" href="#" data-phone-link><i data-i="phone"></i><span>Call</span></a>
+    <a class="qa" href="#" data-wa-link><i data-i="chat"></i><span>WhatsApp</span></a>
+    <a class="qa" href="#" data-directions target="_blank" rel="noopener"><i data-i="pin"></i><span>Directions</span></a>
   </div>
 </section>
 
 <section class="section" id="departments">
   <div class="wrap">
-    <h2>Our departments</h2>
-    <p class="sub">Search or tap a department to start your booking.</p>
-    <div class="searchbox">
-      <i data-i="search"></i>
-      <input type="search" id="dept-search" placeholder="Search departments, e.g. cardiology" aria-label="Search departments" autocomplete="off">
-    </div>
-    <div class="grid depts" id="dept-grid"></div>
-    <p class="empty" id="dept-empty" hidden>No department found. Try another word, or call us and we will help.</p>
-  </div>
-</section>
-
-<section class="section alt" id="how">
-  <div class="wrap">
-    <h2>How booking works</h2>
-    <p class="sub">Three steps, about a minute.</p>
-    <ol class="steps" id="steps"></ol>
-  </div>
-</section>
-
-<section class="section" id="book">
-  <div class="wrap book-grid">
-    <div>
-      <h2>Book an appointment</h2>
-      <p class="sub">Fill in the form and WhatsApp opens with your request ready to send.</p>
-      <ul class="ticks">
-        <li>No registration or payment needed</li>
-        <li>Our reception team confirms your slot on WhatsApp</li>
-        <li>Change or cancel in the same chat</li>
-      </ul>
-    </div>
-    <form id="booking-form" class="form" novalidate>
-      <label for="f-name">Patient name
-        <input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Full name">
-      </label>
-      <label for="f-phone">Mobile number
-        <input id="f-phone" name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="10-digit mobile number">
-      </label>
-      <label for="f-dept">Department
-        <select name="department" id="f-dept" required></select>
-      </label>
-      <fieldset class="field">
-        <legend>Preferred date</legend>
-        <div class="quick" id="date-quick"></div>
-        <input name="date" id="f-date" type="date" required aria-label="Choose date">
-      </fieldset>
-      <fieldset class="field">
-        <legend>Preferred time</legend>
-        <div class="slots" id="slots" role="radiogroup" aria-label="Time slot"></div>
-        <input type="hidden" name="time" id="f-time" required>
-      </fieldset>
-      <label for="f-type">Visit type
-        <select id="f-type" name="type">
-          <option>New patient</option>
-          <option>Follow-up</option>
-          <option>Health check-up</option>
-        </select>
-      </label>
-      <label for="f-notes">Reason or symptoms <span class="muted">(optional)</span>
-        <textarea id="f-notes" name="notes" rows="3" placeholder="Briefly describe the problem"></textarea>
-      </label>
-      <div class="summary" id="summary" aria-live="polite"></div>
-      <p class="error" id="form-error" role="alert" hidden></p>
-      <button class="btn btn-wa btn-block btn-lg" type="submit"><i data-i="chat"></i> Send booking on WhatsApp</button>
-      <p class="muted small">Not for emergencies. In an emergency, call us or come to casualty.</p>
-    </form>
+    <h2>Departments</h2>
+    <p class="sub">Tap a department to book.</p>
+    <label class="searchbox"><i data-i="search"></i>
+      <input type="search" id="dept-search" placeholder="Search, e.g. cardiology" aria-label="Search departments" autocomplete="off" enterkeyhint="search">
+    </label>
+    <div class="depts" id="dept-grid"></div>
+    <button type="button" class="more" id="dept-more">Show all departments</button>
+    <p class="empty" id="dept-empty" hidden>No department found. Call us and we will help.</p>
   </div>
 </section>
 
 <section class="section alt" id="services">
   <div class="wrap">
     <h2>Services &amp; facilities</h2>
-    <p class="sub">Everything a patient and family need, under one roof.</p>
-    <div class="grid services" id="svc-grid"></div>
+    <div class="svc" id="svc-grid"></div>
+  </div>
+</section>
+
+<section class="section" id="updates" hidden>
+  <div class="wrap">
+    <h2>Latest updates</h2>
+    <div class="news" id="news-list"></div>
   </div>
 </section>
 
@@ -165,16 +117,16 @@
   <div class="wrap">
     <div class="about">
       <div>
-        <h2>About Navodaya Hospital</h2>
-        <p>When the need for quality healthcare in Kerala arose, the idea of Navodaya Hospital and Research Centre was born in the minds of its Directors. Built in the heart of central Pazhayannur, NHRC is open to all and aims at providing quality and affordable health care.</p>
-        <p>The expertise, the commitment, the compassion and the infrastructure all come together to deliver technologically advanced care with a patient-focused approach.</p>
-        <p class="note">NHRC Life Care Private Limited</p>
+        <h2>About us</h2>
+        <p id="a-p1"></p>
+        <p id="a-p2"></p>
+        <p class="note" data-company></p>
       </div>
-      <figure class="about-photo"><img src="building.jpg" width="589" height="520" alt="Navodaya Hospital building" loading="lazy"></figure>
+      <figure class="about-photo"><img id="a-img" src="building.jpg" width="589" height="520" alt="Navodaya Hospital building" loading="lazy"></figure>
     </div>
     <div class="vm">
-      <div class="vm-card"><h3>Our vision</h3><p id="vision"></p></div>
-      <div class="vm-card"><h3>Our mission</h3><ul id="mission"></ul></div>
+      <details class="acc" open><summary>Our vision</summary><p id="vision"></p></details>
+      <details class="acc"><summary>Our mission</summary><ul id="mission"></ul></details>
     </div>
   </div>
 </section>
@@ -182,24 +134,29 @@
 <section class="section alt" id="why">
   <div class="wrap">
     <h2>Why choose NHRC?</h2>
-    <p class="sub">What families tell us matters most, and what we work to provide.</p>
-    <div class="grid why" id="why-grid"></div>
-    <p class="infonote">All information about booking appointments, medical emergencies and patient reports is easy to get at the NHRC Information Desk.</p>
+    <ul class="checks" id="why-grid"></ul>
+    <p class="infonote">Information about appointments, emergencies and patient reports is available at the NHRC Information Desk.</p>
+  </div>
+</section>
+
+<section class="section" id="gallery" hidden>
+  <div class="wrap">
+    <h2>Gallery</h2>
+    <div class="gal" id="gal-grid"></div>
   </div>
 </section>
 
 <section class="section" id="leadership">
   <div class="wrap">
     <h2>Our leadership</h2>
-    <p class="sub">The team behind Navodaya Hospital.</p>
-    <div class="grid people" id="people-grid"></div>
+    <div class="people" id="people-grid"></div>
   </div>
 </section>
 
 <section class="section alt" id="reviews" hidden>
   <div class="wrap">
-    <h2>What our patients say</h2>
-    <div class="grid reviews" id="rev-grid"></div>
+    <h2>What patients say</h2>
+    <div class="reviews" id="rev-grid"></div>
   </div>
 </section>
 
@@ -212,9 +169,9 @@
 
 <section class="cta-band">
   <div class="wrap">
-    <h2>Ready to see a doctor?</h2>
-    <p>Book on WhatsApp. We confirm your slot and you are done.</p>
-    <a href="#book" class="btn btn-lg btn-light"><i data-i="chat"></i> Book on WhatsApp</a>
+    <h2>Need to see a doctor?</h2>
+    <p>Pick a department, date and time. We confirm on WhatsApp.</p>
+    <button type="button" class="btn btn-light btn-lg" data-open-book><i data-i="clipboard"></i> Book appointment</button>
   </div>
 </section>
 
@@ -224,14 +181,14 @@
       <h2>Contact &amp; location</h2>
       <dl class="info">
         <div><dt>Address</dt><dd data-address></dd></div>
-        <div><dt>Phone</dt><dd><a href="tel:+918086655666" data-phone>+91 80866 55666</a> · <a href="tel:+919846845521" data-phone2>+91 98468 45521</a></dd></div>
-        <div><dt>Email</dt><dd><a href="mailto:nhrclifecare@gmail.com" data-email>nhrclifecare@gmail.com</a></dd></div>
-        <div><dt>Website</dt><dd><a href="https://www.navodayahospital.org" data-website target="_blank" rel="noopener">www.navodayahospital.org</a></dd></div>
-        <div id="hours-row" hidden><dt>Timings</dt><dd id="hours"></dd></div>
+        <div><dt>Phone</dt><dd><a href="#" data-phone-link><span data-phone></span></a> · <a href="#" data-phone2-link><span data-phone2></span></a></dd></div>
+        <div><dt>Email</dt><dd><a href="#" data-email-link><span data-email></span></a></dd></div>
+        <div><dt>Website</dt><dd><a href="#" data-website-link target="_blank" rel="noopener"><span data-website></span></a></dd></div>
+        <div data-hours-row><dt>Timings</dt><dd data-hours></dd></div>
       </dl>
       <div class="btn-row">
         <a class="btn btn-wa" href="#" data-wa-link><i data-i="chat"></i> WhatsApp us</a>
-        <a class="btn btn-ghost" id="directions" href="#" target="_blank" rel="noopener"><i data-i="pin"></i> Get directions</a>
+        <a class="btn btn-ghost" href="#" data-directions target="_blank" rel="noopener"><i data-i="pin"></i> Directions</a>
       </div>
     </div>
     <div class="map" id="map"></div>
@@ -243,16 +200,16 @@
   <div class="wrap footer-grid">
     <div class="f-brand">
       <img src="logo-lockup.png" width="900" height="192" alt="Navodaya Hospital and Research Centre" loading="lazy">
-      <p class="f-tag">Redefining Health Care</p>
-      <p class="f-co">NHRC Life Care Private Limited</p>
+      <p class="f-tag" data-tagline></p>
+      <p class="f-co" data-company></p>
     </div>
     <div>
       <h3>Contact</h3>
       <ul class="f-list">
         <li><i data-i="pin"></i><span data-address></span></li>
-        <li><i data-i="phone"></i><span><a href="tel:+918086655666" data-phone>+91 80866 55666</a>, <a href="tel:+919846845521" data-phone2>+91 98468 45521</a></span></li>
-        <li><i data-i="mail"></i><a href="mailto:nhrclifecare@gmail.com" data-email>nhrclifecare@gmail.com</a></li>
-        <li><i data-i="globe"></i><a href="https://www.navodayahospital.org" data-website target="_blank" rel="noopener">www.navodayahospital.org</a></li>
+        <li><i data-i="phone"></i><span><a href="#" data-phone-link><span data-phone></span></a>, <a href="#" data-phone2-link><span data-phone2></span></a></span></li>
+        <li><i data-i="mail"></i><a href="#" data-email-link><span data-email></span></a></li>
+        <li><i data-i="globe"></i><a href="#" data-website-link target="_blank" rel="noopener"><span data-website></span></a></li>
       </ul>
     </div>
     <div>
@@ -260,7 +217,6 @@
       <ul class="f-links">
         <li><a href="#departments">Departments</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="#book">Book appointment</a></li>
         <li><a href="#about">About us</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -268,20 +224,48 @@
     </div>
   </div>
   <div class="wrap f-bottom">
-    <span>© <span id="yr"></span> NHRC Life Care Private Limited. All rights reserved.</span>
-    <span>For emergencies call <a href="tel:+918086655666" data-phone>+91 80866 55666</a></span>
+    <span>© <span id="yr"></span> <span data-company></span></span>
+    <button type="button" class="staff" id="staff-link">Staff login</button>
   </div>
 </footer>
 
-<button type="button" class="totop" id="totop" aria-label="Back to top"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="mbar" aria-label="Quick contact">
-  <a class="mbar-call" href="tel:+918086655666" data-phone-link><i data-i="phone"></i> Call</a>
-  <a class="mbar-wa" href="#" data-wa-link><i data-i="chat"></i> WhatsApp</a>
+  <a class="mbar-call" href="#" data-phone-link aria-label="Call the hospital"><i data-i="phone"></i> Call</a>
+  <button type="button" class="mbar-book" data-open-book><i data-i="clipboard"></i> Book appointment</button>
 </nav>
+
+<!-- Booking -->
+<dialog id="sheet" aria-labelledby="wz-title">
+  <div class="sheet-head">
+    <div>
+      <h2 id="wz-title" tabindex="-1">Book appointment</h2>
+      <p class="sheet-step" id="wz-step"></p>
+    </div>
+    <button type="button" class="x" id="wz-close" aria-label="Close">×</button>
+  </div>
+  <div class="sheet-prog" aria-hidden="true"><span id="wz-bar"></span></div>
+  <div class="sheet-body" id="wz-body"></div>
+  <div class="sheet-foot" id="wz-foot"></div>
+</dialog>
+
+<!-- Staff login -->
+<dialog id="login" aria-labelledby="lg-title">
+  <form id="login-form" class="login" novalidate>
+    <div class="sheet-head"><h2 id="lg-title" tabindex="-1">Staff login</h2><button type="button" class="x" id="lg-close" aria-label="Close">×</button></div>
+    <label>User name<input id="lg-user" type="text" autocomplete="username" autocapitalize="none" required></label>
+    <label>Password<input id="lg-pass" type="password" autocomplete="current-password" required></label>
+    <p class="error" id="lg-err" role="alert" hidden></p>
+    <button class="btn btn-block" type="submit">Log in</button>
+  </form>
+</dialog>
+
+<div id="admin-root"></div>
+<button type="button" class="edit-fab" id="edit-fab" hidden>Edit site</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="data.js"></script>
 <script src="icons.js"></script>
-<script src="script.js"></script>
+<script src="site.js"></script>
+<script src="booking.js"></script>
 </body>
 </html>

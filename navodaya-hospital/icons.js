@@ -33,7 +33,9 @@
     plus: '<path d="M12 5v14M5 12h14" stroke-width="3"/>',
     cross: '<path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z"/>'
   };
+  var NAMES = Object.keys(P);
   window.icon = function (n, cls) {
     return '<svg class="svg-i ' + (cls || "") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (P[n] || P.cross) + '</svg>';
   };
+  window.icon.names = NAMES;
 })();

@@ -4,8 +4,8 @@ window.HOSPITAL = {
   shortName: "Navodaya Hospital",
   company: "NHRC Life Care Private Limited",
   tagline: "Redefining Health Care",
-  // WhatsApp number with country code, digits only (e.g. 919876543210). REPLACE THIS to switch bookings on.
-  whatsapp: "910000000000",
+  // WhatsApp number for bookings: country code + number, digits only.
+  whatsapp: "918086655666",
   phone: "+91 80866 55666",
   phone2: "+91 98468 45521",
   email: "nhrclifecare@gmail.com",
@@ -14,6 +14,26 @@ window.HOSPITAL = {
   mapEmbed: "",
   directions: "https://www.google.com/maps/search/?api=1&query=Navodaya+Hospital+and+Research+Centre+Pazhayannur+Thrissur+680587",
   hours: "Emergency services, ambulance and pharmacy: 24x7",
+  daysAhead: 14,          // how many days ahead patients can book
+  closedWeekdays: [],     // days with no OPD booking, 0 = Sunday ... 6 = Saturday
+  theme: { primary: "#173866", accent: "#00a796" },
+  hero: {
+    eyebrow: "Redefining Health Care · Pazhayannur",
+    title: "Quality, affordable healthcare in Pazhayannur.",
+    accent: "Book your visit on WhatsApp.",
+    lead: "Choose a department, date and time. Our reception team confirms your slot on WhatsApp, with no sign-up needed.",
+    image: "building.jpg"
+  },
+  about: {
+    p1: "When the need for quality healthcare in Kerala arose, the idea of Navodaya Hospital and Research Centre was born in the minds of its Directors. Built in the heart of central Pazhayannur, NHRC is open to all and aims at providing quality and affordable health care.",
+    p2: "The expertise, the commitment, the compassion and the infrastructure all come together to deliver technologically advanced care with a patient-focused approach.",
+    image: "building.jpg"
+  },
+  // Latest updates: shown in the scrolling bar under the header and in the Updates section.
+  // { date: "2026-11-10", title: "Short headline", text: "Details", link: "", pin: false, show: true }
+  news: [],
+  // Photo gallery: { image: "photo.jpg", caption: "Text" }
+  gallery: [],
   timeSlots: ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM","07:00 PM"],
 
   // Departments from the hospital brochure. call:true = emergency/critical care (call, not book online).
@@ -59,7 +79,7 @@ window.HOSPITAL = {
 
   // Leadership, from the brochure.
   people: [
-    { name: "Mr. Abdul Jaleel P M", role: "Managing Director" },
+    { name: "Mr. Abdul Jaleel P M", role: "Managing Director", photo: "" },
     { name: "Dr. Farraz Shahithulla", role: "Director and Administrator" },
     { name: "Adv. Muhammad Rafi A.K", role: "Director and Legal Adviser" },
     { name: "Dr. Abdul Jaleel T", role: "Director and Medical Superintendent" },
@@ -75,12 +95,6 @@ window.HOSPITAL = {
     { icon: "clipboard", name: "Health Check-up Plans", text: "Different types of health check-up plans." },
     { icon: "bed", name: "Spacious Halls & Waiting Areas", text: "Comfortable space for patients and families." },
     { icon: "users", name: "Information & Help Desk", text: "Appointments, emergencies and patient reports in one place." }
-  ],
-
-  steps: [
-    { icon: "clipboard", title: "Choose", text: "Pick a department, date and time." },
-    { icon: "chat", title: "Send on WhatsApp", text: "Your request opens in WhatsApp, ready to send." },
-    { icon: "users", title: "Get confirmed", text: "Our reception team confirms your slot in the same chat." }
   ],
 
   // "Why choose NHRC", from the brochure.
