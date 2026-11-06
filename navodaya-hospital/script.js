@@ -11,15 +11,19 @@
   $$("[data-i]").forEach(function (el) { el.outerHTML = icon(el.dataset.i); });
 
   // ----- Contact details from config -----
+  var waLive = H.whatsapp && !/^9100+$/.test(H.whatsapp) && !/^0+$/.test(H.whatsapp);
   var waBase = "https://wa.me/" + H.whatsapp;
+  var telOf = function (p) { return "tel:" + p.replace(/[^\d+]/g, ""); };
   $$("[data-wa-link]").forEach(function (a) {
-    a.href = waBase + "?text=" + encodeURIComponent("Hello " + H.name + ", I would like some help.");
+    a.href = waBase + "?text=" + encodeURIComponent("Hello " + H.shortName + ", I would like some help.");
     a.target = "_blank"; a.rel = "noopener";
+    if (!waLive) a.addEventListener("click", function (e) { e.preventDefault(); toast("WhatsApp is not connected yet."); });
   });
-  var tel = "tel:" + H.phone.replace(/[^\d+]/g, "");
-  $$("[data-phone]").forEach(function (a) { a.textContent = H.phone; if (a.tagName === "A") a.href = tel; });
-  $$("[data-phone-link]").forEach(function (a) { a.href = tel; });
+  $$("[data-phone]").forEach(function (a) { a.textContent = H.phone; if (a.tagName === "A") a.href = telOf(H.phone); });
+  $$("[data-phone2]").forEach(function (a) { a.textContent = H.phone2; a.href = telOf(H.phone2); });
+  $$("[data-phone-link]").forEach(function (a) { a.href = telOf(H.phone); });
   $$("[data-email]").forEach(function (a) { a.textContent = H.email; a.href = "mailto:" + H.email; });
+  $$("[data-website]").forEach(function (a) { a.href = H.website; a.textContent = H.website.replace(/^https?:\/\//, ""); });
   $$("[data-address]").forEach(function (a) { a.textContent = H.address; });
   $("#yr").textContent = new Date().getFullYear();
   $("#directions").href = H.directions;
@@ -27,11 +31,10 @@
     $("#top-hours").textContent = H.hours; $("#top-hours").hidden = false;
     $("#hours").textContent = H.hours; $("#hours-row").hidden = false;
   }
-  if (H.sampleContent) $("#sample-bar").hidden = false;
+  if (!waLive) $("#sample-bar").hidden = false;
   $("#map").innerHTML = H.mapEmbed
     ? '<iframe src="' + esc(H.mapEmbed) + '" loading="lazy" title="Hospital location map"></iframe>'
-    : '<div class="map-card"><span class="map-pin">' + icon("pin") + '</span><b>Navodaya Hospital</b><span>' + esc(H.address) + '</span><a class="btn btn-sm" href="' + esc(H.directions) + '" target="_blank" rel="noopener">Open in Google Maps</a></div>';
-  if (H.heroImage) $(".hero").style.setProperty("--hero-img", "url('" + H.heroImage + "')");
+    : '<div class="map-card"><span class="map-pin">' + icon("pin") + '</span><b>' + esc(H.name) + '</b><span>' + esc(H.address) + '</span><a class="btn btn-sm" href="' + esc(H.directions) + '" target="_blank" rel="noopener">Open in Google Maps</a></div>';
 
   // ----- Mobile menu -----
   var btn = $(".menu-btn"), menu = $("#menu");
@@ -41,20 +44,33 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
 
   // ----- Content sections -----
-  var card = function (ic, t, p, extra) {
-    return '<div class="card"' + (extra || "") + '><div class="ic">' + icon(ic) + '</div><h3>' + esc(t) + '</h3>' + (p ? '<p>' + esc(p) + '</p>' : "") + '</div>';
+  var card = function (ic, t, p) {
+    return '<div class="card"><div class="ic">' + icon(ic) + '</div><h3>' + esc(t) + '</h3>' + (p ? '<p>' + esc(p) + '</p>' : "") + '</div>';
   };
-  $("#dept-grid").innerHTML = H.departments.map(function (d) {
-    return '<a class="card" href="#book" data-dept="' + d.id + '"><div class="ic">' + icon(d.icon) + '</div><h3>' + esc(d.name) + '</h3><p>' + esc(d.text) + '</p></a>';
-  }).join("");
-  $("#svc-grid").innerHTML = H.services.map(function (s) { return card(s.icon, s.name); }).join("");
+  var bookable = H.departments.filter(function (d) { return !d.call; });
+  function renderDepts(q) {
+    q = (q || "").trim().toLowerCase();
+    var list = H.departments.filter(function (d) { return !q || d.name.toLowerCase().indexOf(q) > -1; });
+    $("#dept-grid").innerHTML = list.map(function (d) {
+      var inner = '<span class="ic">' + icon(d.icon) + '</span><span class="dn">' + esc(d.name) + '</span><span class="go">' + (d.call ? "Call" : "Book") + ' →</span>';
+      return d.call
+        ? '<a class="dept" href="' + telOf(H.phone) + '">' + inner + '</a>'
+        : '<a class="dept" href="#book" data-dept="' + d.id + '">' + inner + '</a>';
+    }).join("");
+    $("#dept-empty").hidden = list.length > 0;
+    observe($$("#dept-grid .dept"));
+  }
+  $("#svc-grid").innerHTML = H.services.map(function (s) { return card(s.icon, s.name, s.text); }).join("");
   $("#why-grid").innerHTML = H.why.map(function (w) { return card(w.icon, w.title, w.text); }).join("");
+  $("#people-grid").innerHTML = H.people.map(function (p) {
+    return '<div class="card person"><div class="avatar">' + icon("doctor") + '</div><h3>' + esc(p.name) + '</h3><p>' + esc(p.role) + '</p></div>';
+  }).join("");
+  $("#vision").textContent = H.vision;
+  $("#mission").innerHTML = H.mission.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("");
   $("#steps").innerHTML = H.steps.map(function (s, i) {
     return '<li class="step"><span class="num">' + (i + 1) + '</span><div class="ic">' + icon(s.icon) + '</div><h3>' + esc(s.title) + '</h3><p>' + esc(s.text) + '</p></li>';
   }).join("");
-  $("#faq-list").innerHTML = H.faqs.map(function (f) {
-    return '<details><summary>' + esc(f.q) + '</summary><p>' + esc(f.a) + '</p></details>';
-  }).join("");
+  $("#faq-list").innerHTML = H.faqs.map(function (f) { return '<details><summary>' + esc(f.q) + '</summary><p>' + esc(f.a) + '</p></details>'; }).join("");
   if (H.reviews.length) {
     $("#reviews").hidden = false;
     $("#rev-grid").innerHTML = H.reviews.map(function (r) {
@@ -64,24 +80,20 @@
     menu.insertBefore(nav, $('#menu a[href="#faq"]'));
   }
 
+  // ----- Department search -----
+  $("#dept-search").addEventListener("input", function (e) { renderDepts(e.target.value); });
+
   // ----- Booking form -----
   var form = $("#booking-form"), err = $("#form-error");
-  var fDept = $("#f-dept"), fDoc = $("#f-doc"), fDate = $("#f-date"), fTime = $("#f-time");
-  var slots = $("#slots");
-  function fillDocs() {
-    var list = H.doctors.filter(function (d) { return d.dept === fDept.value; });
-    fDoc.innerHTML = '<option value="Any available doctor">Any available doctor</option>' + list.map(function (d) { return '<option>' + esc(d.name) + '</option>'; }).join("");
-  }
-  fDept.innerHTML = '<option value="">Select department</option>' + H.departments.map(function (d) { return '<option value="' + d.id + '">' + esc(d.name) + '</option>'; }).join("");
+  var fDept = $("#f-dept"), fDate = $("#f-date"), fTime = $("#f-time"), slots = $("#slots");
+  fDept.innerHTML = '<option value="">Select department</option>' + bookable.map(function (d) { return '<option value="' + d.id + '">' + esc(d.name) + '</option>'; }).join("");
   slots.innerHTML = H.timeSlots.map(function (t) { return '<button type="button" class="slot" role="radio" aria-checked="false" data-t="' + t + '">' + t + '</button>'; }).join("");
   slots.addEventListener("click", function (e) {
     var b = e.target.closest(".slot"); if (!b) return;
     slots.querySelectorAll(".slot").forEach(function (x) { var on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-checked", on); });
     fTime.value = b.dataset.t; slots.classList.remove("bad"); updateSummary();
   });
-  fDept.addEventListener("change", function () { fillDocs(); updateSummary(); }); fillDocs();
-  form.addEventListener("input", updateSummary);
-  var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+  var today = new Date();
   var iso = function (d) { var x = new Date(d); x.setMinutes(x.getMinutes() - x.getTimezoneOffset()); return x.toISOString().slice(0, 10); };
   fDate.min = iso(today);
   var quick = $("#date-quick");
@@ -93,43 +105,23 @@
   });
   function markQuick() { quick.querySelectorAll(".qd").forEach(function (b) { b.classList.toggle("on", b.dataset.d === fDate.value); }); }
   fDate.addEventListener("change", function () { markQuick(); updateSummary(); });
+  form.addEventListener("input", updateSummary);
 
   var summary = $("#summary");
   function updateSummary() {
     var f = form.elements, rows = [];
     if (f.name.value.trim()) rows.push(["Patient", f.name.value.trim()]);
     if (f.department.value) rows.push(["Department", deptName(f.department.value)]);
-    if (f.department.value && f.doctor.value) rows.push(["Doctor", f.doctor.value]);
     if (f.date.value) rows.push(["Date", new Date(f.date.value + "T00:00:00").toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })]);
     if (f.time.value) rows.push(["Time", f.time.value]);
     summary.hidden = !rows.length;
     summary.innerHTML = '<b>Your request</b>' + rows.map(function (r) { return '<span><i>' + r[0] + '</i>' + esc(r[1]) + '</span>'; }).join("");
   }
-  var filter = "all";
-  function renderDocs() {
-    $("#doc-grid").innerHTML = H.doctors.filter(function (d) { return filter === "all" || d.dept === filter; }).map(function (d) {
-      return '<div class="card doc"><div class="avatar">' + icon("doctor") + '</div><h3>' + esc(d.name) + '</h3><small>' + esc(d.qual) + ' · ' + esc(d.exp) + '</small>' +
-        '<span class="tag">' + esc(deptName(d.dept)) + '</span><small>Available: ' + esc(d.days) + '</small>' +
-        '<button type="button" class="btn btn-sm" data-book="' + esc(d.name) + '" data-dept="' + d.dept + '">Book ' + esc(d.name) + '</button></div>';
-    }).join("");
-    observe($$("#doc-grid .card"));
-  }
-  $("#dept-filters").innerHTML = '<button type="button" class="chip on" data-f="all" aria-pressed="true">All</button>' +
-    H.departments.map(function (d) { return '<button type="button" class="chip" data-f="' + d.id + '" aria-pressed="false">' + esc(d.name) + '</button>'; }).join("");
-  $("#dept-filters").addEventListener("click", function (e) {
-    var f = e.target.dataset.f; if (!f) return; filter = f;
-    $$(".chip").forEach(function (c) { var on = c.dataset.f === f; c.classList.toggle("on", on); c.setAttribute("aria-pressed", on); });
-    renderDocs();
-  });
-
-  function preselect(dept, doc) { fDept.value = dept; fillDocs(); if (doc) fDoc.value = doc; updateSummary(); }
+  function preselect(dept) { fDept.value = dept; updateSummary(); }
   document.addEventListener("click", function (e) {
-    var b = e.target.closest("[data-book]");
-    if (b) { preselect(b.dataset.dept, b.dataset.book); $("#book").scrollIntoView({ behavior: motion ? "smooth" : "auto" }); return; }
-    var c = e.target.closest("#dept-grid .card");
+    var c = e.target.closest("[data-dept]");
     if (c) preselect(c.dataset.dept);
   });
-
 
   var labels = { name: "patient name", phone: "a valid mobile number", department: "department", date: "date", time: "time" };
   form.addEventListener("submit", function (e) {
@@ -141,13 +133,15 @@
     ["department", "date", "time"].forEach(function (n) { if (!f[n].value) bad.push(n); });
     if (bad.length) {
       bad.forEach(function (n) { f[n].classList.add("bad"); f[n].setAttribute("aria-invalid", "true"); if (n === "time") slots.classList.add("bad"); });
-      err.textContent = "Please enter: " + bad.map(function (n) { return labels[n]; }).join(", ") + "."; err.hidden = false; (bad[0] === "time" ? slots.querySelector(".slot") : f[bad[0]]).focus(); return;
+      err.textContent = "Please enter: " + bad.map(function (n) { return labels[n]; }).join(", ") + "."; err.hidden = false;
+      (bad[0] === "time" ? slots.querySelector(".slot") : f[bad[0]]).focus(); return;
     }
     err.hidden = true;
+    if (!waLive) { toast("Booking is not connected yet. Please call us."); return; }
     var d = new Date(f.date.value + "T00:00:00");
-    var msg = ["*New appointment request – " + H.name + "*",
+    var msg = ["*New appointment request – " + H.shortName + "*",
       "Name: " + f.name.value.trim(), "Mobile: " + f.phone.value.trim(),
-      "Department: " + deptName(f.department.value), "Doctor: " + f.doctor.value,
+      "Department: " + deptName(f.department.value),
       "Date: " + d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" }),
       "Time: " + f.time.value, "Visit type: " + f.type.value,
       f.notes.value.trim() ? "Reason: " + f.notes.value.trim() : ""].filter(Boolean).join("\n");
@@ -155,9 +149,14 @@
     window.open(waBase + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
   });
 
-  // ----- Motion: one calm scroll reveal + header shadow -----
-  var header = $(".header");
-  window.addEventListener("scroll", function () { header.classList.toggle("scrolled", window.scrollY > 10); }, { passive: true });
+  // ----- Toast -----
+  var toastEl = $("#toast"), tt;
+  function toast(msg) {
+    toastEl.innerHTML = '<span class="tick">' + icon("check") + '</span>' + esc(msg);
+    toastEl.classList.add("show"); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove("show"); }, 3200);
+  }
+
+  // ----- Motion: scroll reveal, progress, scrollspy, parallax, spotlight -----
   var io = null;
   if (motion && "IntersectionObserver" in window) {
     io = new IntersectionObserver(function (entries) {
@@ -167,67 +166,56 @@
   function observe(list) {
     list.forEach(function (el, i) {
       if (!io) return;
-      el.classList.add("reveal"); el.style.setProperty("--d", ((i % 4) * 0.08) + "s"); io.observe(el);
+      el.classList.add("reveal"); el.style.setProperty("--d", ((i % 4) * 0.06) + "s"); io.observe(el);
     });
   }
-  observe($$(".section h2, .section .sub, .card, .step, .form, .mv > div, .map, details, .ticks, .cta-band .wrap"));
-  renderDocs();
+  renderDepts("");
   updateSummary();
+  observe($$(".section h2, .section .sub, .card, .step, .form, .vm-card, .about-photo, .map, details, .ticks, .cta-band .wrap, .infonote"));
 
-  // ----- Extra interactive touches -----
-  var toastEl = $("#toast"), tt;
-  function toast(msg) {
-    toastEl.innerHTML = '<span class="tick">' + icon("check") + '</span>' + esc(msg);
-    toastEl.classList.add("show"); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove("show"); }, 3200);
-  }
-
-  // Scroll progress, back-to-top, scrollspy, hero parallax (transform only)
-  var bar = $("#progress"), totop = $("#totop"), heroBg = $(".hero"), ticking = false;
+  var header = $(".header"), bar = $("#progress"), totop = $("#totop"), hero = $(".hero"), ticking = false;
   var links = [].slice.call($$('#menu a[href^="#"]:not(.btn)')), spy = {};
   links.forEach(function (a) { var t = document.getElementById(a.getAttribute("href").slice(1)); if (t) spy[a.getAttribute("href")] = t; });
   function onScroll() {
     var y = window.scrollY, max = document.documentElement.scrollHeight - innerHeight;
+    header.classList.toggle("scrolled", y > 10);
     bar.style.transform = "scaleX(" + (max > 0 ? y / max : 0) + ")";
     totop.classList.toggle("show", y > 700);
     var cur = null;
     links.forEach(function (a) { var t = spy[a.getAttribute("href")]; if (t && t.getBoundingClientRect().top < innerHeight * 0.4) cur = a; });
     links.forEach(function (a) { a.classList.toggle("active", a === cur); });
-    if (motion && y < innerHeight) heroBg.style.setProperty("--py", (y * 0.18) + "px");
+    if (motion && y < innerHeight) hero.style.setProperty("--py", (y * 0.12) + "px");
     ticking = false;
   }
   window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   totop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: motion ? "smooth" : "auto" }); });
   onScroll();
 
-  // Card spotlight follows the pointer
   if (matchMedia("(hover: hover)").matches) {
     document.addEventListener("pointermove", function (e) {
-      var c = e.target.closest && e.target.closest(".card, .step");
+      var c = e.target.closest && e.target.closest(".card, .step, .dept");
       if (!c) return;
       var r = c.getBoundingClientRect();
       c.style.setProperty("--mx", (e.clientX - r.left) + "px"); c.style.setProperty("--my", (e.clientY - r.top) + "px");
     });
   }
 
-  // Headline: words rise in one by one
+  // Headline words rise in one by one
   if (motion) {
-    var h1 = $("h1");
-    if (h1) {
-      var i = 0;
-      (function wrap(n) {
-        [].slice.call(n.childNodes).forEach(function (c) {
-          if (c.nodeType === 3) {
-            var f = document.createDocumentFragment();
-            c.textContent.split(/(\s+)/).forEach(function (w) {
-              if (!w.trim()) { f.appendChild(document.createTextNode(w)); return; }
-              var o = document.createElement("span"); o.className = "w";
-              var inn = document.createElement("span"); inn.textContent = w; inn.style.animationDelay = (0.2 + i++ * 0.06) + "s"; o.appendChild(inn); f.appendChild(o);
-            });
-            n.replaceChild(f, c);
-          } else wrap(c);
-        });
-      })(h1);
-      h1.classList.add("split"); h1.classList.remove("hero-in");
-    }
+    var h1 = $("h1"), i = 0;
+    (function wrap(n) {
+      [].slice.call(n.childNodes).forEach(function (c) {
+        if (c.nodeType === 3) {
+          var f = document.createDocumentFragment();
+          c.textContent.split(/(\s+)/).forEach(function (w) {
+            if (!w.trim()) { f.appendChild(document.createTextNode(w)); return; }
+            var o = document.createElement("span"); o.className = "w";
+            var inn = document.createElement("span"); inn.textContent = w; inn.style.animationDelay = (0.2 + i++ * 0.06) + "s"; o.appendChild(inn); f.appendChild(o);
+          });
+          n.replaceChild(f, c);
+        } else wrap(c);
+      });
+    })(h1);
+    h1.classList.add("split"); h1.classList.remove("hero-in");
   }
 })();
