@@ -58,26 +58,39 @@
 
 <main id="main">
 <section class="hero" id="home">
-  <div class="hero-photo">
-    <img id="h-img" src="building.jpg" width="589" height="520" alt="Navodaya Hospital and Research Centre building" fetchpriority="high">
-    <div class="plus3d" id="plus3d" aria-hidden="true"><svg class="plus-fb" viewBox="0 0 100 100"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8be0d4"/><stop offset="1" stop-color="#00a796"/></linearGradient></defs><path fill="url(#pg)" d="M38 10h24a6 6 0 0 1 6 6v16h16a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6H68v16a6 6 0 0 1-6 6H38a6 6 0 0 1-6-6V68H16a6 6 0 0 1-6-6V38a6 6 0 0 1 6-6h16V16a6 6 0 0 1 6-6z"/></svg></div>
-    <a class="glass-card" href="#" data-phone-link aria-label="Call emergency and ambulance"><span class="gc-ic"><i data-i="ambulance"></i></span><span class="gc-tx"><b>24x7 emergency &amp; ambulance</b><small><span data-phone></span></small></span><span class="gc-go"><i data-i="phone"></i></span></a>
-  </div>
-  <div class="wrap hero-wrap">
+  <div class="hero-bg" aria-hidden="true"><img id="h-img" src="building.jpg" width="589" height="520" alt="" fetchpriority="high"></div>
+  <div class="hero-shade" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
     <div class="hero-copy">
+      <p class="hero-badge"><span class="dot" aria-hidden="true"></span> Now booking on WhatsApp</p>
       <p class="kicker"><i data-i="cross"></i> <span id="h-eyebrow"></span></p>
       <h1><span id="h-title"></span> <span class="accent" id="h-accent"></span></h1>
       <p class="lead" id="h-lead"></p>
       <div class="hero-cta">
-        <button type="button" class="btn btn-light btn-lg" data-open-book><i data-i="clipboard"></i> Book appointment</button>
-        <a class="btn btn-line btn-lg" href="#" data-phone-link><i data-i="phone"></i> Call</a>
+        <button type="button" class="btn btn-light btn-lg" data-open-book><i data-i="calendar"></i> Book appointment</button>
+        <a class="btn btn-line btn-lg" href="#" data-phone-link><i data-i="phone"></i> Call now</a>
       </div>
-      <ul class="facts">
-        <li><i data-i="ambulance"></i> 24x7 emergency &amp; ambulance</li>
-        <li><i data-i="pill"></i> Pharmacy 24x7</li>
-        <li><i data-i="pin"></i> Ample parking</li>
-      </ul>
+      <form class="quickbook" id="quickbook" aria-label="Quick booking">
+        <label for="qb-dept"><i data-i="steth"></i><span class="qb-lab">Quick booking</span></label>
+        <div class="qb-row">
+          <select id="qb-dept" aria-label="Choose a department"></select>
+          <button type="submit" class="btn qb-go">Pick a time <i data-i="clock"></i></button>
+        </div>
+      </form>
     </div>
+    <div class="hero-art">
+      <span class="ring r1" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span>
+      <div class="plus3d" id="plus3d" aria-hidden="true"><svg class="plus-fb" viewBox="0 0 100 100"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8be0d4"/><stop offset="1" stop-color="#00a796"/></linearGradient></defs><path fill="url(#pg)" d="M38 10h24a6 6 0 0 1 6 6v16h16a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6H68v16a6 6 0 0 1-6 6H38a6 6 0 0 1-6-6V68H16a6 6 0 0 1-6-6V38a6 6 0 0 1 6-6h16V16a6 6 0 0 1 6-6z"/></svg></div>
+      <a class="glass-card" href="#" data-phone-link aria-label="Call emergency and ambulance"><span class="gc-ic"><i data-i="ambulance"></i></span><span class="gc-tx"><b>24x7 emergency &amp; ambulance</b><small><span data-phone></span></small></span><span class="gc-go"><i data-i="phone"></i></span></a>
+    </div>
+  </div>
+  <div class="hero-strip">
+    <ul class="wrap">
+      <li><i data-i="steth"></i><span><b id="qb-count">37</b> departments</span></li>
+      <li><i data-i="ambulance"></i><span><b>24x7</b> emergency</span></li>
+      <li><i data-i="pill"></i><span><b>24x7</b> pharmacy</span></li>
+      <li><i data-i="pin"></i><span><b>Ample</b> parking</span></li>
+    </ul>
   </div>
 </section>
 

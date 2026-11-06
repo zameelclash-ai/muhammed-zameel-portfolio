@@ -55,8 +55,10 @@
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) cur = "contact";
     return cur;
   }
+  var heroBg = $(".hero-bg"), heroEl = $(".hero");
   function onScroll() {
     ticking = false;
+    if (motion && heroBg) { var hy = Math.min(window.scrollY, heroEl.offsetHeight); heroBg.style.transform = "translate3d(0," + (hy * 0.28).toFixed(1) + "px,0)"; }
     var y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight;
     bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0) + ")";
     header.classList.toggle("scrolled", y > 6);

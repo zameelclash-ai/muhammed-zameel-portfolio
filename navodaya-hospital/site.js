@@ -97,6 +97,10 @@
     $("#h-eyebrow").textContent = h.eyebrow; $("#h-title").textContent = h.title;
     $("#h-accent").textContent = h.accent; $("#h-lead").textContent = h.lead;
     $("#h-img").src = h.image || "building.jpg";
+    var qb = $("#qb-dept"), keep = qb.value;
+    qb.innerHTML = '<option value="">Choose a department</option>' + S.bookable().map(function (d) { return '<option value="' + esc(d.id) + '">' + esc(d.name) + '</option>'; }).join("");
+    qb.value = keep;
+    $("#qb-count").textContent = C().departments.length;
     $("#a-p1").textContent = C().about.p1; $("#a-p2").textContent = C().about.p2;
     $("#a-img").src = C().about.image || "building.jpg";
     $("#vision").textContent = C().vision;
@@ -210,6 +214,9 @@
 
   /* ---------- page chrome: menu, search, reveal, sheet launchers ---------- */
   function initChrome() {
+    $("#quickbook").addEventListener("submit", function (e) {
+      e.preventDefault(); if (window.Booking) window.Booking.open($("#qb-dept").value || undefined);
+    });
     var btn = $(".menu-btn"), menu = $("#menu");
     var setMenu = function (o) { menu.classList.toggle("open", o); btn.setAttribute("aria-expanded", o); btn.setAttribute("aria-label", o ? "Close menu" : "Open menu"); };
     btn.addEventListener("click", function () { setMenu(!menu.classList.contains("open")); });
