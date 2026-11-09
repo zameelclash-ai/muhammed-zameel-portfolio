@@ -50,6 +50,17 @@
     });
   }
 
+  // With the online backend, photos go to storage and only their link is kept in the content.
+  // Without it (or if upload fails), the resized photo stays inside the content itself.
+  function uploadPhoto(dataUrl) {
+    if (!S.api.alive) return Promise.resolve(dataUrl);
+    S.toast("Uploading photo…");
+    return fetch("/api/upload", { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ user: S.adminUser, password: S.adminPass, dataUrl: dataUrl }) })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && j.url) { S.toast("Photo uploaded."); return j.url; } return dataUrl; }, function () { return dataUrl; });
+  }
+
   /* ---------- field builders ---------- */
   function val(p) { var v = getP(S.content, p); return v == null ? "" : v; }
   function fText(label, p, o) {
@@ -167,7 +178,7 @@
     ai: function () {
       var on = S.api.alive;
       return '<h3>AI assistant</h3><p class="status ' + (on ? "ok" : "off") + '">' + (on ? "AI is connected." : "AI is not connected yet.") + '</p>' +
-        (on ? "" : '<p class="muted">AI needs the site to be hosted with the included Netlify backend and an API key. Steps are in README-ADMIN.md. Until then every other editing feature works.</p>') +
+        (on ? "" : '<p class="muted">AI needs the site hosted on Vercel (or Netlify) with the included backend and a Claude API key. Steps are in README-ADMIN.md. Until then every other editing feature works.</p>') +
         '<div class="af"><label>Tell the AI what to change</label><textarea id="ai-inst" rows="4" placeholder="Examples:\n• Make the headline shorter and friendlier\n• Add a FAQ about visiting hours\n• Rewrite the about text in simple words"></textarea></div>' +
         '<button type="button" class="btn" data-act="airun">✨ Suggest changes</button><div class="ai-out big" id="ai-edit-out"></div>' +
         '<p class="muted sp">You always see the changes first and choose whether to apply them. Photos are never changed by the AI.</p>';
@@ -246,7 +257,11 @@
       if (j < 0 || j >= arr.length) return;
       var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp; commit(); draw(true);
     } else if (act === "img") {
-      pickImage(1200).then(function (url) { if (url) { setP(S.content, path === undefined ? b.dataset.p : b.dataset.p, url); commit(); draw(true); } });
+      var target = b.dataset.p;
+      pickImage(1200).then(function (url) {
+        if (!url) return;
+        return uploadPhoto(url).then(function (finalUrl) { setP(S.content, target, finalUrl); commit(); draw(true); });
+      });
     } else if (act === "imgdel") {
       setP(S.content, b.dataset.p, ""); commit(); draw(true);
     } else if (act === "theme-reset") {
