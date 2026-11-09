@@ -7,14 +7,28 @@ const json = (obj, status = 200, cache = "no-store") =>
   new Response(JSON.stringify(obj), { status, headers: { "content-type": "application/json", "cache-control": cache } });
 const env = () => ({ ADMIN_USER: Netlify.env.get("ADMIN_USER"), ADMIN_PASSWORD: Netlify.env.get("ADMIN_PASSWORD") });
 
-export const handle = async (req, store, envVars) => {
+// Too many wrong passwords from one place: pause that place for 15 minutes.
+const MAX_FAILS = 8, WINDOW = 15 * 60 * 1000;
+const failKey = (ip) => "fail/" + String(ip || "unknown").replace(/[^a-zA-Z0-9.:]/g, "_");
+async function blocked(store, ip) {
+  const f = await store.get(failKey(ip), { type: "json" });
+  return !!f && f.count >= MAX_FAILS && Date.now() - f.last < WINDOW;
+}
+async function noteFail(store, ip) {
+  const f = await store.get(failKey(ip), { type: "json" });
+  const fresh = !f || Date.now() - f.last >= WINDOW;
+  await store.setJSON(failKey(ip), { count: fresh ? 1 : f.count + 1, last: Date.now() });
+}
+
+export const handle = async (req, store, envVars, ip) => {
   if (req.method === "GET") {
     const data = await store.get("content", { type: "json" });
     return json(data || {});
   }
   if (req.method === "POST") {
     let body; try { body = await req.json(); } catch { return json({ error: "Bad request" }, 400); }
-    if (!authorised(body.user, body.password, envVars)) return json({ error: "Wrong user name or password" }, 401);
+    if (await blocked(store, ip)) return json({ error: "Too many wrong tries. Please wait 15 minutes." }, 429);
+    if (!authorised(body.user, body.password, envVars)) { await noteFail(store, ip); return json({ error: "Wrong user name or password" }, 401); }
     if (body.check) return json({ ok: true });
     const c = body.content;
     if (!c || typeof c !== "object" || Array.isArray(c)) return json({ error: "No content" }, 400);
@@ -30,5 +44,5 @@ export const handle = async (req, store, envVars) => {
   return json({ error: "Method not allowed" }, 405);
 };
 
-export default async (req) => handle(req, getStore({ name: "nhrc-site", consistency: "strong" }), env());
+export default async (req, context) => handle(req, getStore({ name: "nhrc-site", consistency: "strong" }), env(), context && context.ip);
 export const config = { path: "/api/content" };
