@@ -173,8 +173,31 @@
     }).join("");
   }
 
+  /* ---------- SEO: keep structured data in step with staff edits ---------- */
+  function renderSeo() {
+    try {
+      var c = C(), el = document.getElementById("ld-main");
+      if (!el) return;
+      var site = "https://navodayahospital.org/";
+      var ph = [c.phone, c.phone2].filter(Boolean).map(function (p) { return "+" + String(p).replace(/\D/g, ""); });
+      var hosp = {
+        "@type": "Hospital", "@id": site + "#hospital", name: c.name, alternateName: [c.shortName, c.company].filter(Boolean),
+        url: site, logo: site + "logo-lockup.png", image: site + "og.jpg", telephone: ph, email: c.email, slogan: c.tagline,
+        address: { "@type": "PostalAddress", streetAddress: "Thiruvilwamala Road, Near Panchayat Office", addressLocality: "Pazhayannur", addressRegion: "Kerala", postalCode: "680587", addressCountry: "IN" },
+        areaServed: ["Pazhayannur", "Thrissur", "Palakkad"], hasMap: c.directions,
+        openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "00:00", closes: "23:59" }],
+        department: (c.departments || []).map(function (d) { return { "@type": "MedicalClinic", name: d.name, medicalSpecialty: d.name }; }),
+        potentialAction: { "@type": "ReserveAction", target: { "@type": "EntryPoint", urlTemplate: "https://wa.me/" + c.whatsapp }, result: { "@type": "Reservation", name: "Doctor appointment" } }
+      };
+      var graph = [hosp];
+      var faqs = (c.faqs || []).filter(function (f) { return f.q && f.a; });
+      if (faqs.length) graph.push({ "@type": "FAQPage", mainEntity: faqs.map(function (f) { return { "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } }; }) });
+      el.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+    } catch (e) {}
+  }
+
   S.render = function () {
-    applyTheme(); bindContact(); renderHero(); renderDepts(); renderLists(); renderNews();
+    applyTheme(); bindContact(); renderHero(); renderDepts(); renderLists(); renderNews(); renderSeo();
     $$("[data-i]").forEach(function (el) { el.outerHTML = icon(el.dataset.i); });
     if (S.onRender) S.onRender();
   };

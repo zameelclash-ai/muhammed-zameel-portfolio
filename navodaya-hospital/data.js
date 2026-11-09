@@ -9,7 +9,7 @@ window.HOSPITAL = {
   phone: "+91 80866 55666",
   phone2: "+91 98468 45521",
   email: "nhrclifecare@gmail.com",
-  website: "https://www.navodayahospital.org",
+  website: "https://navodayahospital.org",
   address: "Thiruvilwamala Road, Near Panchayat Office, Pazhayannur, Thrissur - 680587",
   mapEmbed: "",
   directions: "https://www.google.com/maps/search/?api=1&query=Navodaya+Hospital+and+Research+Centre+Pazhayannur+Thrissur+680587",
