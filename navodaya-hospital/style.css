@@ -480,3 +480,5 @@ h1{font-size:2rem}
 }
 @media(min-width:760px){#info{width:520px;max-width:92vw;max-height:86dvh;margin:auto;border-radius:16px}}
 #in-foot .btn{white-space:nowrap;padding-left:12px;padding-right:12px;font-size:.92rem}
+/* Netlify shows a small badge at the bottom-right corner; keep the staff link clear of it */
+.f-bottom{justify-content:flex-start;gap:var(--s2) var(--s5)}
