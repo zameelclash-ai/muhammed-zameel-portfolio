@@ -8,7 +8,12 @@ const reduce = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: redu
 if (host) {
   let gl = null;
   try { const c = document.createElement("canvas"); gl = c.getContext("webgl2") || c.getContext("webgl"); } catch (e) {}
-  if (gl) start();
+  // Weak phones (few cores, low memory, data saver) keep the flat SVG plus; others start after first paint.
+  const weak = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) || (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.connection && navigator.connection.saveData);
+  if (gl && !weak) {
+    const go = () => start();
+    if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 2500 }); else setTimeout(go, 800);
+  }
 }
 
 function roundedShape(points, r) {
