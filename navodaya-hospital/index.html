@@ -70,6 +70,7 @@
     <nav id="menu" aria-label="Main">
       <div class="navpill">
         <a href="#departments">Departments</a>
+        <a href="#events" id="nav-events" hidden>Events</a>
         <a href="#services">Services</a>
         <a href="#about">About</a>
         <a href="#updates" id="nav-updates" hidden>Updates</a>
@@ -116,6 +117,18 @@
       <li data-info="strip:pharm" role="button" tabindex="0"><i data-i="pill"></i><span><b>24x7</b> pharmacy</span></li>
       <li data-info="strip:park" role="button" tabindex="0"><i data-i="pin"></i><span><b>Ample</b> parking</span></li>
     </ul>
+  </div>
+</section>
+
+<section class="section" id="events" aria-labelledby="ev-h">
+  <div class="wrap">
+    <header class="sec-head"><p class="kicker"><i data-i="cross"></i> Events</p><h2 id="ev-h">Life at Navodaya</h2><p class="sub">Camps, celebrations and community programmes. Tap a photo to see it larger.</p></header>
+    <div class="evs" id="evs">
+      <div class="ev-track" id="ev-track" tabindex="-1"></div>
+      <button type="button" class="ev-nav prev" id="ev-prev" aria-label="Previous photo"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button type="button" class="ev-nav next" id="ev-next" aria-label="Next photo"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="ev-dots" id="ev-dots" role="group" aria-label="Choose photo"></div>
   </div>
 </section>
 

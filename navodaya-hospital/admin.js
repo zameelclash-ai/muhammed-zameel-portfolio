@@ -124,6 +124,9 @@
         fSelect("Stars", b + ".rating", [[5, "5 stars"], [4, "4 stars"], [3, "3 stars"], [2, "2 stars"], [1, "1 star"]]) +
         fArea("Review", b + ".text", { ai: false }); },
       blank: function () { return { name: "", place: "", rating: 5, text: "" }; } },
+    events: { noun: "event photo", title: "title", fields: function (b) {
+      return fImage("Photo", b + ".image") + fText("Heading", b + ".title", { ph: "e.g. Free diabetes camp" }) + fArea("Short brief (shown under the photo)", b + ".text", { rows: 3, ai: true }); },
+      blank: function () { return { image: "", title: "", text: "" }; } },
     gallery: { noun: "photo", title: "caption", fields: function (b) { return fImage("Photo", b + ".image") + fText("Caption", b + ".caption"); },
       blank: function () { return { image: "", caption: "" }; } }
   };
@@ -131,7 +134,7 @@
 
   /* ---------- tabs ---------- */
   var TABS = [
-    ["general", "General"], ["home", "Home page"], ["news", "Updates"], ["departments", "Departments"], ["services", "Services"],
+    ["general", "General"], ["home", "Home page"], ["news", "Updates"], ["events", "Events"], ["departments", "Departments"], ["services", "Services"],
     ["about", "About"], ["team", "Team"], ["faq", "FAQ"], ["reviews", "Reviews"], ["gallery", "Gallery"],
     ["booking", "Booking"], ["look", "Look"], ["ai", "AI"], ["publish", "Publish"]
   ];
@@ -150,6 +153,7 @@
       return '<h3>Updates and news</h3><p class="muted">These scroll in the bar under the header and appear in the Latest updates section.</p>' + lst("news", { open: true }) +
         '<div class="ainews"><b>Write an update with AI</b><p class="muted">Type a rough note, for example: "Free diabetes camp on Sunday 10 am".</p><textarea id="ai-note" rows="2" placeholder="Your note"></textarea><button type="button" class="btn btn-sm" data-act="ainews">✨ Write update</button><div class="ai-out" id="ai-news-out"></div></div>';
     },
+    events: function () { return '<h3>Events slider</h3><p class="muted">These photos slide under the top of the home page. Add a photo with Upload, write a heading and a short brief, and it shows on the site after you press Publish. Remove old photos any time. The section hides itself when the list is empty.</p>' + lst("events", { open: true }); },
     departments: function () { return '<h3>Departments</h3><p class="muted">Drag order with the arrows. These also appear in the booking form.</p>' + lst("departments"); },
     services: function () { return '<h3>Services &amp; facilities</h3>' + lst("services") + '<h3 class="sp">Why choose us</h3>' + lst("why"); },
     about: function () {

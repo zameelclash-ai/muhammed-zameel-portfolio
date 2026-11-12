@@ -196,8 +196,59 @@
     } catch (e) {}
   }
 
+  /* ---------- events slider ---------- */
+  var evTimer = 0, evBound = false;
+  function evStep() { var t = $("#ev-track"), s = t && t.querySelector(".ev-slide"); return s ? s.offsetWidth + (parseFloat(getComputedStyle(t).columnGap) || 12) : 0; }
+  function evSync() {
+    var t = $("#ev-track"); if (!t) return;
+    var st = evStep(), n = t.children.length, i = st ? Math.round(t.scrollLeft / st) : 0;
+    var fits = t.scrollWidth <= t.clientWidth + 2;
+    $("#evs").classList.toggle("fits", fits); $("#ev-dots").hidden = fits;
+    $("#ev-prev").disabled = t.scrollLeft < 4; $("#ev-next").disabled = t.scrollLeft + t.clientWidth >= t.scrollWidth - 4;
+    $$("#ev-dots button").forEach(function (b, k) { b.classList.toggle("on", k === Math.min(i, n - 1)); b.setAttribute("aria-current", k === Math.min(i, n - 1)); });
+  }
+  function evGo(i, smooth) { var t = $("#ev-track"); t.scrollTo({ left: i * evStep(), behavior: smooth === false || reduceMotion ? "auto" : "smooth" }); }
+  var reduceMotion = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  function evAuto() {
+    clearInterval(evTimer);
+    if (reduceMotion) return;
+    evTimer = setInterval(function () {
+      var t = $("#ev-track"), sec = $("#events");
+      if (!t || sec.hidden || document.hidden || evPaused || t.scrollWidth <= t.clientWidth + 2) return;
+      var r = sec.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      if (t.scrollLeft + t.clientWidth >= t.scrollWidth - 4) evGo(0); else t.scrollBy({ left: evStep(), behavior: "smooth" });
+    }, 6000);
+  }
+  var evPaused = false;
+  function renderEvents() {
+    var ev = (C().events || []).filter(function (e) { return e && e.image; });
+    S.events = ev;
+    var sec = $("#events"); if (!sec) return;
+    sec.hidden = !ev.length; $("#nav-events").hidden = !ev.length;
+    $("#ev-track").innerHTML = ev.map(function (e, i) {
+      return '<article class="ev-slide" data-info="event:' + i + '" role="button" tabindex="0" aria-label="' + esc(e.title || "Event photo") + '"><div class="ev-ph"><img src="' + esc(e.image) + '" alt="' + esc(e.title || "Event photo") + '" loading="' + (i ? "lazy" : "eager") + '" draggable="false"></div>' +
+        '<div class="ev-cap">' + (e.title ? "<b>" + esc(e.title) + "</b>" : "") + (e.text ? "<p>" + esc(e.text) + "</p>" : "") + "</div></article>";
+    }).join("");
+    $("#ev-dots").innerHTML = ev.map(function (e, i) { return '<button type="button" aria-label="Photo ' + (i + 1) + '" data-n="' + i + '"></button>'; }).join("");
+    if (!evBound) {
+      evBound = true;
+      var t = $("#ev-track"), raf = 0;
+      t.addEventListener("scroll", function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; evSync(); }); }, { passive: true });
+      $("#ev-prev").addEventListener("click", function () { t.scrollBy({ left: -evStep(), behavior: reduceMotion ? "auto" : "smooth" }); });
+      $("#ev-next").addEventListener("click", function () { t.scrollBy({ left: evStep(), behavior: reduceMotion ? "auto" : "smooth" }); });
+      $("#ev-dots").addEventListener("click", function (e) { var b = e.target.closest("button[data-n]"); if (b) evGo(+b.dataset.n); });
+      var evs = $("#evs");
+      ["mouseenter", "focusin", "touchstart"].forEach(function (n) { evs.addEventListener(n, function () { evPaused = true; }, { passive: true }); });
+      ["mouseleave", "focusout"].forEach(function (n) { evs.addEventListener(n, function () { evPaused = false; }); });
+      evs.addEventListener("touchend", function () { setTimeout(function () { evPaused = false; }, 6000); }, { passive: true });
+      window.addEventListener("resize", evSync);
+      evAuto();
+    }
+    requestAnimationFrame(evSync);
+  }
+
   S.render = function () {
-    applyTheme(); bindContact(); renderHero(); renderDepts(); renderLists(); renderNews(); renderSeo();
+    applyTheme(); bindContact(); renderHero(); renderDepts(); renderLists(); renderNews(); renderEvents(); renderSeo();
     $$("[data-i]").forEach(function (el) { el.outerHTML = icon(el.dataset.i); });
     if (S.onRender) S.onRender();
   };

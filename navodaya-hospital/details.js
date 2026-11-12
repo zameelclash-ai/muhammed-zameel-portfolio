@@ -68,6 +68,10 @@
       acts.push(book());
       show({ kicker: n.date ? S.fmtDate(n.date, true) : "Update", title: n.title || "Update", html: p(n.text), actions: acts });
     },
+    event: function (i) {
+      var e = (S.events || [])[+i]; if (!e) return;
+      show({ kicker: "Event", image: e.image, alt: e.title || "Event photo", title: e.title || C().shortName, html: p(e.text), actions: [] });
+    },
     gal: function (i) {
       var g = (S.gal || [])[+i]; if (!g) return;
       show({ kicker: "Gallery", image: g.image, alt: g.caption || "Hospital photo", title: g.caption || C().shortName, actions: [] });

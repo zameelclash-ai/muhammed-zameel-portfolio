@@ -32,6 +32,13 @@ window.HOSPITAL = {
   // Latest updates: shown in the scrolling bar under the header and in the Updates section.
   // { date: "2026-11-10", title: "Short headline", text: "Details", link: "", pin: false, show: true }
   news: [],
+  // Events slider under the header: { image: "photo.jpg", title: "Heading", text: "Short brief shown under the photo" }
+  // Staff can add, remove and replace these from the Events tab of the editor.
+  events: [
+    { image: "photos/event-1.jpg", title: "Sample event: Free health check-up camp", text: "Sample text. Staff can replace this photo and brief from the Events tab after logging in." },
+    { image: "photos/event-2.jpg", title: "Sample event: Awareness class", text: "Add the date, place and a line about what happened at the event." },
+    { image: "photos/event-3.jpg", title: "Sample event: Doctors' day celebration", text: "Add as many event photos as you like. Remove these samples when you upload your own." }
+  ],
   // Photo gallery: { image: "photo.jpg", caption: "Text" }
   gallery: [
     { image: "photos/gallery-1.jpg", caption: "" },
